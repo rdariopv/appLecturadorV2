@@ -1,0 +1,38 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.lecturador.android.applecturador.app-mergeDebugResources-11:/values-land/values-land.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Windows 10\\.gradle\\caches\\transforms-3\\0816c4b2776c52a873d05a675e4ef09b\\transformed\\appcompat-v7-27.0.0\\res\\values-land\\values-land.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,125,189,260",
+                        "endColumns": "69,63,70,67",
+                        "endOffsets": "120,184,255,323"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Windows 10\\.gradle\\caches\\transforms-3\\07b20318f165d7df1456087dfac444a2\\transformed\\design-27.0.0\\res\\values-land\\values-land.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "232"
+                    },
+                    "to": {
+                        "startLines": "6",
+                        "startColumns": "4",
+                        "startOffsets": "328",
+                        "endLines": "9",
+                        "endColumns": "12",
+                        "endOffsets": "505"
+                    }
+                }
+            ]
+        }
+    ]
+}

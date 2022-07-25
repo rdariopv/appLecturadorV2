@@ -1,0 +1,16 @@
+com.lecturador.android.applecturador.app-design-27.0.0-0 C:\Users\Windows 10\.gradle\caches\transforms-3\07b20318f165d7df1456087dfac444a2\transformed\design-27.0.0\res
+com.lecturador.android.applecturador.app-appcompat-v7-27.0.0-1 C:\Users\Windows 10\.gradle\caches\transforms-3\0816c4b2776c52a873d05a675e4ef09b\transformed\appcompat-v7-27.0.0\res
+com.lecturador.android.applecturador.app-transition-27.0.0-2 C:\Users\Windows 10\.gradle\caches\transforms-3\09322e647aef39aa0b15f00d5f9aae5c\transformed\transition-27.0.0\res
+com.lecturador.android.applecturador.app-support-compat-27.0.0-3 C:\Users\Windows 10\.gradle\caches\transforms-3\1fdaa06a873799bd8134b83c9b2d0030\transformed\support-compat-27.0.0\res
+com.lecturador.android.applecturador.app-library-material-1.1.0-4 C:\Users\Windows 10\.gradle\caches\transforms-3\5221e42d40515668b425dc70bbe59f50\transformed\library-material-1.1.0\res
+com.lecturador.android.applecturador.app-library-2.1.4-5 C:\Users\Windows 10\.gradle\caches\transforms-3\714f8bc17ce8d0631dd993524da30fb8\transformed\library-2.1.4\res
+com.lecturador.android.applecturador.app-support-media-compat-27.0.0-6 C:\Users\Windows 10\.gradle\caches\transforms-3\975d6c7329d3093d95a4ea17cb5ee7d3\transformed\support-media-compat-27.0.0\res
+com.lecturador.android.applecturador.app-recyclerview-v7-27.0.0-7 C:\Users\Windows 10\.gradle\caches\transforms-3\fb3e54944cff96aba4bae3d0bbe2ed11\transformed\recyclerview-v7-27.0.0\res
+com.lecturador.android.applecturador.app-pngs-8 D:\AndroidProjects\appLecturador\app\build\generated\res\pngs\debug
+com.lecturador.android.applecturador.app-resValues-9 D:\AndroidProjects\appLecturador\app\build\generated\res\resValues\debug
+com.lecturador.android.applecturador.app-rs-10 D:\AndroidProjects\appLecturador\app\build\generated\res\rs\debug
+com.lecturador.android.applecturador.app-mergeDebugResources-11 D:\AndroidProjects\appLecturador\app\build\intermediates\incremental\debug\mergeDebugResources\merged.dir
+com.lecturador.android.applecturador.app-mergeDebugResources-12 D:\AndroidProjects\appLecturador\app\build\intermediates\incremental\debug\mergeDebugResources\stripped.dir
+com.lecturador.android.applecturador.app-merged_res-13 D:\AndroidProjects\appLecturador\app\build\intermediates\merged_res\debug
+com.lecturador.android.applecturador.app-debug-14 D:\AndroidProjects\appLecturador\app\src\debug\res
+com.lecturador.android.applecturador.app-main-15 D:\AndroidProjects\appLecturador\app\src\main\res
