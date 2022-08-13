@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:1-111:12
-INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:1-111:12
-INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:1-111:12
-INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:1-111:12
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:1-120:12
+INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:1-120:12
+INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:1-120:12
+INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:1-120:12
 MERGED from [com.android.support:design:27.0.0] C:\Users\Windows 10\.gradle\caches\transforms-3\07b20318f165d7df1456087dfac444a2\transformed\design-27.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [com.weiwangcn.betterspinner:library-material:1.1.0] C:\Users\Windows 10\.gradle\caches\transforms-3\5221e42d40515668b425dc70bbe59f50\transformed\library-material-1.1.0\AndroidManifest.xml:2:1-16:12
 MERGED from [com.rengwuxian.materialedittext:library:2.1.4] C:\Users\Windows 10\.gradle\caches\transforms-3\714f8bc17ce8d0631dd993524da30fb8\transformed\library-2.1.4\AndroidManifest.xml:2:1-10:12
@@ -20,175 +20,191 @@ MERGED from [com.android.support:support-media-compat:27.0.0] C:\Users\Windows 1
 MERGED from [com.android.support:support-core-ui:27.0.0] C:\Users\Windows 10\.gradle\caches\transforms-3\768917e9120f9d3f3c74ebe6c465c9e0\transformed\support-core-ui-27.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:support-compat:27.0.0] C:\Users\Windows 10\.gradle\caches\transforms-3\1fdaa06a873799bd8134b83c9b2d0030\transformed\support-compat-27.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\Windows 10\.gradle\caches\transforms-3\6e8e72b707f88f3268452ebca9956642\transformed\runtime-1.0.0\AndroidManifest.xml:17:1-30:12
-INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:1-111:12
-INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:1-111:12
-INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:1-111:12
+INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:1-120:12
+INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:1-120:12
+INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:1-120:12
 	package
 		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:3:5-51
 		INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml
 		INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:1-111:12
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:1-120:12
 		INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:1-111:12
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:1-120:12
 		INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.BLUETOOTH_CONNECT
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:5:5-76
+	android:name
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:5:22-73
 uses-permission#android.permission.INTERNET
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:5:5-67
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:9:5-67
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:5:22-64
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:9:22-64
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:6:5-79
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:10:5-79
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:6:22-76
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:10:22-76
 uses-permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:7:5-79
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:11:5-79
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:7:22-76
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:11:22-76
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:8:5-81
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:12:5-81
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:8:22-78
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:12:22-78
 uses-permission#android.permission.ACCESS_COARSE_LOCATION
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:9:5-81
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:13:5-81
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:9:22-78
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:13:22-78
 uses-permission#android.permission.BLUETOOTH_ADMIN
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:10:5-74
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:14:5-76
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:10:22-71
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:14:22-71
 uses-permission#android.permission.BLUETOOTH
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:11:5-68
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:15:5-70
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:11:22-65
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:15:22-65
+uses-permission#android.permission.BLUETOOTH_ADVERTISE
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:17:5-79
+	android:name
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:17:22-75
+uses-permission#android.permission.BLUETOOTH_SCAN
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:18:5-75
+	android:name
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:18:22-70
 uses-permission#android.permission.SYSTEM_ALERT_WINDOW
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:12:5-78
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:19:5-78
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:12:22-75
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:19:22-75
 uses-permission#android.permission.ACCESS_LOCATION_EXTRA_COMMANDS
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:14:5-89
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:21:5-89
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:14:22-86
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:21:22-86
 supports-screens
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:16:5-22:40
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:23:5-29:40
 	android:largeScreens
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:18:9-36
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:25:9-36
 	android:smallScreens
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:21:9-36
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:28:9-36
 	android:normalScreens
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:19:9-37
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:26:9-37
 	android:xlargeScreens
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:22:9-37
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:29:9-37
 	android:resizeable
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:20:9-34
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:27:9-34
 	android:anyDensity
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:17:9-34
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:24:9-34
 application
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:24:5-109:19
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:31:5-118:19
 MERGED from [com.weiwangcn.betterspinner:library-material:1.1.0] C:\Users\Windows 10\.gradle\caches\transforms-3\5221e42d40515668b425dc70bbe59f50\transformed\library-material-1.1.0\AndroidManifest.xml:11:5-14:19
 MERGED from [com.weiwangcn.betterspinner:library-material:1.1.0] C:\Users\Windows 10\.gradle\caches\transforms-3\5221e42d40515668b425dc70bbe59f50\transformed\library-material-1.1.0\AndroidManifest.xml:11:5-14:19
 MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\Windows 10\.gradle\caches\transforms-3\6e8e72b707f88f3268452ebca9956642\transformed\runtime-1.0.0\AndroidManifest.xml:24:5-28:19
 MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\Windows 10\.gradle\caches\transforms-3\6e8e72b707f88f3268452ebca9956642\transformed\runtime-1.0.0\AndroidManifest.xml:24:5-28:19
 	android:label
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:27:9-41
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:34:9-41
 	android:icon
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:26:9-43
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:33:9-43
 	android:allowBackup
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:25:9-35
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:32:9-35
 	android:theme
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:28:9-40
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:36:9-40
+	android:usesCleartextTraffic
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:35:9-44
 activity#com.lecturador.android.applecturador.MenuPrincipal
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:29:9-37:20
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:37:9-46:20
 	android:label
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:31:13-45
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:39:13-45
+	android:exported
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:40:13-36
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:30:13-42
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:38:13-42
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:32:13-36:29
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:41:13-45:29
 action#android.intent.action.MAIN
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:33:17-69
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:42:17-69
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:33:25-66
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:42:25-66
 category#android.intent.category.LAUNCHER
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:35:17-77
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:44:17-77
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:35:27-74
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:44:27-74
 activity#com.lecturador.android.applecturador.ListaMedidores
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:38:9-45:20
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:47:9-54:20
 	android:parentActivityName
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:41:13-56
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:50:13-56
 	android:label
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:40:13-67
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:49:13-67
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:39:13-43
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:48:13-43
 meta-data#android.support.PARENT_ACTIVITY
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:42:13-44:50
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:51:13-53:50
 	android:value
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:44:17-47
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:53:17-47
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:43:17-63
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:52:17-63
 activity#com.lecturador.android.applecturador.RealizarLecturacion
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:46:9-53:20
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:55:9-62:20
 	android:parentActivityName
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:49:13-57
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:58:13-57
 	android:label
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:48:13-72
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:57:13-72
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:47:13-48
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:56:13-48
 activity#com.lecturador.android.applecturador.LecturacionBluetooth
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:54:9-56:76
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:63:9-65:76
 	android:label
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:56:13-73
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:65:13-73
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:55:13-49
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:64:13-49
 activity#com.lecturador.android.applecturador.AjustsActivity
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:57:9-65:20
-	android:parentActivityName
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:60:13-56
-	android:label
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:59:13-58
-	android:theme
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:61:13-56
-	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:58:13-43
-activity#com.lecturador.android.applecturador.DownloadActivity
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:66:9-73:20
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:66:9-74:20
 	android:parentActivityName
 		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:69:13-56
 	android:label
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:68:13-60
-	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:67:13-45
-activity#com.lecturador.android.applecturador.SyncActivity
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:83:9-91:20
-	android:parentActivityName
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:86:13-56
-	android:label
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:85:13-56
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:68:13-58
 	android:theme
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:87:13-56
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:70:13-56
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:84:13-41
-activity#com.lecturador.android.applecturador.AjustesActivity
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:92:9-99:20
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:67:13-43
+activity#com.lecturador.android.applecturador.DownloadActivity
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:75:9-82:20
+	android:parentActivityName
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:78:13-56
+	android:label
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:77:13-60
+	android:name
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:76:13-45
+activity#com.lecturador.android.applecturador.SyncActivity
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:92:9-100:20
 	android:parentActivityName
 		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:95:13-56
 	android:label
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:94:13-59
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:94:13-56
+	android:theme
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:96:13-56
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:93:13-44
-activity#com.lecturador.android.applecturador.ReImprimir
-ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:100:9-108:20
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:93:13-41
+activity#com.lecturador.android.applecturador.AjustesActivity
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:101:9-108:20
 	android:parentActivityName
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:103:13-57
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:104:13-56
 	android:label
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:102:13-59
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:103:13-59
 	android:name
-		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:101:13-39
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:102:13-44
+activity#com.lecturador.android.applecturador.ReImprimir
+ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:109:9-117:20
+	android:parentActivityName
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:112:13-57
+	android:label
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:111:13-59
+	android:name
+		ADDED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:110:13-39
 uses-sdk
 INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml

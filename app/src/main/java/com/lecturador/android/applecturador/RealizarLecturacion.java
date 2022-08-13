@@ -1,13 +1,17 @@
 package com.lecturador.android.applecturador;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -42,9 +46,13 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -106,10 +114,10 @@ public class RealizarLecturacion extends AppCompatActivity {
         tvNombreS = (TextView) findViewById(R.id.tvNombreS);
         tvDescPeriodo = (TextView) findViewById(R.id.tvDescPeriodo);
         etLectura = (EditText) findViewById(R.id.etLectura);
-        tvNume= (TextView) findViewById(R.id.tvNume);
+        tvNume = (TextView) findViewById(R.id.tvNume);
 
         btnSendLecturacion = (Button) findViewById(R.id.btnSendLecturacion);
-        swNmed=(Switch)findViewById(R.id.swNmed);
+        swNmed = (Switch) findViewById(R.id.swNmed);
 
         BsObw obw = new BsObw();
         LinkedList<BsObw> listObw = obw.listarBsObw();
@@ -139,13 +147,13 @@ public class RealizarLecturacion extends AppCompatActivity {
         enw.ObtenerBsEnw();
         tvDescPeriodo.setText(enw.getAnio() + " - " + enw.getDmes());
 
-        if(loitemLecturacion.getNmed()==0){
+        if (loitemLecturacion.getNmed() == 0) {
             this.swNmed.setChecked(false);
-        }else{
+        } else {
             this.swNmed.setChecked(true);
             this.tvNume.setText(loitemLecturacion.getNume().trim());
         }
-       this.swNmed.setEnabled(false);
+        this.swNmed.setEnabled(false);
 
         //etLectura.setText(loitemLecturacion.getLact() + "");
         tvNombreS.setText(loitemLecturacion.getNomb());
@@ -156,6 +164,46 @@ public class RealizarLecturacion extends AppCompatActivity {
                 registrarLecturacion();
             }
         });
+    }
+
+    private static final String[] REQUIRED_SDK_PERMISSIONS = new String[]{
+
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.BLUETOOTH_ADMIN,
+            Manifest.permission.BLUETOOTH,
+            Manifest.permission.SYSTEM_ALERT_WINDOW,
+            Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS};
+    public static final int REQUEST_CODE_ASK_PERMISSIONS = 1;
+
+    public void configBlueTooth() {
+
+        //----------------------------------------------------------------------------------------
+
+        final List<String> missingPermissions = new ArrayList<>();
+        for (final String permission : REQUIRED_SDK_PERMISSIONS) {
+            final int result = ContextCompat.checkSelfPermission(this, permission);
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                missingPermissions.add(permission);
+            }
+        }
+        if (!missingPermissions.isEmpty()) {
+// request all missing permissions
+            final String[] permissions = missingPermissions
+                    .toArray(new String[missingPermissions.size()]);
+            ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_ASK_PERMISSIONS);
+        } else {
+            final int[] grantResults = new int[REQUIRED_SDK_PERMISSIONS.length];
+            Arrays.fill(grantResults, PackageManager.PERMISSION_GRANTED);
+            onRequestPermissionsResult(REQUEST_CODE_ASK_PERMISSIONS, REQUIRED_SDK_PERMISSIONS,
+                    grantResults);
+        }
+
+        //----------------------------------------------------------------------------------------
+
     }
 
     private void registrarLecturacion() {
@@ -176,14 +224,14 @@ public class RealizarLecturacion extends AppCompatActivity {
             } catch (Exception e) {
                 lectura = 0;
             }
-            double consumo=0;
+            double consumo = 0;
             if (loitemLecturacion.getNmed() == 0) {
                 lectura = loitemLecturacion.getLant();
                 BsTaw taw = new BsTaw();
-                taw=taw.obtenerTarifaDesde(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), loitemLecturacion.getNhpc(), loitemLecturacion.getNcat(), 0);
-                consumo=taw.getHast();
+                taw = taw.obtenerTarifaDesde(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), loitemLecturacion.getNhpc(), loitemLecturacion.getNcat(), 0);
+                consumo = taw.getHast();
 
-            }else{
+            } else {
                 consumo = lectura - loitemLecturacion.getLant();
             }
 
@@ -198,16 +246,16 @@ public class RealizarLecturacion extends AppCompatActivity {
                 loitemLecturacion.setImco(importeConsumo);
                 loitemLecturacion.guardarImporteConsumo();
 
-                if(config.isCnfGpsA()){
-                    loitemLecturacion.setLati(MenuPrincipal.gps.Latitud+"");
-                    loitemLecturacion.setLong(MenuPrincipal.gps.Longitud+"");
+                if (config.isCnfGpsA()) {
+                    loitemLecturacion.setLati(MenuPrincipal.gps.Latitud + "");
+                    loitemLecturacion.setLong(MenuPrincipal.gps.Longitud + "");
                     loitemLecturacion.registrarUbicacion();
                 }
 
-               //aqui calcular alcantarilla
-              double imptAlct=  calcularAlcantarilla(loitemLecturacion.getNhpf(), importeConsumo);
+                //aqui calcular alcantarilla
+                double imptAlct = calcularAlcantarilla(loitemLecturacion.getNhpf(), importeConsumo);
 
-              recuperacionInversion(loitemLecturacion.getNhpf(),importeConsumo+imptAlct);
+                recuperacionInversion(loitemLecturacion.getNhpf(), importeConsumo + imptAlct);
                 // calcula descuento de ley NHPC=7050
                 Log.e("RealizarLecturacion", "inicia calcularDescuentoLey NHPF=" + loitemLecturacion.getNhpf());
                 calcularDescuentoLey(loitemLecturacion.getNhpf());
@@ -221,21 +269,22 @@ public class RealizarLecturacion extends AppCompatActivity {
 
                 escribirAviso();
                 if (config.isCnfOnly()) {
-                    try{
+                    try {
                         new sincronizarConsumo().execute();
-                    }catch (Exception e){}
-
-                }
-                if (config.isPrintOnline()) {
-                    try{
-                        new enviarImprimir().execute();
-                    }catch (Exception e){
-                        //Toast.makeText(getApplicationContext(),"Verifique la impresora o dispositivos vinculados", Toast.LENGTH_LONG).show();
-                        Toast.makeText(getApplicationContext(),e.getMessage(), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
                     }
 
                 }
-                Toast.makeText(getApplicationContext(),"Registro Satisfactorio", Toast.LENGTH_LONG).show();
+                if (config.isPrintOnline()) {
+                    try {
+                        new enviarImprimir().execute();
+                    } catch (Exception e) {
+                        //Toast.makeText(getApplicationContext(),"Verifique la impresora o dispositivos vinculados", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+
+                }
+                Toast.makeText(getApplicationContext(), "Registro Satisfactorio", Toast.LENGTH_LONG).show();
             }
         } else {
             loitemLecturacion.setLact(0);
@@ -280,12 +329,12 @@ public class RealizarLecturacion extends AppCompatActivity {
         BsDpw dpw = new BsDpw();
         dpw.obtenerDpw(loitemLecturacion.getNhpf(), loitemLecturacion.getNhpc());
 
-        double consumo=0;
-        if(loitemLecturacion.getNmed()==0){
+        double consumo = 0;
+        if (loitemLecturacion.getNmed() == 0) {
             BsTaw taw = new BsTaw();
-            taw=taw.obtenerTarifaDesde(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), loitemLecturacion.getNhpc(), loitemLecturacion.getNcat(), 0);
-            consumo=taw.getHast();
-        }else{
+            taw = taw.obtenerTarifaDesde(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), loitemLecturacion.getNhpc(), loitemLecturacion.getNcat(), 0);
+            consumo = taw.getHast();
+        } else {
             consumo = loitemLecturacion.getLact() - loitemLecturacion.getLant();
         }
 
@@ -330,31 +379,54 @@ public class RealizarLecturacion extends AppCompatActivity {
             double tcam = dpw.getTcam();
             String fiva = tar.getFiva().trim();
             String vafa = tar.getVafa().trim();
-            if (desde == 0) { // consumo minimo
-                if (consumo <= hasta) {
-                    rango = consumo;
-                    importe = importe + AnalisisImporte(rango, val1, cmon,
-                            tcam, fiva, vafa);
 
-                    double precioUnitario = importe / dpw.getCant();
-                    dpw.setPuni(precioUnitario);
-                    dpw.registrarPrecioUnitario();
-                    dpw.setImpt(importe);
-                    dpw.registrarImporte();
+            //if (desde == 0) { // consumo minimo
 
-                    return importe;
-                } else {
-                    rango = hasta - desde + 0.0;
-                }
-            } else {
-                if (consumo >= hasta) {
-                    rango = hasta - desde + 1.0;
+            //    // aqui hay que meter
+
+            //    if (consumo <= hasta) {
+            //        rango = consumo;
+            //        importe = importe + AnalisisImporte(rango, val1, cmon,
+            //                tcam, fiva, vafa);
+
+            //        double precioUnitario = importe / dpw.getCant();
+            //        dpw.setPuni(precioUnitario);
+            //        dpw.registrarPrecioUnitario();
+            //        dpw.setImpt(importe);
+            //        dpw.registrarImporte();
+
+            //        return importe;
+            //    } else {
+            //        rango = hasta - desde + 0.0;
+            //    }
+            //} else {
+            //    if (consumo >= hasta) {
+            //        rango = hasta - desde + 1.0;
+            //    } else {
+            //        rango = aux;
+            //    }
+            //}
+
+            if (desde != 0) {
+
+                if (consumo >=  hasta) {
+                    rango =  hasta - desde + 1.0;
                 } else {
                     rango = aux;
                 }
+            } else if (consumo <=  hasta) {
+                int i = hasta;
+
+                importe = importe + AnalisisImporte(consumo, val1, cmon, tcam, fiva, vafa);
+                dpw.setPuni(importe / dpw.getCant());
+                dpw.registrarPrecioUnitario();
+                dpw.setImpt(importe);
+                dpw.registrarImporte();
+                return importe;
+            } else {
+                rango = hasta - desde +0.0;
             }
-            double aimpt = AnalisisImporte(rango, val1, cmon, tcam, fiva, vafa);
-            importe = importe + aimpt;
+            importe = importe  + AnalisisImporte(rango, val1, cmon, tcam, fiva, vafa);
             aux = aux - rango;
         }
 
@@ -439,7 +511,7 @@ public class RealizarLecturacion extends AppCompatActivity {
 
                 double lfImpConMin = calcConsumo(liMinLey);
                 double lfRecuInv = 0;//recuperacionInversionDeLey(nhpf, lfImpConMin); // para otras empresas
-                double lfAlcan = calcularAlcantarillaDeLey(nhpf, lfImpConMin+lfRecuInv);  // para otras empresas
+                double lfAlcan = calcularAlcantarillaDeLey(nhpf, lfImpConMin + lfRecuInv);  // para otras empresas
 
                 LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(hpw.getAnio(), hpw.getMesf(), 7050, hpw.getNcat());
 
@@ -488,7 +560,7 @@ public class RealizarLecturacion extends AppCompatActivity {
         BsDpw dpw = new BsDpw();
         dpw.obtenerDpw(hpw.getNhpf(), 7004);
         double lfImporte = 0;
-        if(dpw.getNhpc()!=0){
+        if (dpw.getNhpc() != 0) {
             double ldAlcantarilla = 0;
 
             BsTaw taw = new BsTaw();
@@ -526,13 +598,14 @@ public class RealizarLecturacion extends AppCompatActivity {
 
         return lfImporte;
     }
+
     public double calcularAlcantarillaDeLey(int nhpf, double importeConsumo) {
         BsHpw hpw = new BsHpw();
         hpw.obtenerBsHpw(nhpf);
         BsDpw dpw = new BsDpw();
         dpw.obtenerDpw(hpw.getNhpf(), 7004);
         double lfImporte = 0;
-        if(dpw.getNhpc()!=0){
+        if (dpw.getNhpc() != 0) {
             double ldAlcantarilla = 0;
 
             BsTaw taw = new BsTaw();
@@ -566,63 +639,63 @@ public class RealizarLecturacion extends AppCompatActivity {
     }
 
 
-    public double recuperacionInversion(int nhpf, double importeConsumo){
+    public double recuperacionInversion(int nhpf, double importeConsumo) {
 
         BsHpw hpw = new BsHpw();
         hpw.obtenerBsHpw(nhpf);
         BsDpw dpw = new BsDpw();
         dpw.obtenerDpw(hpw.getNhpf(), 7080);
-         if(dpw.getNhpc()!=0){
-             BsTaw taw = new BsTaw();
-             LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), 7080, loitemLecturacion.getNcat());
+        if (dpw.getNhpc() != 0) {
+            BsTaw taw = new BsTaw();
+            LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), 7080, loitemLecturacion.getNcat());
 
-             double lfImporte = 0;
+            double lfImporte = 0;
 
-             for (BsTaw tar : listTarifas) {
-                 int desde = tar.getDesd();
-                 int hasta = tar.getHast();
-                 double val1 = tar.getVal1();
-                 int cmon = tar.getCmon();
+            for (BsTaw tar : listTarifas) {
+                int desde = tar.getDesd();
+                int hasta = tar.getHast();
+                double val1 = tar.getVal1();
+                int cmon = tar.getCmon();
 
-                 String fiva = tar.getFiva().trim();
-                 String vafa = tar.getVafa().trim();
+                String fiva = tar.getFiva().trim();
+                String vafa = tar.getVafa().trim();
 
-                 if (cmon == 2) {  // en dolares convertir a bolivianos
-                     val1 = val1 * dpw.getTcam();
-                 }
+                if (cmon == 2) {  // en dolares convertir a bolivianos
+                    val1 = val1 * dpw.getTcam();
+                }
 
-                 char lfiva = fiva.charAt(0);
-                 char lvafa = vafa.charAt(0);
-                 if ('F' == lfiva && 'F' == lvafa) { // NO interesa el consumo
-                     lfImporte =  importeConsumo * (val1 / 100);
-                 }
+                char lfiva = fiva.charAt(0);
+                char lvafa = vafa.charAt(0);
+                if ('F' == lfiva && 'F' == lvafa) { // NO interesa el consumo
+                    lfImporte = importeConsumo * (val1 / 100);
+                }
 
-                 if ('F' == lfiva && 'V' == lvafa) { // SI interesa el consumo
-                     lfImporte = val1;
-                 }
-                 if ('V' == lfiva && 'V' == lvafa) { // SI interesa el consumo
-                     lfImporte =hpw.getCons()* val1;
-                 }
-             }
-             dpw.setPuni(lfImporte);
-             dpw.registrarPrecioUnitario();
+                if ('F' == lfiva && 'V' == lvafa) { // SI interesa el consumo
+                    lfImporte = val1;
+                }
+                if ('V' == lfiva && 'V' == lvafa) { // SI interesa el consumo
+                    lfImporte = hpw.getCons() * val1;
+                }
+            }
+            dpw.setPuni(lfImporte);
+            dpw.registrarPrecioUnitario();
 
-             dpw.setImpt(lfImporte);
-             dpw.registrarImporte();
+            dpw.setImpt(lfImporte);
+            dpw.registrarImporte();
 
-         }
+        }
 
         return 0;
     }
 
-    public double recuperacionInversionDeLey(int nhpf, double importeConsumo){
+    public double recuperacionInversionDeLey(int nhpf, double importeConsumo) {
 
         BsHpw hpw = new BsHpw();
         hpw.obtenerBsHpw(nhpf);
         BsDpw dpw = new BsDpw();
         dpw.obtenerDpw(hpw.getNhpf(), 7080);
         double lfImporte = 0;
-        if(dpw.getNhpc()!=0){
+        if (dpw.getNhpc() != 0) {
             BsTaw taw = new BsTaw();
             LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), 7080, loitemLecturacion.getNcat());
 
@@ -642,14 +715,14 @@ public class RealizarLecturacion extends AppCompatActivity {
                 char lfiva = fiva.charAt(0);
                 char lvafa = vafa.charAt(0);
                 if ('F' == lfiva && 'F' == lvafa) { // NO interesa el consumo
-                    lfImporte =  importeConsumo * (val1 / 100);
+                    lfImporte = importeConsumo * (val1 / 100);
                 }
 
                 if ('F' == lfiva && 'V' == lvafa) { // SI interesa el consumo
                     lfImporte = val1;
                 }
                 if ('V' == lfiva && 'V' == lvafa) { // SI interesa el consumo
-                    lfImporte =hpw.getCons()* val1;
+                    lfImporte = hpw.getCons() * val1;
                 }
             }
 
@@ -684,7 +757,6 @@ public class RealizarLecturacion extends AppCompatActivity {
 
         BsTaw taw = new BsTaw();
         LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), liNhpc, loitemLecturacion.getNcat());
-
         double lfImporte = 0;
 
         for (BsTaw tar : listTarifas) {
@@ -692,23 +764,26 @@ public class RealizarLecturacion extends AppCompatActivity {
             int hasta = tar.getHast();
             double val1 = tar.getVal1();
             int cmon = tar.getCmon();
-
             String fiva = tar.getFiva().trim();
             String vafa = tar.getVafa().trim();
-
             if (cmon == 2) {  // en dolares convertir a bolivianos
                 val1 = val1 * lfTcam;
             }
-
             char lfiva = fiva.charAt(0);
             char lvafa = vafa.charAt(0);
-            if ('F' == lfiva && 'F' == lvafa) { // NO interesa el consumo
-                lfImporte = lfConsumo * (val1 / 100);
-            } else if ('F' == lfiva && 'V' == lvafa) { // SI interesa el consumo
+            if ('F' == lfiva && 'V' == lvafa) { // No interesa el consumo
                 lfImporte = val1;
             }
+            if ('V' == lfiva && 'V' == lvafa) { // SI interesa el consumo
+                //lfImporte = lfImporte * (val1 / 100);
+                //lfImporte =  new BigDecimal(lfImporte).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                lfImporte = lfConsumo * val1;
+            }
+            if ('F' == lfiva && 'F' == lvafa) { // NO interesa el consumo
+                lfImporte = lfConsumo * (val1 / 100);
+            }
         }
-
+        lfImporte =  new BigDecimal(lfImporte).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
         return lfImporte;
     }
 
@@ -717,14 +792,18 @@ public class RealizarLecturacion extends AppCompatActivity {
         if (cmon == 2) {  // en dolares convertir a bolivianos
             valor = valor * tcam;
         }
-
         char lfiva = fiva.charAt(0);
         char lvafa = vafa.charAt(0);
         if ('F' == lfiva && 'V' == lvafa) { // NO interesa el consumo
             importe = valor;
         } else if ('V' == lfiva && 'V' == lvafa) { // SI interesa el consumo
             importe = consumo * valor;
+        } else if (lfiva == 'F' && lvafa == 'F') {  //'--- No interesa el consumo interesa el Importe que viene
+            importe = importe * (valor / 100);
+            importe =  new BigDecimal(importe).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
         }
+
+
         return importe;
     }
 
@@ -761,16 +840,21 @@ public class RealizarLecturacion extends AppCompatActivity {
     //region para IMPRESORA
     private BluetoothDeviceArrayAdapter adpPrinters;
     private String bluetoothAddress;
+    // The request code used in ActivityCompat.requestPermissions()
+// and returned in the Activity's onRequestPermissionsResult()
 
 
     private boolean isBluetoothPrinter(BluetoothDevice bluetoothDevice) {
-
         return bluetoothDevice.getBluetoothClass().getMajorDeviceClass() == BluetoothClass.Device.Major.IMAGING
                 || bluetoothDevice.getBluetoothClass().getMajorDeviceClass() == BluetoothClass.Device.Major.UNCATEGORIZED;
+
+
     }
 
     private ArrayList<BluetoothDevice> getPairedPrinters() {
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         ArrayList<BluetoothDevice> pairedDevicesList = new ArrayList<BluetoothDevice>();
         for (BluetoothDevice device : pairedDevices) {
@@ -968,7 +1052,7 @@ public class RealizarLecturacion extends AppCompatActivity {
             int lact = loitemLecturacion.getLact();
             int cons = loitemLecturacion.getCons();
             Date fecha = new Date();
-            int imco = Integer.valueOf(loitemLecturacion.getImco() + "");
+            int imco = (int) loitemLecturacion.getImco();
             int cobs = loitemLecturacion.getCobs();
             int stad = loitemLecturacion.getStad();
             String latitud= loitemLecturacion.getLati();

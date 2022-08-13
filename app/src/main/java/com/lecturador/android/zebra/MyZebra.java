@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.math.MathUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
@@ -29,6 +30,8 @@ import org.joda.time.DateTimeUtils;
 import org.joda.time.Days;
 
 import java.io.ByteArrayInputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,8 +41,6 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Set;
 
-import static org.apache.commons.math.util.MathUtils.mulAndCheck;
-import static org.apache.commons.math.util.MathUtils.round;
 
 /**
  * Created by Dario Pardo on 8/10/2017.
@@ -378,7 +379,7 @@ public class MyZebra {
         sb.append("^XZ");
         return sb;
     }
-
+    private static final DecimalFormat df = new DecimalFormat("0.00");
     public StringBuilder printZPLVertical2(BsHpw Hpw){
 
 
@@ -503,7 +504,9 @@ public class MyZebra {
         for (BsDpw dtl : listDtl) {
             String lsDtl = dtl.getDhpc().trim();
             int longMax = 63;
-           double ldImpt= org.apache.commons.math.util.MathUtils.round(dtl.getImpt(),2);
+
+            double ldImpt =  new BigDecimal(dtl.getImpt()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+
             totalDtl= totalDtl + ldImpt;
           //   Precision.round(dtl.getImpt(), 3);
           String impt= df1.format(ldImpt);
@@ -532,7 +535,8 @@ public class MyZebra {
         }
         yLon = yLon + 25;
        // double lhImpt= org.apache.commons.math.util.MathUtils.round(Hpw.getImpt(),2);
-        double lhImpt= org.apache.commons.math.util.MathUtils.round(totalDtl,2);
+        //double lhImpt= org.apache.commons.math.util.MathUtils.round(totalDtl,2);
+        double lhImpt =  new BigDecimal(totalDtl).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
         String impt= df1.format(lhImpt);
         //String impt = lhImpt+"";
         int cantPtos= 65 - impt.length()-14;
@@ -547,7 +551,8 @@ public class MyZebra {
         sb.append("^FO1,"+yLon+"^GB710,1,3^FS");
         //sb.append("T 5 0 40 " + yLon + "-------------------------------------\r\n");
         yLon = yLon + 25;
-        double ldImor= org.apache.commons.math.util.MathUtils.round(Hpw.getImor(),2);
+        //double ldImor= org.apache.commons.math.util.MathUtils.round(Hpw.getImor(),2);
+        double ldImor =  new BigDecimal(Hpw.getImor()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
         String imor= df1.format(ldImor);
        // String imor = ldImor+"";
         sb.append("^FO"+xlon+","+yLon+"^FD facturas Impagas:" + Hpw.getNmor() + "        Total Bs:" + imor + "^FS");
@@ -1057,7 +1062,6 @@ public class MyZebra {
         //sb.append("^FO420,720^A0R,0,25^FD "+hpw.getImor()+"^FS ");
         //sb.append("^FO420,970^A0R,0,25^FD "+hpw.getNmor()+"^FS ");
         //sb.append("^FO420,1000^A0R,0,25^FD Fcorte.^FS ");
-
 
         String imor=df1.format(hpw.getImor());
         xlon=265;
