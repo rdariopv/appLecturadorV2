@@ -43,6 +43,18 @@ public class AdpObw extends BaseAdapter implements Filterable {
         return this.listObs.get(posicion).getCodo();
     }
 
+    public int getIndexbyId(int Cobs) {
+        int i = 0;
+        int index = -1;
+        while (i < this.listObs.size()) {
+            if (Cobs == this.listObs.get(i).getCodo()) {
+                index = i;
+                i = this.listObs.size();
+            }
+            i++;
+        }
+        return index;
+    }
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ContenedorItem contenedorItem;

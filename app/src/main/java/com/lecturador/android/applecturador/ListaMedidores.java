@@ -3,15 +3,18 @@ package com.lecturador.android.applecturador;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 //import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -49,9 +52,11 @@ public class ListaMedidores extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.reimprimir) {
-            lanzarDialogBusquedaCliente();
+            //lanzarDialogBusquedaCliente();
+            otroDialogo();
             //Toast.makeText(this,"En desarrollo",Toast.LENGTH_LONG ).show();
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -121,6 +126,33 @@ public class ListaMedidores extends AppCompatActivity {
         builder.show();
     }
 
+    public void otroDialogo() {
+        View textEntryView = LayoutInflater.from(this).inflate(R.layout.dialog_search, (ViewGroup) null);
+        final EditText etCodf = (EditText) textEntryView.findViewById(R.id.etCodf);
+        final EditText etNcnt = (EditText) textEntryView.findViewById(R.id.etNcnt);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle((CharSequence) "Buscar cliente:").setView(textEntryView).setPositiveButton((CharSequence) "Aceptar", (DialogInterface.OnClickListener) new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String Ncnt1 = etNcnt.getText().toString();
+                String Codf1 = etCodf.getText().toString();
+                int liNcnt = 0;
+                int liCodf = 0;
+                if (!Ncnt1.isEmpty()) {
+                    liNcnt = Integer.valueOf(Ncnt1).intValue();
+                } else if (!Codf1.isEmpty()) {
+                    liCodf = Integer.valueOf(Codf1).intValue();
+                }
+                ListaMedidores.this.buscarOtroCliente(liNcnt, liCodf);
+            }
+        }).setNegativeButton((CharSequence) "Cancelar", (DialogInterface.OnClickListener) new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.dismiss();
+            }
+        });
+        alert.show();
+    }
+
+
     public void buscarCliente(int NroContrato){
         Intent intent= new Intent(this,ReImprimir.class);
         BsHpw itemLecturacion= new BsHpw();
@@ -132,6 +164,26 @@ public class ListaMedidores extends AppCompatActivity {
            Snackbar.make(findViewById(android.R.id.content),"SOCIO NO ENCONTRADO.",Snackbar.LENGTH_LONG).show();
        }
 
+    }
+
+    public void buscarOtroCliente(int liNcnt, int liCodf) {
+        BsHpw itemLecturacion = new BsHpw();
+        Intent intent = new Intent(this, EditarLectura.class);
+      //  startActivity(intent);
+      // return;
+
+        boolean existe = false;
+        if (liNcnt != 0) {
+            existe = itemLecturacion.obtenerBsHpwByCodFijo(liNcnt);
+        } else if (liCodf != 0) {
+            existe = itemLecturacion.obtenerBsHpwByCodUbicacion(liCodf);
+        }
+        if (existe) {
+            intent.putExtra("item", itemLecturacion);
+            startActivity(intent);
+            return;
+        }
+        Snackbar.make(findViewById(android.R.id.content), (CharSequence) "SOCIO NO ENCONTRADO.", 0).show();
     }
 
 }

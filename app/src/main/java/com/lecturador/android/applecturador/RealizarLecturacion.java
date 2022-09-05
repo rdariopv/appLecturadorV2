@@ -260,6 +260,7 @@ public class RealizarLecturacion extends AppCompatActivity {
                 Log.e("RealizarLecturacion", "inicia calcularDescuentoLey NHPF=" + loitemLecturacion.getNhpf());
                 calcularDescuentoLey(loitemLecturacion.getNhpf());
 
+                calcularCovid(loitemLecturacion.getNhpf(),importeConsumo + imptAlct,loitemLecturacion);
                 //calcular otros conceptos BSDpwStad=1
                 Log.e("RealizarLecturacion", "inicia registrarOtrosConceptos NHPF=" + loitemLecturacion.getNhpf());
                 registrarOtrosConceptos();
@@ -296,7 +297,40 @@ public class RealizarLecturacion extends AppCompatActivity {
 
     }
 
-
+    public double calcularCovid(int nhpf, double imptConsumoyAlcantarilla, BsHpw loitemLecturacion) {
+        BsHpw hpw = new BsHpw();
+        BsTaw taw = new BsTaw();
+        hpw.obtenerBsHpw(nhpf);
+        BsDpw dpw = new BsDpw();
+        dpw.obtenerDpw(hpw.getNhpf(), 7101);
+        double lfImporte = 0.0d;
+        if (dpw.getNhpc() != 0) {
+            List<BsTaw> listTaw = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), 7101, loitemLecturacion.getNcat());
+            for (BsTaw tar:listTaw) {
+                double val1 = tar.getVal1();
+                int cmon = tar.getCmon();
+                String fiva = tar.getFiva().trim();
+                String vafa = tar.getVafa().trim();
+                if (cmon == 2) {
+                    val1 *= dpw.getTcam();
+                }
+                char lfiva = fiva.charAt(0);
+                char lvafa = vafa.charAt(0);
+                BsHpw hpw2 = hpw;
+                if ('F' == lfiva && 'F' == lvafa) {
+                    lfImporte = imptConsumoyAlcantarilla * (val1 / 100.0d);
+                } else if ('F' == lfiva && 'V' == lvafa) {
+                    lfImporte = val1;
+                }
+                hpw = hpw2;
+            }
+            dpw.setPuni(lfImporte);
+            dpw.registrarPrecioUnitario();
+            dpw.setImpt(lfImporte);
+            dpw.registrarImporte();
+        }
+        return lfImporte;
+    }
     public void escribirAviso() {
         StringBuilder sb = new StringBuilder();
         MyZebra myZebra = new MyZebra();
