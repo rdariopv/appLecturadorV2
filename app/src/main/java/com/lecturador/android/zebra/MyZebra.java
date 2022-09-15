@@ -865,21 +865,13 @@ public class MyZebra {
         //sb.append("^FO420,970^A0R,0,25^FD "+hpw.getNmor()+"^FS ");
         //sb.append("^FO420,1000^A0R,0,25^FD Fcorte.^FS ");
 
-
-        String imor=df1.format(hpw.getImor());
+     // cambio
+        String imor=df1.format(hpw.getImor()+ hpw.getImpt());
         xlon=430;
         sb.append("^FO"+xlon+",940^A0R,0,25^FD "+imor+"^FS ");
-        sb.append("^FO"+xlon+",1180^A0R,0,25^FD "+String.valueOf(hpw.getNmor())+"^FS ");
+        sb.append("^FO"+xlon+",1180^A0R,0,25^FD "+String.valueOf(hpw.getNmor()+1)+"^FS ");
 
         sb.append("^FO"+xlon+",1470^A0R,0,25^FD "+lsFcor+"^FS ");
-
-        //sb.append("^FO350,620^A0R,0,36^FD itm1^FS ");
-        //sb.append("^FO390,750^A0R,0,25^FD DATOS DE LA FACTURA^FS ");
-        // sb.append("^FO350,840^A0R,0,20^FD impt^FS ");
-
-        //    sb.append("^FO363,750^A0R,0,20^FD ITEM^FS ");
-        //    sb.append("^FO363,860^A0R,0,20^FD DETALLE^FS ");
-        //    sb.append("^FO363,1050^A0R,0,20^FD IMPORTE Bs.^FS ");
 
         int x=310;
         for (BsDpw d:lldpw) {
