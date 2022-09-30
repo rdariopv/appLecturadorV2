@@ -144,89 +144,95 @@ public class FirstFragment extends Fragment {
     }
 
 
-    public void registrarLecturacion() {
-        int lectura;
-        int lectura2;
-        double consumo;
-        int i;
-        int intValue = Integer.valueOf(this.tvDescCodigoP.getText().toString()).intValue();
-        int nhpf = this.loitemLecturacion.getNhpf();
-        int cobs = ((BsObw) this.spObsP.getAdapter().getItem(this.spObsP.getSelectedItemPosition())).getCodo();
-        this.loitemLecturacion.setCobs(cobs);
-        this.loitemLecturacion.guardarObservacion();
+    private void registrarLecturacion() {
+
+        int idMedidor = Integer.valueOf(tvDescCodigoP.getText().toString());
+        //  int idPeriodo = Integer.valueOf(tvDescCodigo.getText().toString());
+        int nhpf = loitemLecturacion.getNhpf();
+
+        BsObw obs = (BsObw) spObsP.getAdapter().getItem(spObsP.getSelectedItemPosition());
+        int cobs = obs.getCodo();
+        loitemLecturacion.setCobs(cobs);
+        loitemLecturacion.guardarObservacion();
+
         if (cobs == 0) {
+            int lectura;
             try {
-                lectura = Integer.valueOf(this.etLecturaP.getText().toString()).intValue();
+                lectura = Integer.valueOf(etLecturaP.getText().toString());
             } catch (Exception e) {
                 lectura = 0;
             }
-            if (this.loitemLecturacion.getNmed() == 0) {
-                int lectura3 = this.loitemLecturacion.getLant();
-                consumo = (double) new BsTaw().obtenerTarifaDesde(this.loitemLecturacion.getAnio(), this.loitemLecturacion.getMesf(), this.loitemLecturacion.getNhpc(), this.loitemLecturacion.getNcat(), 0).getHast();
-                lectura2 = lectura3;
+            double consumo = 0;
+            if (loitemLecturacion.getNmed() == 0) {
+                lectura = loitemLecturacion.getLant();
+                BsTaw taw = new BsTaw();
+                taw = taw.obtenerTarifaDesde(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), loitemLecturacion.getNhpc(), loitemLecturacion.getNcat(), 0);
+                consumo = taw.getHast();
+
             } else {
-                consumo = (double) (lectura - this.loitemLecturacion.getLant());
-                lectura2 = lectura;
+                consumo = lectura - loitemLecturacion.getLant();
             }
-            if (consumo < 0.0d) {
-                Toast.makeText(getContext(), "Consumo Negativo, Digite Nuevamente la lectura",Toast.LENGTH_LONG ).show();
-                return;
-            }
-            this.loitemLecturacion.setLact(lectura2);
-            this.loitemLecturacion.setStat(-100);
-            this.loitemLecturacion.guardarLecturaActual();
-            BsHpw bsHpw = this.loitemLecturacion;
-            Double importeConsumo = bsHpw.calcularConsumo(nhpf, bsHpw, getContext());
-            this.loitemLecturacion.setImco(importeConsumo.doubleValue());
-            this.loitemLecturacion.guardarImporteConsumo();
-            if (this.config.isCnfGpsA()) {
-                BsHpw bsHpw2 = this.loitemLecturacion;
-                bsHpw2.setLati(MenuPrincipal.gps.Latitud + "");
-                BsHpw bsHpw3 = this.loitemLecturacion;
-                bsHpw3.setLong(MenuPrincipal.gps.Longitud + "");
-                this.loitemLecturacion.registrarUbicacion();
-            }
-            BsHpw bsHpw4 = this.loitemLecturacion;
-            double imptAlct = bsHpw4.calcularAlcantarilla(bsHpw4.getNhpf(), importeConsumo.doubleValue(), this.loitemLecturacion);
-            BsHpw bsHpw5 = this.loitemLecturacion;
-            double d = consumo;
-            bsHpw5.recuperacionInversion(bsHpw5.getNhpf(), importeConsumo.doubleValue() + imptAlct, this.loitemLecturacion);
-            Log.e("RealizarLecturacion", "inicia calcularDescuentoLey NHPF=" + this.loitemLecturacion.getNhpf());
-            BsHpw bsHpw6 = this.loitemLecturacion;
-            double calcularDescuentoLey = bsHpw6.calcularDescuentoLey(bsHpw6.getNhpf(), this.loitemLecturacion);
-            BsHpw bsHpw7 = this.loitemLecturacion;
-            int i2 = lectura2;
-            double calcularCovid = bsHpw7.calcularCovid(bsHpw7.getNhpf(), importeConsumo.doubleValue() + imptAlct, this.loitemLecturacion);
-            Log.e("RealizarLecturacion", "inicia registrarOtrosConceptos NHPF=" + this.loitemLecturacion.getNhpf());
-            BsHpw bsHpw8 = this.loitemLecturacion;
-            bsHpw8.registrarOtrosConceptos(bsHpw8);
-            BsHpw bsHpw9 = this.loitemLecturacion;
-            bsHpw9.registrarTotal(bsHpw9.getNhpf());
-         //   escribirAviso();
-            if (this.config.isCnfOnly()) {
-                try {
-                    new sincronizarConsumo().execute(new String[0]);
-                } catch (Exception e2) {
-                }
-            }
-            if (this.config.isPrintOnline()) {
-                try {
-                    new enviarImprimir().execute(new String[0]);
-                    i = 1;
-                } catch (Exception e3) {
-                    i = 1;
-                    Toast.makeText(getContext(), e3.getMessage(), Toast.LENGTH_LONG).show();
-                }
+
+            if (consumo < 0) {
+                Toast.makeText(getContext(), "Consumo Negativo, Digite Nuevamente la lectura", Toast.LENGTH_LONG).show();
             } else {
-                i = 1;
+                loitemLecturacion.setLact(lectura);
+                loitemLecturacion.setStat(-100);   // marcamos como lecturado
+                loitemLecturacion.guardarLecturaActual();
+
+                Double importeConsumo = loitemLecturacion.calcularConsumo(nhpf,loitemLecturacion, getContext());
+                loitemLecturacion.setImco(importeConsumo);
+                loitemLecturacion.guardarImporteConsumo();
+
+                if (config.isCnfGpsA()) {
+                    loitemLecturacion.setLati(MenuPrincipal.gps.Latitud + "");
+                    loitemLecturacion.setLong(MenuPrincipal.gps.Longitud + "");
+                    loitemLecturacion.registrarUbicacion();
+                }
+
+                //aqui calcular alcantarilla
+                double imptAlct = loitemLecturacion.calcularAlcantarilla(loitemLecturacion.getNhpf(), importeConsumo, loitemLecturacion);
+
+                loitemLecturacion.recuperacionInversion(loitemLecturacion.getNhpf(), importeConsumo + imptAlct, loitemLecturacion);
+                // calcula descuento de ley NHPC=7050
+                Log.e("RealizarLecturacion", "inicia calcularDescuentoLey NHPF=" + loitemLecturacion.getNhpf());
+                loitemLecturacion.calcularDescuentoLey(loitemLecturacion.getNhpf(),loitemLecturacion);
+
+                loitemLecturacion.calcularCovid(loitemLecturacion.getNhpf(),importeConsumo + imptAlct,loitemLecturacion);
+                //calcular otros conceptos BSDpwStad=1
+                Log.e("RealizarLecturacion", "inicia registrarOtrosConceptos NHPF=" + loitemLecturacion.getNhpf());
+                loitemLecturacion.registrarOtrosConceptos(loitemLecturacion);
+
+                //registrarTotal
+                loitemLecturacion.registrarTotal(loitemLecturacion.getNhpf());
+
+               //escribirAviso();
+                if (config.isCnfOnly()) {
+                    try {
+                        new sincronizarConsumo().execute();
+                    } catch (Exception e) {
+                    }
+
+                }
+                if (config.isPrintOnline()) {
+                    try {
+                        new enviarImprimir().execute();
+                    } catch (Exception e) {
+                        //Toast.makeText(getApplicationContext(),"Verifique la impresora o dispositivos vinculados", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getWindow().getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+
+                }
+                Toast.makeText(getActivity().getWindow().getContext(), "Registro Satisfactorio", Toast.LENGTH_LONG).show();
             }
-            Toast.makeText(getContext(), "Registro Satisfactorio", Toast.LENGTH_LONG).show();
-            return;
+        } else {
+            loitemLecturacion.setLact(0);
+            loitemLecturacion.setStat(-100);  // marcamos como lecturado
+            loitemLecturacion.guardarLecturaActual();
+           // escribirAviso();
         }
-        this.loitemLecturacion.setLact(0);
-        this.loitemLecturacion.setStat(-100);
-        this.loitemLecturacion.guardarLecturaActual();
-        //escribirAviso();
+
+
     }
 
 
@@ -296,34 +302,40 @@ public class FirstFragment extends Fragment {
         super.onStop();
     }
 
-    public class enviarImprimir extends AsyncTask<String, Integer, Boolean> {
 
-        /* renamed from: pd */
-        ProgressDialog f48pd = new ProgressDialog(getActivity().getWindow().getContext());
+    public class enviarImprimir extends AsyncTask<String, Integer, Boolean> {
+        ProgressDialog pd = new ProgressDialog(getActivity().getWindow().getContext());
         private ZebraPrinter printer;
 
-        public enviarImprimir() {
+        @Override
+        protected void onPreExecute() {
+            pd.setTitle("Imprimiendo");
+            pd.setMessage("Enviando datos para imprimir");
+            // pd.setProgress(0);
+            pd.setIndeterminate(false);
+            pd.show();
+            // super.onPreExecute();
         }
 
-        /* access modifiers changed from: protected */
-        public void onPreExecute() {
-            this.f48pd.setTitle("Imprimiendo");
-            this.f48pd.setMessage("Enviando datos para imprimir");
-            this.f48pd.setIndeterminate(false);
-            this.f48pd.show();
-        }
+        @Override
+        protected Boolean doInBackground(String... strings) {
 
-        /* access modifiers changed from: protected */
-        public Boolean doInBackground(String... strings) {
-            FirstFragment editarLectura = FirstFragment.this;
-            String unused = editarLectura.bluetoothAddress = ((BluetoothDevice) editarLectura.getPairedPrinters().get(0)).getAddress();
-            FirstFragment.this.connectAndPrint(new BluetoothConnection(FirstFragment.this.bluetoothAddress));
+            bluetoothAddress = getPairedPrinters().get(0).getAddress();
+            // BluetoothDevice bt= getPairedPrinters().get(0);
+            try{
+                BluetoothConnection conn = new BluetoothConnection(bluetoothAddress);
+                connectAndPrint(conn);
+            }catch (Exception e){
+                pd.setMessage(e.getMessage());
+            }
+
             return true;
         }
 
-        /* access modifiers changed from: protected */
-        public void onPostExecute(Boolean aBoolean) {
-            this.f48pd.dismiss();
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            pd.dismiss();
+            // super.onPostExecute(aBoolean);
         }
     }
 
@@ -362,49 +374,50 @@ public class FirstFragment extends Fragment {
             return null;
         }
     }
-
     public class sincronizarConsumo extends AsyncTask<String, Integer, Boolean> {
-        public sincronizarConsumo() {
+        @Override
+        protected void onPreExecute() {
+            //        super.onPreExecute();
         }
 
-        /* access modifiers changed from: protected */
-        public void onPreExecute() {
-        }
-
-        /* access modifiers changed from: protected */
-        public Boolean doInBackground(String... strings) {
+        @Override
+        protected Boolean doInBackground(String... strings) {
             SyncBsHpw shpw = new SyncBsHpw();
-            int liNhpf = FirstFragment.this.loitemLecturacion.getNhpf();
-            int lact = FirstFragment.this.loitemLecturacion.getLact();
-            int cons = FirstFragment.this.loitemLecturacion.getCons();
+            int liNhpf = loitemLecturacion.getNhpf();
+            int lact = loitemLecturacion.getLact();
+            int cons = loitemLecturacion.getCons();
             Date fecha = new Date();
-            int imco = (int) FirstFragment.this.loitemLecturacion.getImco();
-            int cobs = FirstFragment.this.loitemLecturacion.getCobs();
-            int stad = FirstFragment.this.loitemLecturacion.getStad();
-            String latitud = FirstFragment.this.loitemLecturacion.getLati();
-            String longitud = FirstFragment.this.loitemLecturacion.getLong();
+            int imco = (int) loitemLecturacion.getImco();
+            int cobs = loitemLecturacion.getCobs();
+            int stad = loitemLecturacion.getStad();
+            String latitud= loitemLecturacion.getLati();
+            String longitud= loitemLecturacion.getLong();
             BsDpw dpw = new BsDpw();
-            dpw.obtenerDpw(FirstFragment.this.loitemLecturacion.getNhpf(), FirstFragment.this.loitemLecturacion.getNhpc());
-            BsDpw dpw2 = dpw;
-            int i = imco;
-            if (shpw.SyncActualizarAvisoHead(liNhpf, lact, cons, fecha, imco, cobs, stad, latitud, longitud, 1, "appMovil") != 1) {
-                return null;
+            dpw.obtenerDpw(loitemLecturacion.getNhpf(), loitemLecturacion.getNhpc());
+            int nofn = 1;
+            int result = shpw.SyncActualizarAvisoHead(liNhpf, lact, cons, fecha, imco, cobs, stad,latitud, longitud, nofn, "appMovil");
+            if (result == 1) {
+                SyncBsDpw sdpw = new SyncBsDpw();
+                int result2 = sdpw.SyncActualizarAvisoDetalle(loitemLecturacion.getNhpf(), loitemLecturacion.getNhpc(),
+                        (int) dpw.getCant(), dpw.getPuni(), (int) dpw.getImpt());
+                if (result2 == 1) {
+                    loitemLecturacion.actualizarEstado(3); // estado lecturado
+                }
             }
-            if (new SyncBsDpw().SyncActualizarAvisoDetalle(FirstFragment.this.loitemLecturacion.getNhpf(), FirstFragment.this.loitemLecturacion.getNhpc(), (int) dpw2.getCant(), dpw2.getPuni(), (double) ((int) dpw2.getImpt())) != 1) {
-                return null;
-            }
-            FirstFragment.this.loitemLecturacion.actualizarEstado(3);
+
             return null;
         }
 
-        /* access modifiers changed from: protected */
-        public void onPostExecute(Boolean aBoolean) {
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+//            super.onPostExecute(aBoolean);
         }
 
-        /* access modifiers changed from: protected */
-        public void onCancelled(Boolean aBoolean) {
+        @Override
+        protected void onCancelled(Boolean aBoolean) {
+            //          super.onCancelled(aBoolean);
         }
+
     }
-
 
 }

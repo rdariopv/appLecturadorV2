@@ -866,10 +866,10 @@ public class MyZebra {
         //sb.append("^FO420,1000^A0R,0,25^FD Fcorte.^FS ");
 
      // cambio
-        String imor=df1.format(hpw.getImor()+ hpw.getImpt());
+        String imor=df1.format(hpw.getImor());
         xlon=430;
         sb.append("^FO"+xlon+",940^A0R,0,25^FD "+imor+"^FS ");
-        sb.append("^FO"+xlon+",1180^A0R,0,25^FD "+String.valueOf(hpw.getNmor()+1)+"^FS ");
+        sb.append("^FO"+xlon+",1180^A0R,0,25^FD "+String.valueOf(hpw.getNmor())+"^FS ");
 
         sb.append("^FO"+xlon+",1470^A0R,0,25^FD "+lsFcor+"^FS ");
 

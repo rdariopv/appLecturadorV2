@@ -331,6 +331,7 @@ public class RealizarLecturacion extends AppCompatActivity {
         }
         return lfImporte;
     }
+
     public void escribirAviso() {
         StringBuilder sb = new StringBuilder();
         MyZebra myZebra = new MyZebra();
@@ -671,7 +672,6 @@ public class RealizarLecturacion extends AppCompatActivity {
 
         return lfImporte;
     }
-
 
     public double recuperacionInversion(int nhpf, double importeConsumo) {
 

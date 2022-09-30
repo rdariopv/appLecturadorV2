@@ -1,11 +1,22 @@
 package com.lecturador.android.dblecturador;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.lecturador.android.applecturador.ListaMedidores;
+import com.lecturador.android.applecturador.RealizarLecturacion;
+import com.lecturador.android.zebra.MyZebra;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -909,7 +920,7 @@ public class BsHpw implements Serializable {
         DBmanager.CerrarBD();
     }
 
-    public void guardarConsumo(){
+    public void guardarConsumo() {
         String lsConsulta = DBhelper.COLBSHPWNHPF + " = " + this.getNhpf() + " ";
         DBmanager.AbrirBD();
         List<Object> datos = new ArrayList<Object>();
@@ -937,7 +948,7 @@ public class BsHpw implements Serializable {
         List<Object> datos = new ArrayList<Object>();
         datos.add(this.Lati);
         datos.add(this.Long);
-        Log.e("BSHPW", "registrarUbicacion: Latitud=" +this.Lati +" | Longitud="+this.Long );
+        Log.e("BSHPW", "registrarUbicacion: Latitud=" + this.Lati + " | Longitud=" + this.Long);
         String[] columna = new String[2];
         columna[0] = DBhelper.COLBSHPWLATI;
         columna[1] = DBhelper.COLBSHPWLONG;
@@ -949,7 +960,7 @@ public class BsHpw implements Serializable {
     public void actualizarEstado(int estado) {
         String lsConsulta = DBhelper.COLBSHPWNHPF + " = " + this.getNhpf() + " ";
         DBmanager.AbrirBD();
-        this.Stad=estado;
+        this.Stad = estado;
         List<Object> datos = new ArrayList<Object>();
         datos.add(estado);
         String[] columna = new String[1];
@@ -958,19 +969,19 @@ public class BsHpw implements Serializable {
         DBmanager.CerrarBD();
     }
 
-    public void registrarTotal(int nhpf){
+    public void registrarTotal(int nhpf) {
         obtenerBsHpw(nhpf);
         BsDpw dpw = new BsDpw();
-        LinkedList<BsDpw> listDtl= dpw.listarDetalles(this.Nhpf);
-        double total=0;
-        for (BsDpw dtl:listDtl ) {
-            total=total+ dtl.getImpt();
+        LinkedList<BsDpw> listDtl = dpw.listarDetalles(this.Nhpf);
+        double total = 0;
+        for (BsDpw dtl : listDtl) {
+            total = total + dtl.getImpt();
         }
         this.setImpt(total);
-        Double imor = total+this.getImor();
+        Double imor = total + this.getImor();
         this.setImor(imor);
-       //this.Nmor=this.Nmor+1;
-        this.setNmor(this.Nmor+1);
+        //this.Nmor=this.Nmor+1;
+        this.setNmor(this.Nmor + 1);
 
         String lsConsulta = DBhelper.COLBSHPWNHPF + " = " + this.Nhpf + " ";
         DBmanager.AbrirBD();
@@ -1062,7 +1073,7 @@ public class BsHpw implements Serializable {
             hpw.setNlec(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNLEC))));
             hpw.setPtjc(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWPTJC))));
             hpw.setStad(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWSTAD))));
-            hpw.setLati( cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLATI)));
+            hpw.setLati(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLATI)));
             hpw.setLong(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLONG)));
             hpw.setStat(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWSTAT))));
             hpw.setRide(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWRIDE))));
@@ -1083,8 +1094,8 @@ public class BsHpw implements Serializable {
         DBmanager.AbrirBD();
         // Cursor cursor = DBmanager.listarTabla(DBhelper.NOMTAHPW, DBhelper.COLSBSHPW);
         String condicion = DBhelper.COLBSHPWSTAT + " = 0";
-        String orderby = DBhelper.COLBSHPWCODF  +" ASC";
-        Cursor cursor = DBmanager.buscarTuplas(DBhelper.NOMTAHPW, DBhelper.COLSBSHPW, condicion,orderby);
+        String orderby = DBhelper.COLBSHPWCODF + " ASC";
+        Cursor cursor = DBmanager.buscarTuplas(DBhelper.NOMTAHPW, DBhelper.COLSBSHPW, condicion, orderby);
         while (cursor.moveToNext()) {
             BsHpw hpw = new BsHpw();
             hpw.setNhpf(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNHPF))));
@@ -1174,7 +1185,7 @@ public class BsHpw implements Serializable {
         LinkedList<BsHpw> listHpw = new LinkedList<>();
         DBmanager.AbrirBD();
         // Cursor cursor = DBmanager.listarTabla(DBhelper.NOMTAHPW, DBhelper.COLSBSHPW);
-        String condicion = DBhelper.COLBSHPWSTAT + " = -100 and "+ DBhelper.COLBSHPWSTAD +" = 1";
+        String condicion = DBhelper.COLBSHPWSTAT + " = -100 and " + DBhelper.COLBSHPWSTAD + " = 1";
         Cursor cursor = DBmanager.buscarTuplas(DBhelper.NOMTAHPW, DBhelper.COLSBSHPW, condicion, null);
         while (cursor.moveToNext()) {
             BsHpw hpw = new BsHpw();
@@ -1257,97 +1268,10 @@ public class BsHpw implements Serializable {
     }
 
     public void obtenerBsHpw(int nhpf) {
-       // LinkedList<BsHpw> listHpw = new LinkedList<>();
+        // LinkedList<BsHpw> listHpw = new LinkedList<>();
         DBmanager.AbrirBD();
         // Cursor cursor = DBmanager.listarTabla(DBhelper.NOMTAHPW, DBhelper.COLSBSHPW);
         String condicion = DBhelper.COLBSHPWNHPF + " = " + nhpf;
-        Cursor cursor = DBmanager.buscarTuplas(DBhelper.NOMTAHPW, DBhelper.COLSBSHPW, condicion, null);
-        BsHpw hpw = new BsHpw();
-        if (cursor.moveToNext()) {
-           // BsHpw hpw = new BsHpw();
-            this.setNhpf(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNHPF))));
-            this.setAnio(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWANIO))));
-            this.setMesf(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWMESF))));
-            this.setFgen(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWFGEN)));
-            this.setFent(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWFENT)));
-            this.setFvto(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWFVTO)));
-            this.setFcor(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWFCOR)));
-            this.setNhpc(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNHPC))));
-            this.setNcat(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNCAT))));
-            this.setDcat(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDCAT)));
-            this.setLant(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLANT))));
-            this.setLact(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLACT))));
-            this.setCons(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWCONS))));
-            this.setConf(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWCONF))));
-            this.setImco(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWIMCO))));
-            this.setFini(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWFINI)));
-            this.setFfin(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWFFIN)));
-            this.setImpt(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWIMPT))));
-            this.setIcfi(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWICFI))));
-            this.setImor(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWIMOR))));
-            this.setNmor(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNMOR))));
-            this.setCmor(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWCMOR))));
-            this.setCort(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWCORT)));
-            this.setDesc(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDESC)));
-            this.setCper(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWCPER))));
-            this.setNomb(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNOMB)));
-            this.setNmed(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNMED))));
-            this.setNume(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNUME)));
-            this.setNcnt(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNCNT))));
-            this.setNser(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNSER))));
-            this.setDpto(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDPTO))));
-            this.setNpro(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNPRO))));
-            this.setNciu(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNCIU))));
-            this.setDciu(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDCIU)));
-            this.setNuve(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNUVE))));
-            this.setDuve(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDUVE)));
-            this.setNmza(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNMZA))));
-            this.setDmza(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDMZA)));
-            this.setNlot(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNLOT))));
-            this.setDlot(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDLOT)));
-            this.setNbar(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNBAR))));
-            this.setDbar(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDBAR)));
-            this.setNimb(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNIMB))));
-            this.setDimb(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDIMB)));
-            this.setNzon(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNZON))));
-            this.setDzon(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDZON)));
-            this.setNrut(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNRUT))));
-            this.setDrut(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDRUT)));
-            this.setCodf(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWCODF))));
-            this.setNred(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNRED))));
-            this.setNvia(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNVIA))));
-            this.setNroi(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNROI))));
-            this.setDire(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDIRE)));
-            this.setClas(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWCLAS))));
-            this.setIplv(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWIPLV))));
-            this.setNfac(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNFAC))));
-            this.setNtpc(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNTPC))));
-            this.setNtcn(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNTCN))));
-            this.setNdtb(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNDTB))));
-            this.setOnof(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWONOF))));
-            this.setLmax(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLMAX))));
-            this.setConp(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWCONP))));
-            this.setKvat(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWKVAT))));
-            this.setCobs(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWCOBS))));
-            this.setNlec(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNLEC))));
-            this.setPtjc(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWPTJC))));
-            this.setStad(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWSTAD))));
-            this.setLati(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLATI)));
-            this.setLong(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLONG)));
-            this.setStat(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWSTAT))));
-            this.setRide(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWRIDE))));
-
-            Log.e("BSHPW", "obtenerBsHpw se obtiene el Header con el nhpf= "+ nhpf);
-        }
-
-    }
-
-
-    public boolean obtenerBsHpwByNroContrato(int NroContrato) {
-
-        boolean existe=false;
-        DBmanager.AbrirBD();
-        String condicion = DBhelper.COLBSHPWCODF  + " = " + NroContrato;
         Cursor cursor = DBmanager.buscarTuplas(DBhelper.NOMTAHPW, DBhelper.COLSBSHPW, condicion, null);
         BsHpw hpw = new BsHpw();
         if (cursor.moveToNext()) {
@@ -1424,14 +1348,101 @@ public class BsHpw implements Serializable {
             this.setStat(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWSTAT))));
             this.setRide(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWRIDE))));
 
-            existe=true;
-            Log.e("BSHPW", "obtenerBsHpwByCodigoFijo se obtiene el Header con el NroContrato= "+ NroContrato);
+            Log.e("BSHPW", "obtenerBsHpw se obtiene el Header con el nhpf= " + nhpf);
         }
-     return existe;
+
     }
 
-    public int countRegister(){
-        int cant= DBmanager.Cantidad_de_Registros(DBhelper.NOMTAHPW);
+
+    public boolean obtenerBsHpwByNroContrato(int NroContrato) {
+
+        boolean existe = false;
+        DBmanager.AbrirBD();
+        String condicion = DBhelper.COLBSHPWCODF + " = " + NroContrato;
+        Cursor cursor = DBmanager.buscarTuplas(DBhelper.NOMTAHPW, DBhelper.COLSBSHPW, condicion, null);
+        BsHpw hpw = new BsHpw();
+        if (cursor.moveToNext()) {
+            // BsHpw hpw = new BsHpw();
+            this.setNhpf(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNHPF))));
+            this.setAnio(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWANIO))));
+            this.setMesf(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWMESF))));
+            this.setFgen(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWFGEN)));
+            this.setFent(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWFENT)));
+            this.setFvto(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWFVTO)));
+            this.setFcor(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWFCOR)));
+            this.setNhpc(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNHPC))));
+            this.setNcat(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNCAT))));
+            this.setDcat(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDCAT)));
+            this.setLant(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLANT))));
+            this.setLact(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLACT))));
+            this.setCons(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWCONS))));
+            this.setConf(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWCONF))));
+            this.setImco(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWIMCO))));
+            this.setFini(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWFINI)));
+            this.setFfin(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWFFIN)));
+            this.setImpt(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWIMPT))));
+            this.setIcfi(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWICFI))));
+            this.setImor(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWIMOR))));
+            this.setNmor(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNMOR))));
+            this.setCmor(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWCMOR))));
+            this.setCort(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWCORT)));
+            this.setDesc(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDESC)));
+            this.setCper(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWCPER))));
+            this.setNomb(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNOMB)));
+            this.setNmed(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNMED))));
+            this.setNume(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNUME)));
+            this.setNcnt(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNCNT))));
+            this.setNser(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNSER))));
+            this.setDpto(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDPTO))));
+            this.setNpro(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNPRO))));
+            this.setNciu(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNCIU))));
+            this.setDciu(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDCIU)));
+            this.setNuve(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNUVE))));
+            this.setDuve(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDUVE)));
+            this.setNmza(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNMZA))));
+            this.setDmza(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDMZA)));
+            this.setNlot(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNLOT))));
+            this.setDlot(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDLOT)));
+            this.setNbar(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNBAR))));
+            this.setDbar(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDBAR)));
+            this.setNimb(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNIMB))));
+            this.setDimb(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDIMB)));
+            this.setNzon(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNZON))));
+            this.setDzon(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDZON)));
+            this.setNrut(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNRUT))));
+            this.setDrut(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDRUT)));
+            this.setCodf(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWCODF))));
+            this.setNred(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNRED))));
+            this.setNvia(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNVIA))));
+            this.setNroi(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNROI))));
+            this.setDire(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWDIRE)));
+            this.setClas(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWCLAS))));
+            this.setIplv(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWIPLV))));
+            this.setNfac(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNFAC))));
+            this.setNtpc(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNTPC))));
+            this.setNtcn(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNTCN))));
+            this.setNdtb(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNDTB))));
+            this.setOnof(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWONOF))));
+            this.setLmax(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLMAX))));
+            this.setConp(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWCONP))));
+            this.setKvat(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWKVAT))));
+            this.setCobs(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWCOBS))));
+            this.setNlec(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNLEC))));
+            this.setPtjc(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWPTJC))));
+            this.setStad(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWSTAD))));
+            this.setLati(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLATI)));
+            this.setLong(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLONG)));
+            this.setStat(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWSTAT))));
+            this.setRide(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWRIDE))));
+
+            existe = true;
+            Log.e("BSHPW", "obtenerBsHpwByCodigoFijo se obtiene el Header con el NroContrato= " + NroContrato);
+        }
+        return existe;
+    }
+
+    public int countRegister() {
+        int cant = DBmanager.Cantidad_de_Registros(DBhelper.NOMTAHPW);
         return cant;
     }
 
@@ -1600,274 +1611,16 @@ public class BsHpw implements Serializable {
     }
 
 
-    public Double calcularConsumo(int nhpf, BsHpw loitemLecturacion, Context act1) {
-        double consumo;
-        Iterator it;
-        LinkedList<BsTaw> tarifas;
-        Double rango;
-        BsHpw hpw = new BsHpw();
-        hpw.obtenerBsHpw(nhpf);
-        BsDpw dpw = new BsDpw();
-        dpw.obtenerDpw(loitemLecturacion.getNhpf(), loitemLecturacion.getNhpc());
-        if (loitemLecturacion.getNmed() == 0) {
-            consumo = (double) new BsTaw().obtenerTarifaDesde(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), loitemLecturacion.getNhpc(), loitemLecturacion.getNcat(), 0).getHast();
-        } else {
-            consumo = (double) (loitemLecturacion.getLact() - loitemLecturacion.getLant());
-        }
-        if (consumo < 0.0d) {
-            Toast.makeText(act1, "Consumo Negativo, Digite Nuevamente la lectura", Toast.LENGTH_LONG).show();
-        } else {
-            Context context = act1;
-        }
-        loitemLecturacion.setCons((int) consumo);
-        loitemLecturacion.guardarConsumo();
-        double importe = 0.0d;
-        if (consumo == 0.0d) {
-            dpw.setCant(1.0d);
-        } else {
-            dpw.setCant(consumo);
-        }
-        dpw.registrarCantidad();
-        Double valueOf = Double.valueOf(0.0d);
-        Double valueOf2 = Double.valueOf(0.0d);
-        BsTaw taw = new BsTaw();
-        Double aux = Double.valueOf(consumo);
-        LinkedList<BsTaw> tarifas2 = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), loitemLecturacion.getNhpc(), loitemLecturacion.getNcat());
-        Iterator it2 = tarifas2.iterator();
-        while (it2.hasNext()) {
-            BsTaw tar = (BsTaw) it2.next();
-            int desde = tar.getDesd();
-            BsHpw hpw2 = hpw;
-            int hasta = tar.getHast();
-            double val1 = tar.getVal1();
-            int cmon = tar.getCmon();
-            double tcam = dpw.getTcam();
-            String fiva = tar.getFiva().trim();
-            String vafa = tar.getVafa().trim();
-            if (desde == 0) {
-                tarifas = tarifas2;
-                it = it2;
-                if (consumo <= ((double) hasta)) {
-                    double importe2 = importe + AnalisisImporte(Double.valueOf(consumo), Double.valueOf(val1), cmon, Double.valueOf(tcam), fiva, vafa).doubleValue();
-                    dpw.setPuni(importe2 / dpw.getCant());
-                    dpw.registrarPrecioUnitario();
-                    dpw.setImpt(importe2);
-                    dpw.registrarImporte();
-                    return Double.valueOf(importe2);
-                }
-                double d = (double) (hasta - desde);
-                Double.isNaN(d);
-                rango = Double.valueOf(d + 0.0d);
-            } else {
-                tarifas = tarifas2;
-                it = it2;
-                if (consumo >= ((double) hasta)) {
-                    double d2 = (double) (hasta - desde);
-                    Double.isNaN(d2);
-                    rango = Double.valueOf(d2 + 1.0d);
-                } else {
-                    rango = aux;
-                }
-            }
-            importe += AnalisisImporte(rango, Double.valueOf(val1), cmon, Double.valueOf(tcam), fiva, vafa).doubleValue();
-            aux = Double.valueOf(aux.doubleValue() - rango.doubleValue());
-            Double d3 = rango;
-            hpw = hpw2;
-            tarifas2 = tarifas;
-            it2 = it;
-        }
-        LinkedList<BsTaw> linkedList = tarifas2;
-        dpw.setPuni(importe / dpw.getCant());
-        dpw.registrarPrecioUnitario();
-        dpw.setImpt(importe);
-        dpw.registrarImporte();
-        return Double.valueOf(importe);
-    }
-
-    public double calcConsumo(double consumo, BsHpw loitemLecturacion) {
-        long j;
-        Double rango;
-        LinkedList<BsTaw> tarifas = new BsTaw().obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), loitemLecturacion.getNhpc(), loitemLecturacion.getNcat());
-        BsDpw dpw = new BsDpw();
-        dpw.obtenerDpw(loitemLecturacion.getNhpf(), loitemLecturacion.getNhpc());
-        long j2 = 0;
-        Double valueOf = Double.valueOf(0.0d);
-        Double liConAux = Double.valueOf(consumo);
-        double importe = 0.0d;
-        Iterator it = tarifas.iterator();
-        while (it.hasNext()) {
-            BsTaw tar = (BsTaw) it.next();
-            int desde = tar.getDesd();
-            int hasta = tar.getHast();
-            double val1 = tar.getVal1();
-            int cmon = tar.getCmon();
-            double tcam = dpw.getTcam();
-            String fiva = tar.getFiva().trim();
-            String vafa = tar.getVafa().trim();
-            if (desde != 0) {
-                j = j2;
-                if (consumo >= ((double) hasta)) {
-                    double d = (double) (hasta - desde);
-                    Double.isNaN(d);
-                    rango = Double.valueOf(d + 1.0d);
-                } else {
-                    rango = liConAux;
-                }
-            } else if (consumo < ((double) hasta)) {
-                return importe + AnalisisImporte(Double.valueOf(consumo), Double.valueOf(val1), cmon, Double.valueOf(tcam), fiva, vafa).doubleValue();
-            } else {
-                double d2 = (double) (hasta - desde);
-                Double.isNaN(d2);
-                j = 0;
-                rango = Double.valueOf(d2 + 0.0d);
-            }
-            importe += AnalisisImporte(rango, Double.valueOf(val1), cmon, Double.valueOf(tcam), fiva, vafa).doubleValue();
-            liConAux = Double.valueOf(liConAux.doubleValue() - rango.doubleValue());
-            Double d3 = rango;
-            j2 = j;
-        }
-        return importe;
-    }
-
-    public double calcularDescuentoLey(int nhpf, BsHpw loitemLecturacion) {
-        double dctoLey;
-        int liMinLey;
-        int i = nhpf;
-        BsHpw bsHpw = loitemLecturacion;
-        BsHpw hpw = new BsHpw();
-        hpw.obtenerBsHpw(i);
-        BsDpw dpw = new BsDpw();
-        dpw.obtenerDpw(hpw.getNhpf(), 7050);
-        if (dpw.getNhpc() != 0) {
-            BsTaw taw = new BsTaw();
-            BsTaw tarifa = taw.obtenerTarifaDesde(hpw.getAnio(), hpw.getMesf(), 7050, hpw.getNcat(), 0);
-            if (tarifa.getNhpc() == 7050) {
-                int liMinLey2 = tarifa.getHast();
-                BsTaw tarifaMin = taw.obtenerTarifaDesde(hpw.getAnio(), hpw.getMesf(), hpw.getNhpc(), hpw.getNcat(), 0);
-                int liMinConsumo = tarifaMin.getHast();
-                if (hpw.getCons() <= liMinConsumo) {
-                    liMinLey = liMinConsumo;
-                } else if (hpw.getCons() < liMinLey2) {
-                    liMinLey = loitemLecturacion.getCons();
-                } else {
-                    liMinLey = liMinLey2;
-                }
-                double lfImpConMin = calcConsumo((double) liMinLey, bsHpw);
-                double lfAlcan = calcularAlcantarillaDeLey(i, lfImpConMin + 0.0d, bsHpw);
-                LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(hpw.getAnio(), hpw.getMesf(), 7050, hpw.getNcat());
-                Iterator it = listTarifas.iterator();
-                BsHpw hpw2 = hpw;
-                double dctoLey2 = 0.0d;
-                while (it.hasNext()) {
-                    BsTaw tar = (BsTaw) it.next();
-                    LinkedList<BsTaw> listTarifas2 = listTarifas;
-                    int desde = tar.getDesd();
-                    Iterator it2 = it;
-                    int hasta = tar.getHast();
-                    double val1 = tar.getVal1();
-                    BsTaw taw2 = taw;
-                    int cmon = tar.getCmon();
-                    double tcam = dpw.getTcam();
-                    BsHpw hpw3 = hpw2;
-                    String fiva = tar.getFiva().trim();
-                    BsTaw tarifaMin2 = tarifaMin;
-                    String vafa = tar.getVafa().trim();
-                    if (liMinLey < desde || liMinLey > hasta) {
-                        int i2 = hasta;
-                    } else {
-                        int i3 = desde;
-                        char charAt = fiva.charAt(0);
-                        int i4 = hasta;
-                        if ('V' != vafa.charAt(0)) {
-                            dctoLey2 += (lfImpConMin + 0.0d + lfAlcan) * (val1 / 100.0d);
-                        } else if (cmon == 1) {
-                            dctoLey2 += val1;
-                        } else {
-                            dctoLey2 += val1 * tcam;
-                        }
-                    }
-                    listTarifas = listTarifas2;
-                    it = it2;
-                    taw = taw2;
-                    hpw2 = hpw3;
-                    tarifaMin = tarifaMin2;
-                }
-                BsTaw bsTaw = taw;
-                BsHpw bsHpw2 = hpw2;
-                BsTaw bsTaw2 = tarifaMin;
-                dpw.setCant(1.0d);
-                dpw.registrarCantidad();
-                dpw.setPuni(dctoLey2);
-                dpw.registrarPrecioUnitario();
-                dpw.setImpt(dctoLey2);
-                dpw.registrarImporte();
-                return dctoLey2;
-            }
-            BsTaw bsTaw3 = taw;
-            dctoLey = 0.0d;
-        } else {
-            dctoLey = 0.0d;
-        }
-        return dctoLey;
-    }
-
-    public double calcularAlcantarilla(int nhpf, double importeConsumo, BsHpw loitemLecturacion) {
-        BsHpw hpw = new BsHpw();
-        hpw.obtenerBsHpw(nhpf);
-        BsDpw dpw = new BsDpw();
-        dpw.obtenerDpw(hpw.getNhpf(), 7004);
-        double lfImporte = 0.0d;
-        if (dpw.getNhpc() != 0) {
-            BsTaw taw = new BsTaw();
-            LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), 7004, loitemLecturacion.getNcat());
-            Iterator it = listTarifas.iterator();
-            while (it.hasNext()) {
-                BsTaw tar = (BsTaw) it.next();
-                int desd = tar.getDesd();
-                int hast = tar.getHast();
-                double val1 = tar.getVal1();
-                int cmon = tar.getCmon();
-                BsHpw hpw2 = hpw;
-                String fiva = tar.getFiva().trim();
-                String vafa = tar.getVafa().trim();
-                BsTaw taw2 = taw;
-                if (cmon == 2) {
-                    val1 *= dpw.getTcam();
-                }
-                LinkedList<BsTaw> listTarifas2 = listTarifas;
-                char lfiva = fiva.charAt(0);
-                char lvafa = vafa.charAt(0);
-                String str = fiva;
-                if ('F' == lfiva && 'F' == lvafa) {
-                    lfImporte = importeConsumo * (val1 / 100.0d);
-                } else if ('F' == lfiva && 'V' == lvafa) {
-                    lfImporte = val1;
-                }
-                int i = nhpf;
-                taw = taw2;
-                hpw = hpw2;
-                listTarifas = listTarifas2;
-            }
-            BsTaw bsTaw = taw;
-            LinkedList<BsTaw> linkedList = listTarifas;
-            dpw.setPuni(lfImporte);
-            dpw.registrarPrecioUnitario();
-            dpw.setImpt(lfImporte);
-            dpw.registrarImporte();
-        }
-        return lfImporte;
-    }
-
     public double calcularCovid(int nhpf, double imptConsumoyAlcantarilla, BsHpw loitemLecturacion) {
         BsHpw hpw = new BsHpw();
+        BsTaw taw = new BsTaw();
         hpw.obtenerBsHpw(nhpf);
         BsDpw dpw = new BsDpw();
         dpw.obtenerDpw(hpw.getNhpf(), 7101);
         double lfImporte = 0.0d;
         if (dpw.getNhpc() != 0) {
-            Iterator it = new BsTaw().obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), 7101, loitemLecturacion.getNcat()).iterator();
-            while (it.hasNext()) {
-                BsTaw tar = (BsTaw) it.next();
+            List<BsTaw> listTaw = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), 7101, loitemLecturacion.getNcat());
+            for (BsTaw tar:listTaw) {
                 double val1 = tar.getVal1();
                 int cmon = tar.getCmon();
                 String fiva = tar.getFiva().trim();
@@ -1893,210 +1646,446 @@ public class BsHpw implements Serializable {
         return lfImporte;
     }
 
+
+
+    public Double calcularConsumo(int nhpf, BsHpw loitemLecturacion, Context context) {
+        BsHpw hpw = new BsHpw();
+        hpw.obtenerBsHpw(nhpf);
+        BsDpw dpw = new BsDpw();
+        dpw.obtenerDpw(loitemLecturacion.getNhpf(), loitemLecturacion.getNhpc());
+
+        double consumo = 0;
+        if (loitemLecturacion.getNmed() == 0) {
+            BsTaw taw = new BsTaw();
+            taw = taw.obtenerTarifaDesde(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), loitemLecturacion.getNhpc(), loitemLecturacion.getNcat(), 0);
+            consumo = taw.getHast();
+        } else {
+            consumo = loitemLecturacion.getLact() - loitemLecturacion.getLant();
+        }
+
+        if (consumo < 0) {
+            Toast.makeText(context, "Consumo Negativo, Digite Nuevamente la lectura", Toast.LENGTH_LONG).show();
+        }
+        loitemLecturacion.setCons((int) consumo);
+        loitemLecturacion.guardarConsumo();
+        double importe = 0;
+        //calcConsumo(consumo);
+
+        if (consumo == 0) {
+            //consumo = 1;
+            dpw.setCant(1);
+        } else {
+            dpw.setCant(consumo);
+        }
+        dpw.registrarCantidad();
+
+        // si no tiene medidor tomar el consumo= taw.hasta
+        // si no tiene medidor lectura=0
+
+
+        Double rango = 0.0;
+        Double aux = 0.0;
+
+        BsTaw taw = new BsTaw();
+        aux = consumo;
+
+        LinkedList<BsTaw> tarifas = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(),
+                loitemLecturacion.getNhpc(), loitemLecturacion.getNcat());
+        for (BsTaw tar : tarifas) {
+            int desde = tar.getDesd();
+            int hasta = tar.getHast();
+
+            //if (loitemLecturacion.getNmed() == 0) {
+            //    consumo = hasta;
+            //}
+
+            double val1 = tar.getVal1();
+            int cmon = tar.getCmon();
+            double tcam = dpw.getTcam();
+            String fiva = tar.getFiva().trim();
+            String vafa = tar.getVafa().trim();
+
+            //if (desde == 0) { // consumo minimo
+
+            //    // aqui hay que meter
+
+            //    if (consumo <= hasta) {
+            //        rango = consumo;
+            //        importe = importe + AnalisisImporte(rango, val1, cmon,
+            //                tcam, fiva, vafa);
+
+            //        double precioUnitario = importe / dpw.getCant();
+            //        dpw.setPuni(precioUnitario);
+            //        dpw.registrarPrecioUnitario();
+            //        dpw.setImpt(importe);
+            //        dpw.registrarImporte();
+
+            //        return importe;
+            //    } else {
+            //        rango = hasta - desde + 0.0;
+            //    }
+            //} else {
+            //    if (consumo >= hasta) {
+            //        rango = hasta - desde + 1.0;
+            //    } else {
+            //        rango = aux;
+            //    }
+            //}
+
+            if (desde != 0) {
+
+                if (consumo >=  hasta) {
+                    rango =  hasta - desde + 1.0;
+                } else {
+                    rango = aux;
+                }
+            } else if (consumo <=  hasta) {
+                int i = hasta;
+
+                importe = importe + AnalisisImporte(consumo, val1, cmon, tcam, fiva, vafa);
+                dpw.setPuni(importe / dpw.getCant());
+                dpw.registrarPrecioUnitario();
+                dpw.setImpt(importe);
+                dpw.registrarImporte();
+                return importe;
+            } else {
+                rango = hasta - desde +0.0;
+            }
+            importe = importe  + AnalisisImporte(rango, val1, cmon, tcam, fiva, vafa);
+            aux = aux - rango;
+        }
+
+        double precioUnitario = importe / dpw.getCant();
+        dpw.setPuni(precioUnitario);
+        dpw.registrarPrecioUnitario();
+        dpw.setImpt(importe);
+        dpw.registrarImporte();
+        return importe;
+    }
+
+    public double calcConsumo(double consumo, BsHpw loitemLecturacion) {
+        BsTaw taw = new BsTaw();
+        LinkedList<BsTaw> tarifas = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(),
+                loitemLecturacion.getNhpc(), loitemLecturacion.getNcat());
+
+        BsDpw dpw = new BsDpw();
+        dpw.obtenerDpw(loitemLecturacion.getNhpf(), loitemLecturacion.getNhpc());
+
+        Double rango = 0.0;
+        Double liConAux = consumo;
+        double importe = 0.0;
+        for (BsTaw tar : tarifas) {
+            int desde = tar.getDesd();
+            int hasta = tar.getHast();
+            double val1 = tar.getVal1();
+            int cmon = tar.getCmon();
+            double tcam = dpw.getTcam();
+            String fiva = tar.getFiva().trim();
+            String vafa = tar.getVafa().trim();
+            if (desde == 0) { // consumo minimo
+                if (consumo < hasta) {
+                    rango = consumo;
+                    importe = importe + AnalisisImporte(rango, val1, cmon,
+                            tcam, fiva, vafa);
+                    return importe;
+                } else {
+                    rango = hasta - desde + 0.0;
+                }
+            } else {
+                if (consumo >= hasta) {
+                    rango = hasta - desde + 1.0;
+                } else {
+                    rango = liConAux;
+                }
+            }
+            double aimpt = AnalisisImporte(rango, val1, cmon, tcam, fiva, vafa);
+            importe = importe + aimpt;
+            liConAux = liConAux - rango;
+        }
+        return importe;
+    }
+
+    public void calcularDescuentoLey(int nhpf, BsHpw loitemLecturacion ) {
+        BsHpw hpw = new BsHpw();
+        hpw.obtenerBsHpw(nhpf);
+        BsDpw dpw = new BsDpw();
+        dpw.obtenerDpw(hpw.getNhpf(), 7050);
+        int liMinLey =0;
+        double dctoLey = 0;
+        if (dpw.getNhpc() != 0) {
+            BsTaw taw = new BsTaw();
+            BsTaw tarifa = taw.obtenerTarifaDesde(hpw.getAnio(), hpw.getMesf(), 7050, hpw.getNcat(), 0);
+
+            if (tarifa.getNhpc() == 7050) {
+
+                 liMinLey = tarifa.getHast();
+
+                BsTaw tarifaMin = taw.obtenerTarifaDesde(hpw.getAnio(), hpw.getMesf(),
+                        hpw.getNhpc(), hpw.getNcat(), 0);
+                int liMinConsumo = tarifaMin.getHast();
+
+                //'1.2. si el consumo enviado es menor al minimo consumido -> queda con el valor minimo
+                if (hpw.getCons() <= liMinConsumo) {
+                    liMinLey = liMinConsumo;
+                } else {
+                    // ' si es mayor analizamos y es menor al minimo descto ley le ponemos el consumo enviado
+                    if (hpw.getCons() < liMinLey) {
+                        liMinLey = loitemLecturacion.getCons();
+                    }
+                }
+
+                double lfImpConMin = calcConsumo(liMinLey,loitemLecturacion);
+                double lfRecuInv = 0;//recuperacionInversionDeLey(nhpf, lfImpConMin); // para otras empresas
+                double lfAlcan = calcularAlcantarillaDeLey(nhpf, lfImpConMin + lfRecuInv, loitemLecturacion);  // para otras empresas
+
+                LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(hpw.getAnio(), hpw.getMesf(), 7050, hpw.getNcat());
+
+                for (BsTaw tar : listTarifas) {
+                    int desde = tar.getDesd();
+                    int hasta = tar.getHast();
+                    double val1 = tar.getVal1();
+                    int cmon = tar.getCmon();
+                    double tcam = dpw.getTcam();
+                    String fiva = tar.getFiva().trim();
+                    String vafa = tar.getVafa().trim();
+
+                    if (liMinLey >= desde && liMinLey <= hasta) {
+
+                        char lfiva = fiva.charAt(0);
+                        char lvafa = vafa.charAt(0);
+                        if ('V' == lvafa) { // NO interesa el consumo
+                            if (cmon == 1) { // si es bolivianos
+                                dctoLey = dctoLey + val1;
+                            } else {  // es Dolares
+                                dctoLey = dctoLey + (val1 * tcam);
+                            }
+                        } else {
+                            dctoLey = dctoLey + (lfImpConMin + lfRecuInv + lfAlcan) * (val1 / 100);
+                        }
+                    }
+                }
+
+                dpw.setCant(1);
+                dpw.registrarCantidad();
+
+                double precioUnitario = dctoLey;
+                dpw.setPuni(precioUnitario);
+                dpw.registrarPrecioUnitario();
+
+                dpw.setImpt(dctoLey);
+                dpw.registrarImporte();
+            }
+
+        }
+    }
+
+    public double calcularAlcantarilla(int nhpf, double importeConsumo, BsHpw loitemLecturacion) {
+        BsHpw hpw = new BsHpw();
+        hpw.obtenerBsHpw(nhpf);
+        BsDpw dpw = new BsDpw();
+        dpw.obtenerDpw(hpw.getNhpf(), 7004);
+        double lfImporte = 0;
+        if (dpw.getNhpc() != 0) {
+            double ldAlcantarilla = 0;
+
+            BsTaw taw = new BsTaw();
+            LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), 7004, loitemLecturacion.getNcat());
+
+            for (BsTaw tar : listTarifas) {
+                int desde = tar.getDesd();
+                int hasta = tar.getHast();
+                double val1 = tar.getVal1();
+                int cmon = tar.getCmon();
+
+                String fiva = tar.getFiva().trim();
+                String vafa = tar.getVafa().trim();
+
+                if (cmon == 2) {  // en dolares convertir a bolivianos
+                    val1 = val1 * dpw.getTcam();
+                }
+
+                char lfiva = fiva.charAt(0);
+                char lvafa = vafa.charAt(0);
+                if ('F' == lfiva && 'F' == lvafa) { // NO interesa el consumo
+                    lfImporte = importeConsumo * (val1 / 100);
+                } else if ('F' == lfiva && 'V' == lvafa) { // SI interesa el consumo
+                    lfImporte = val1;
+                }
+            }
+            dpw.setPuni(lfImporte);
+            dpw.registrarPrecioUnitario();
+
+            dpw.setImpt(lfImporte);
+            dpw.registrarImporte();
+
+        }
+
+
+        return lfImporte;
+    }
+
     public double calcularAlcantarillaDeLey(int nhpf, double importeConsumo, BsHpw loitemLecturacion) {
         BsHpw hpw = new BsHpw();
         hpw.obtenerBsHpw(nhpf);
         BsDpw dpw = new BsDpw();
         dpw.obtenerDpw(hpw.getNhpf(), 7004);
-        double lfImporte = 0.0d;
+        double lfImporte = 0;
         if (dpw.getNhpc() != 0) {
+            double ldAlcantarilla = 0;
+
             BsTaw taw = new BsTaw();
-            Iterator it = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), 7004, loitemLecturacion.getNcat()).iterator();
-            while (it.hasNext()) {
-                BsTaw tar = (BsTaw) it.next();
-                int desd = tar.getDesd();
-                int hast = tar.getHast();
+            LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), 7004, loitemLecturacion.getNcat());
+
+            for (BsTaw tar : listTarifas) {
+                int desde = tar.getDesd();
+                int hasta = tar.getHast();
                 double val1 = tar.getVal1();
                 int cmon = tar.getCmon();
-                BsHpw hpw2 = hpw;
+
                 String fiva = tar.getFiva().trim();
                 String vafa = tar.getVafa().trim();
-                BsTaw taw2 = taw;
-                if (cmon == 2) {
-                    val1 *= dpw.getTcam();
+
+                if (cmon == 2) {  // en dolares convertir a bolivianos
+                    val1 = val1 * dpw.getTcam();
                 }
-                BsDpw dpw2 = dpw;
+
                 char lfiva = fiva.charAt(0);
                 char lvafa = vafa.charAt(0);
-                String str = fiva;
-                if ('F' == lfiva && 'F' == lvafa) {
-                    lfImporte = importeConsumo * (val1 / 100.0d);
-                } else if ('F' == lfiva && 'V' == lvafa) {
+                if ('F' == lfiva && 'F' == lvafa) { // NO interesa el consumo
+                    lfImporte = importeConsumo * (val1 / 100);
+                } else if ('F' == lfiva && 'V' == lvafa) { // SI interesa el consumo
                     lfImporte = val1;
                 }
-                int i = nhpf;
-                taw = taw2;
-                hpw = hpw2;
-                dpw = dpw2;
             }
-            BsDpw bsDpw = dpw;
-            BsTaw bsTaw = taw;
-        } else {
-            BsDpw bsDpw2 = dpw;
         }
+
+
         return lfImporte;
     }
 
     public double recuperacionInversion(int nhpf, double importeConsumo, BsHpw loitemLecturacion) {
-        BsHpw hpw = new BsHpw();
-        hpw.obtenerBsHpw(nhpf);
-        BsDpw dpw = new BsDpw();
-        dpw.obtenerDpw(hpw.getNhpf(), 7080);
-        if (dpw.getNhpc() == 0) {
-            return 0.0d;
-        }
-        BsTaw taw = new BsTaw();
-        LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), 7080, loitemLecturacion.getNcat());
-        double lfImporte = 0.0d;
-        Iterator it = listTarifas.iterator();
-        while (it.hasNext()) {
-            BsTaw tar = (BsTaw) it.next();
-            int desd = tar.getDesd();
-            int hast = tar.getHast();
-            double val1 = tar.getVal1();
-            int cmon = tar.getCmon();
-            String fiva = tar.getFiva().trim();
-            String vafa = tar.getVafa().trim();
-            if (cmon == 2) {
-                val1 *= dpw.getTcam();
-            }
-            BsTaw taw2 = taw;
-            char lfiva = fiva.charAt(0);
-            char lvafa = vafa.charAt(0);
-            LinkedList<BsTaw> listTarifas2 = listTarifas;
-            if ('F' == lfiva && 'F' == lvafa) {
-                lfImporte = importeConsumo * (val1 / 100.0d);
-            }
-            double lfImporte2 = lfImporte;
-            if ('F' == lfiva && 'V' == lvafa) {
-                lfImporte2 = val1;
-            }
-            if ('V' == lfiva && 'V' == lvafa) {
-                double cons = (double) hpw.getCons();
-                Double.isNaN(cons);
-                lfImporte = cons * val1;
-            } else {
-                lfImporte = lfImporte2;
-            }
-            int i = nhpf;
-            taw = taw2;
-            listTarifas = listTarifas2;
-        }
-        LinkedList<BsTaw> linkedList = listTarifas;
-        dpw.setPuni(lfImporte);
-        dpw.registrarPrecioUnitario();
-        dpw.setImpt(lfImporte);
-        dpw.registrarImporte();
-        return 0.0d;
-    }
 
-    public double recuperacionInversionDeLey(int nhpf, double importeConsumo, BsHpw loitemLecturacion) {
         BsHpw hpw = new BsHpw();
         hpw.obtenerBsHpw(nhpf);
         BsDpw dpw = new BsDpw();
         dpw.obtenerDpw(hpw.getNhpf(), 7080);
-        double lfImporte = 0.0d;
         if (dpw.getNhpc() != 0) {
             BsTaw taw = new BsTaw();
             LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), 7080, loitemLecturacion.getNcat());
-            Iterator it = listTarifas.iterator();
-            while (it.hasNext()) {
-                BsTaw tar = (BsTaw) it.next();
-                int desd = tar.getDesd();
-                int hast = tar.getHast();
+
+            double lfImporte = 0;
+
+            for (BsTaw tar : listTarifas) {
+                int desde = tar.getDesd();
+                int hasta = tar.getHast();
                 double val1 = tar.getVal1();
                 int cmon = tar.getCmon();
+
                 String fiva = tar.getFiva().trim();
                 String vafa = tar.getVafa().trim();
-                if (cmon == 2) {
-                    val1 *= dpw.getTcam();
+
+                if (cmon == 2) {  // en dolares convertir a bolivianos
+                    val1 = val1 * dpw.getTcam();
                 }
-                BsDpw dpw2 = dpw;
+
                 char lfiva = fiva.charAt(0);
                 char lvafa = vafa.charAt(0);
-                BsTaw taw2 = taw;
-                if ('F' == lfiva && 'F' == lvafa) {
-                    lfImporte = importeConsumo * (val1 / 100.0d);
+                if ('F' == lfiva && 'F' == lvafa) { // NO interesa el consumo
+                    lfImporte = importeConsumo * (val1 / 100);
                 }
-                LinkedList<BsTaw> listTarifas2 = listTarifas;
-                if ('F' == lfiva && 'V' == lvafa) {
+
+                if ('F' == lfiva && 'V' == lvafa) { // SI interesa el consumo
                     lfImporte = val1;
                 }
-                if ('V' == lfiva && 'V' == lvafa) {
-                    double cons = (double) hpw.getCons();
-                    Double.isNaN(cons);
-                    lfImporte = cons * val1;
+                if ('V' == lfiva && 'V' == lvafa) { // SI interesa el consumo
+                    lfImporte = hpw.getCons() * val1;
                 }
-                int i = nhpf;
-                dpw = dpw2;
-                taw = taw2;
-                listTarifas = listTarifas2;
             }
-            BsTaw bsTaw = taw;
-            LinkedList<BsTaw> linkedList = listTarifas;
-        }
-        return lfImporte;
-    }
+            dpw.setPuni(lfImporte);
+            dpw.registrarPrecioUnitario();
 
-    public void registrarOtrosConceptos(BsHpw loitemLecturacion) {
-        Iterator it = new BsDpw().obtenerOtrosDetalles(loitemLecturacion.getNhpf(), loitemLecturacion.getNcat()).iterator();
-        while (it.hasNext()) {
-            BsDpw dpw = (BsDpw) it.next();
-            dpw.setCant(1.0d);
-            dpw.registrarCantidad();
-            double lfImporte = calcularOtrosImportes(dpw.getNhpc(), dpw.getTcam(), (double) loitemLecturacion.getCons(), loitemLecturacion);
             dpw.setImpt(lfImporte);
             dpw.registrarImporte();
-            dpw.setPuni(lfImporte);
+
+        }
+
+        return 0;
+    }
+
+
+    public void registrarOtrosConceptos(BsHpw loitemLecturacion) {
+
+        BsDpw detalle = new BsDpw();
+
+        LinkedList<BsDpw> listDtl = detalle.obtenerOtrosDetalles(loitemLecturacion.getNhpf(), loitemLecturacion.getNcat());
+        for (BsDpw dpw : listDtl) {
+
+            dpw.setCant(1);
+            dpw.registrarCantidad();
+
+            double lfImporte = calcularOtrosImportes(dpw.getNhpc(), dpw.getTcam(), loitemLecturacion.getCons(),loitemLecturacion);
+            dpw.setImpt(lfImporte);
+            dpw.registrarImporte();
+
+            double precioUnitario = lfImporte;
+            dpw.setPuni(precioUnitario);
             dpw.registrarPrecioUnitario();
         }
     }
 
     public double calcularOtrosImportes(int liNhpc, double lfTcam, double lfConsumo, BsHpw loitemLecturacion) {
+
         BsTaw taw = new BsTaw();
-        double lfImporte = 0.0d;
-        Iterator it = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), liNhpc, loitemLecturacion.getNcat()).iterator();
-        while (it.hasNext()) {
-            BsTaw tar = (BsTaw) it.next();
-            int desd = tar.getDesd();
-            int hast = tar.getHast();
+        LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), liNhpc, loitemLecturacion.getNcat());
+        double lfImporte = 0;
+
+        for (BsTaw tar : listTarifas) {
+            int desde = tar.getDesd();
+            int hasta = tar.getHast();
             double val1 = tar.getVal1();
             int cmon = tar.getCmon();
             String fiva = tar.getFiva().trim();
             String vafa = tar.getVafa().trim();
-            if (cmon == 2) {
-                val1 *= lfTcam;
+            if (cmon == 2) {  // en dolares convertir a bolivianos
+                val1 = val1 * lfTcam;
             }
             char lfiva = fiva.charAt(0);
             char lvafa = vafa.charAt(0);
-            BsTaw taw2 = taw;
-            if ('F' == lfiva && 'F' == lvafa) {
-                lfImporte = lfConsumo * (val1 / 100.0d);
-            } else if ('F' == lfiva && 'V' == lvafa) {
+            if ('F' == lfiva && 'V' == lvafa) { // No interesa el consumo
                 lfImporte = val1;
             }
-            taw = taw2;
+            if ('V' == lfiva && 'V' == lvafa) { // SI interesa el consumo
+                //lfImporte = lfImporte * (val1 / 100);
+                //lfImporte =  new BigDecimal(lfImporte).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                lfImporte = lfConsumo * val1;
+            }
+            if ('F' == lfiva && 'F' == lvafa) { // NO interesa el consumo
+                lfImporte = lfConsumo * (val1 / 100);
+            }
         }
+        lfImporte =  new BigDecimal(lfImporte).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
         return lfImporte;
     }
 
     public Double AnalisisImporte(Double consumo, Double valor, int cmon, Double tcam, String fiva, String vafa) {
-        Double importe = Double.valueOf(-1.0d);
-        if (cmon == 2) {
-            valor = Double.valueOf(valor.doubleValue() * tcam.doubleValue());
+        Double importe = -1.0;
+        if (cmon == 2) {  // en dolares convertir a bolivianos
+            valor = valor * tcam;
         }
         char lfiva = fiva.charAt(0);
         char lvafa = vafa.charAt(0);
-        if ('F' == lfiva && 'V' == lvafa) {
-            return valor;
+        if ('F' == lfiva && 'V' == lvafa) { // NO interesa el consumo
+            importe = valor;
+        } else if ('V' == lfiva && 'V' == lvafa) { // SI interesa el consumo
+            importe = consumo * valor;
+        } else if (lfiva == 'F' && lvafa == 'F') {  //'--- No interesa el consumo interesa el Importe que viene
+            importe = importe * (valor / 100);
+            importe =  new BigDecimal(importe).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
         }
-        if ('V' == lfiva && 'V' == lvafa) {
-            return Double.valueOf(consumo.doubleValue() * valor.doubleValue());
-        }
+
+
         return importe;
     }
-
-
 
 
 }

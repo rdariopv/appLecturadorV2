@@ -35,8 +35,26 @@
         <TextView android:textStyle="bold" android:id="@+id/textView6" android:padding="5dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nro.:" android:layout_toRightOf="@+id/swNmedP" android:layout_alignBottom="@+id/swNmedP"/>
         <TextView android:textAppearance="?android:attr/textAppearanceSmall" android:gravity="left" android:id="@+id/tvNumeP" android:padding="5dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:layout_toRightOf="@+id/textView6" android:layout_below="@+id/tvDescPeriodo" android:layout_alignRight="@+id/tvDescPeriodoP" android:layout_alignBottom="@+id/textView6"/>
         <TextView android:textAppearance="?android:attr/textAppearanceSmall" android:textStyle="bold" android:id="@+id/textView5" android:paddingLeft="10dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Digite la Lectura:" android:layout_below="@+id/swNmedP" android:layout_alignParentLeft="true"/>
-        <Spinner android:id="@+id/spObsP" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:layout_below="@+id/etLecturaP" android:layout_alignParentLeft="true"/>
-        <TextView android:textAppearance="?android:attr/textAppearanceSmall" android:gravity="left" android:id="@+id/tvDescCodigoP" android:padding="10dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:layout_toRightOf="@+id/tvImCodSocioP" android:layout_above="@+id/tvNombreD" android:layout_alignParentRight="true"/>
+
+        <Spinner
+            android:id="@+id/spObsP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etLecturaP"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/tvDescCodigoP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tvNombreD"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/tvImCodSocioP"
+            android:gravity="left"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
         <TextView android:textAppearance="?android:attr/textAppearanceSmall" android:gravity="left" android:id="@+id/tvNombreSP" android:padding="10dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:layout_below="@+id/tvDescCodigoP" android:layout_alignLeft="@+id/tvDescPeriodoP" android:layout_alignParentRight="true"/>
         <TextView android:textAppearance="?android:attr/textAppearanceSmall" android:gravity="left" android:id="@+id/tvDescPeriodoP" android:padding="10dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:layout_toRightOf="@+id/textView4" android:layout_below="@+id/tvNombreSP" android:layout_alignParentRight="true"/>
         <LinearLayout android:orientation="horizontal" android:padding="10dp" android:layout_width="match_parent" android:layout_height="match_parent" android:weightSum="1" android:layout_below="@+id/spObsP" android:layout_alignParentLeft="true">
