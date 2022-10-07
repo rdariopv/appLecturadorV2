@@ -969,8 +969,19 @@ public class BsHpw implements Serializable {
         DBmanager.CerrarBD();
     }
 
-    public void registrarTotal(int nhpf) {
+    public void registrarTotal(int nhpf, boolean isFirst,  LinkedList<BsDpw> llOldDtl) {
         obtenerBsHpw(nhpf);
+        // aqui calculamos el monto a restar
+        double oldTotal=0;
+        if(!isFirst){
+            for (BsDpw dtl : llOldDtl) {
+                oldTotal = oldTotal + dtl.getImpt();
+            }
+        }
+
+
+
+        //aqui calculamos el detalle actual
         BsDpw dpw = new BsDpw();
         LinkedList<BsDpw> listDtl = dpw.listarDetalles(this.Nhpf);
         double total = 0;
@@ -978,10 +989,13 @@ public class BsHpw implements Serializable {
             total = total + dtl.getImpt();
         }
         this.setImpt(total);
-        Double imor = total + this.getImor();
+        Double imor = total + this.getImor()-oldTotal;
         this.setImor(imor);
-        //this.Nmor=this.Nmor+1;
-        this.setNmor(this.Nmor + 1);
+
+        if(isFirst){
+            this.Nmor=this.Nmor+1;
+            this.setNmor(this.Nmor);
+        }
 
         String lsConsulta = DBhelper.COLBSHPWNHPF + " = " + this.Nhpf + " ";
         DBmanager.AbrirBD();

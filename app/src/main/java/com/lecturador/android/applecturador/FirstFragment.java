@@ -144,11 +144,14 @@ public class FirstFragment extends Fragment {
     }
 
 
+    private  BsDpw oldDtlLec= new BsDpw();
     private void registrarLecturacion() {
 
         int idMedidor = Integer.valueOf(tvDescCodigoP.getText().toString());
         //  int idPeriodo = Integer.valueOf(tvDescCodigo.getText().toString());
         int nhpf = loitemLecturacion.getNhpf();
+
+        LinkedList<BsDpw> llOldDpw = oldDtlLec.listarDetalles(loitemLecturacion.getNhpf());
 
         BsObw obs = (BsObw) spObsP.getAdapter().getItem(spObsP.getSelectedItemPosition());
         int cobs = obs.getCodo();
@@ -204,7 +207,7 @@ public class FirstFragment extends Fragment {
                 loitemLecturacion.registrarOtrosConceptos(loitemLecturacion);
 
                 //registrarTotal
-                loitemLecturacion.registrarTotal(loitemLecturacion.getNhpf());
+                loitemLecturacion.registrarTotal(loitemLecturacion.getNhpf(), false, llOldDpw);
 
                //escribirAviso();
                 if (config.isCnfOnly()) {

@@ -266,7 +266,7 @@ public class RealizarLecturacion extends AppCompatActivity {
                 registrarOtrosConceptos();
 
                 //registrarTotal
-                loitemLecturacion.registrarTotal(loitemLecturacion.getNhpf());
+                loitemLecturacion.registrarTotal(loitemLecturacion.getNhpf(), true,null);
 
                 escribirAviso();
                 if (config.isCnfOnly()) {
