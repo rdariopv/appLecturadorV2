@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="10Oct2022"
+        android:text="31ENE2023"
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 

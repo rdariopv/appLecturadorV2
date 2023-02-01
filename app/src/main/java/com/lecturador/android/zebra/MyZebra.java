@@ -6,7 +6,7 @@ import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v4.math.MathUtils;
+//import android.support.v4.math.MathUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
@@ -713,8 +713,8 @@ public class MyZebra {
                 }else{
                     sb.append("^FO"+x+",800^A0R,0,20^FD "+d.getDhpc().trim()+"^FS ");
                 }
-
-                sb.append("^FO"+x+",1000^A0R,0,20^FD "+d.getImpt()+"^FS ");
+                String lsImor = df1.format(d.getImpt());
+                sb.append("^FO"+x+",1000^A0R,0,20^FD "+lsImor+"^FS ");
             }
             x=x-30;
         }
@@ -883,8 +883,8 @@ public class MyZebra {
                 }else{
                     sb.append("^FO"+x+",800^A0R,0,20^FD "+d.getDhpc().trim()+"^FS ");
                 }
-
-                sb.append("^FO"+x+",1000^A0R,0,20^FD "+d.getImpt()+"^FS ");
+                String dtlImpt=df1.format(d.getImpt());
+                sb.append("^FO"+x+",1000^A0R,0,20^FD "+dtlImpt+"^FS ");
             }
             x=x-30;
         }
