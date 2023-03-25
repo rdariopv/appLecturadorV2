@@ -23,6 +23,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.lecturador.android.comunicacion.SyncBsDpw;
 import com.lecturador.android.comunicacion.SyncBsHpw;
 import com.lecturador.android.dblecturador.BsDpw;
@@ -48,6 +49,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -253,12 +255,14 @@ public class RealizarLecturacion extends AppCompatActivity {
                 }
 
                 //aqui calcular alcantarilla
-                double imptAlct = calcularAlcantarilla(loitemLecturacion.getNhpf(), importeConsumo);
+                double imptAlct = calcularAlcantarilla(loitemLecturacion.getNhpf(), loitemLecturacion.getImco());
 
-                recuperacionInversion(loitemLecturacion.getNhpf(), importeConsumo + imptAlct);
+                recuperacionInversion(loitemLecturacion.getNhpf(), loitemLecturacion.getImco() + imptAlct);
                 // calcula descuento de ley NHPC=7050
                 Log.e("RealizarLecturacion", "inicia calcularDescuentoLey NHPF=" + loitemLecturacion.getNhpf());
                 calcularDescuentoLey(loitemLecturacion.getNhpf());
+
+                calcularTarifaDignidad(loitemLecturacion.getNhpf());
 
                 calcularCovid(loitemLecturacion.getNhpf(),importeConsumo + imptAlct,loitemLecturacion);
                 //calcular otros conceptos BSDpwStad=1
@@ -324,6 +328,9 @@ public class RealizarLecturacion extends AppCompatActivity {
                 }
                 hpw = hpw2;
             }
+
+            double ldImpt =  new BigDecimal(lfImporte).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+            lfImporte= ldImpt;
             dpw.setPuni(lfImporte);
             dpw.registrarPrecioUnitario();
             dpw.setImpt(lfImporte);
@@ -335,10 +342,35 @@ public class RealizarLecturacion extends AppCompatActivity {
     public void escribirAviso() {
         StringBuilder sb = new StringBuilder();
         MyZebra myZebra = new MyZebra();
-        sb.append(myZebra.imprimirLaPortenha(loitemLecturacion));
+        sb.append(myZebra.printZPLHorizontalZQ520(loitemLecturacion));
         try {
             String url = Environment.getExternalStorageDirectory().getAbsolutePath();
             File myFile = new File(url + "/avsCobranza" + loitemLecturacion.getNhpf() + ".txt");
+            myFile.createNewFile();
+            FileOutputStream fOut = new FileOutputStream(myFile);
+            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+            myOutWriter.append(sb.toString());
+            myOutWriter.close();
+            fOut.close();
+        } catch (Exception e) {
+            Log.e("ERRR", "Could not create file", e);
+        }
+
+
+    }
+
+
+    public void dataTxt() {
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+            String lsFtra =df.format(new Date());
+            String url = Environment.getExternalStorageDirectory().getAbsolutePath();
+            File myFile = new File(url + "/logAvsCobranza" + loitemLecturacion.getNhpf()+"_" +lsFtra+ ".txt");
+            Gson gson = new Gson();
+            String json = gson.toJson(loitemLecturacion);
+
             myFile.createNewFile();
             FileOutputStream fOut = new FileOutputStream(myFile);
             OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
@@ -578,15 +610,61 @@ public class RealizarLecturacion extends AppCompatActivity {
                 dpw.setCant(1);
                 dpw.registrarCantidad();
 
-                double precioUnitario = dctoLey;
+                double ldImpt =  new BigDecimal(dctoLey).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                double precioUnitario = ldImpt;
                 dpw.setPuni(precioUnitario);
                 dpw.registrarPrecioUnitario();
 
+                double ldImpt1 =  new BigDecimal(dctoLey).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                 dctoLey= ldImpt1;
                 dpw.setImpt(dctoLey);
                 dpw.registrarImporte();
             }
 
         }
+    }
+
+
+    public void calcularTarifaDignidad(int nhpf ) {
+
+        BsHpw hpw = new BsHpw();
+        hpw.obtenerBsHpw(nhpf);
+        BsDpw dpw = new BsDpw();
+        dpw.obtenerDpw(hpw.getNhpf(), 7055);
+        double lfImporte=0;
+
+            int liCant = loitemLecturacion.getLact();
+            double lfConsumo = loitemLecturacion.getCons();
+
+            BsTaw taw = new BsTaw();
+            LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), 7055, loitemLecturacion.getNcat());
+
+
+            for (BsTaw tar : listTarifas) {
+                int desde = tar.getDesd();
+                int hasta = tar.getHast();
+                double val1 = tar.getVal1();
+                double lfTcam = dpw.getTcam();
+                int cmon = tar.getCmon();
+
+                String vafa = tar.getVafa().trim();
+                char lvafa = vafa.charAt(0);
+                if (liCant >= desde && liCant <= hasta) {
+                    if ('V' == lvafa) { // SI interesa el consumo
+                        if (cmon == 2) {  // en dolares convertir a bolivianos
+                            val1 = val1 * lfTcam;
+                        }
+                        lfImporte = lfConsumo + val1;
+                    } else {
+                        lfImporte = lfConsumo * val1 / 100;
+                    }
+                }
+            }
+            if(lfImporte!=0){
+                lfImporte = new BigDecimal(lfImporte).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                dpw.setPuni(lfImporte);
+                dpw.registrarPrecioUnitario();
+            }
     }
 
     public double calcularAlcantarilla(int nhpf, double importeConsumo) {
@@ -622,6 +700,10 @@ public class RealizarLecturacion extends AppCompatActivity {
                     lfImporte = val1;
                 }
             }
+
+            // redondeados a 2 decimales
+            double ldImpt =  new BigDecimal(lfImporte).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+            lfImporte=ldImpt;
             dpw.setPuni(lfImporte);
             dpw.registrarPrecioUnitario();
 
@@ -711,6 +793,9 @@ public class RealizarLecturacion extends AppCompatActivity {
                     lfImporte = hpw.getCons() * val1;
                 }
             }
+
+            double ldImptMora =  new BigDecimal(lfImporte).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+            lfImporte=ldImptMora;
             dpw.setPuni(lfImporte);
             dpw.registrarPrecioUnitario();
 

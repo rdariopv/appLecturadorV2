@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.lecturador.android.applecturador.ListaMedidores;
 import com.lecturador.android.applecturador.RealizarLecturacion;
 import com.lecturador.android.zebra.MyZebra;
@@ -17,7 +18,9 @@ import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -913,9 +916,12 @@ public class BsHpw implements Serializable {
         String lsConsulta = DBhelper.COLBSHPWNHPF + " = " + this.getNhpf() + " ";
         DBmanager.AbrirBD();
         List<Object> datos = new ArrayList<Object>();
+        double ldimco =  new BigDecimal(this.Imco).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+        this.Imco=ldimco;
         datos.add(this.Imco);
         String[] columna = new String[1];
         columna[0] = DBhelper.COLBSHPWIMCO;
+
         DBmanager.modificarTupla(DBhelper.NOMTAHPW, columna, datos, lsConsulta);
         DBmanager.CerrarBD();
     }
@@ -956,6 +962,28 @@ public class BsHpw implements Serializable {
         DBmanager.CerrarBD();
     }
 
+    public void dataTxt() {
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+            String lsFtra =df.format(new Date());
+            String url = Environment.getExternalStorageDirectory().getAbsolutePath();
+            File myFile = new File(url + "/logAvsCobranza" + this.getNhpf()+"_" +lsFtra+ ".txt");
+            Gson gson = new Gson();
+            String json = gson.toJson(this);
+            myFile.createNewFile();
+            FileOutputStream fOut = new FileOutputStream(myFile);
+            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+            myOutWriter.append(sb.toString());
+            myOutWriter.close();
+            fOut.close();
+        } catch (Exception e) {
+            Log.e("ERRR", "Could not create file", e);
+        }
+
+
+    }
 
     public void actualizarEstado(int estado) {
         String lsConsulta = DBhelper.COLBSHPWNHPF + " = " + this.getNhpf() + " ";
@@ -983,18 +1011,22 @@ public class BsHpw implements Serializable {
 
         //aqui calculamos el detalle actual
         BsDpw dpw = new BsDpw();
+
         LinkedList<BsDpw> listDtl = dpw.listarDetalles(this.Nhpf);
         double total = 0;
         for (BsDpw dtl : listDtl) {
-            total = total + dtl.getImpt();
+
+           // double ldImptDtl =  new BigDecimal(dtl.getImpt()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+            //total = total + ldImptDtl;
+            total= total + dtl.getImpt();
         }
         this.setImpt(total);
         Double imor = total + this.getImor()-oldTotal;
         this.setImor(imor);
 
         if(isFirst){
-            this.Nmor=this.Nmor+1;
-            this.setNmor(this.Nmor);
+           // this.Nmor=this.Nmor+1;
+            this.setNmor(this.Nmor+1);
         }
 
         String lsConsulta = DBhelper.COLBSHPWNHPF + " = " + this.Nhpf + " ";
@@ -1009,8 +1041,6 @@ public class BsHpw implements Serializable {
         columna[2] = DBhelper.COLBSHPWNMOR;
         DBmanager.modificarTupla(DBhelper.NOMTAHPW, columna, datos, lsConsulta);
         DBmanager.CerrarBD();
-
-
     }
 
     public LinkedList<BsHpw> listarBsHpw() {

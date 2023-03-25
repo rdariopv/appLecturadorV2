@@ -248,7 +248,6 @@ public class ReImprimir extends AppCompatActivity {
     }
 
     ZebraPrinter printer = null;
-
     private byte[] getConfigLabel(Connection conn) {
         byte[] configLabel = null;
         try {

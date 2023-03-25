@@ -553,9 +553,11 @@ public class MyZebra {
         yLon = yLon + 25;
         //double ldImor= org.apache.commons.math.util.MathUtils.round(Hpw.getImor(),2);
         double ldImor =  new BigDecimal(Hpw.getImor()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-        String imor= df1.format(ldImor);
+        double ldImpt =  new BigDecimal(Hpw.getImpt()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+        String imor= df1.format(ldImor+ldImpt);
+        int liNmor= Hpw.getNmor()+1;
        // String imor = ldImor+"";
-        sb.append("^FO"+xlon+","+yLon+"^FD facturas Impagas:" + Hpw.getNmor() + "        Total Bs:" + imor + "^FS");
+        sb.append("^FO"+xlon+","+yLon+"^FD facturas Impagas:" + liNmor + "        Total Bs:" + imor + "^FS");
         yLon = yLon + 25;
         if(Hpw.getNmor()>1){
             sb.append("^FO"+xlon+","+yLon+"^FD Fecha de Corte:" + lsFcor.trim() +"^FS");
@@ -611,7 +613,7 @@ public class MyZebra {
     public StringBuilder printZPLHorizontalZQ520_(BsHpw hpw){
         StringBuilder sb = new StringBuilder();
 
-        DecimalFormat df1=new DecimalFormat("#.00");
+        DecimalFormat df1=new DecimalFormat("0.00");
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat dl = new SimpleDateFormat("dd/MM/yyyy");
@@ -789,7 +791,7 @@ public class MyZebra {
     public StringBuilder printZPLHorizontalZQ520(BsHpw hpw){
         StringBuilder sb = new StringBuilder();
 
-        DecimalFormat df1=new DecimalFormat("#.00");
+        DecimalFormat df1=new DecimalFormat("0.00");
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat dl = new SimpleDateFormat("dd/MM/yyyy");
@@ -865,28 +867,54 @@ public class MyZebra {
         //sb.append("^FO420,970^A0R,0,25^FD "+hpw.getNmor()+"^FS ");
         //sb.append("^FO420,1000^A0R,0,25^FD Fcorte.^FS ");
 
-     // cambio
+       // cambio
+       // double ldImptMora =  new BigDecimal(hpw.getImor()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
         String imor=df1.format(hpw.getImor());
         xlon=430;
-        sb.append("^FO"+xlon+",940^A0R,0,25^FD "+imor+"^FS ");
+        sb.append("^FO"+xlon+",940^A0R,0,25^FD "+String.valueOf(imor)+"^FS ");
         sb.append("^FO"+xlon+",1180^A0R,0,25^FD "+String.valueOf(hpw.getNmor())+"^FS ");
 
         sb.append("^FO"+xlon+",1470^A0R,0,25^FD "+lsFcor+"^FS ");
 
         int x=310;
+        int cont=0;
+         String lsOrde="";
+         double lsImptLast=0;
+         int auxCont=0;
+
         for (BsDpw d:lldpw) {
+
             if(x>=80){
-                sb.append("^FO"+x+",730^A0R,0,20^FD "+d.getOrde()+"^FS ");
-                String dhpc=d.getDhpc().trim();
-                if(dhpc.length()>16){
-                    sb.append("^FO"+x+",800^A0R,0,20^FD "+d.getDhpc().trim().substring(0,16)+"^FS ");
+                if(cont<8){
+                    sb.append("^FO"+x+",730^A0R,0,20^FD "+d.getOrde()+"^FS ");
+                    String dhpc=d.getDhpc().trim();
+                    if(dhpc.length()>16){
+                        sb.append("^FO"+x+",800^A0R,0,20^FD "+d.getDhpc().trim().substring(0,16)+"^FS ");
+                    }else{
+                        sb.append("^FO"+x+",800^A0R,0,20^FD "+d.getDhpc().trim()+"^FS ");
+                    }
+                   // double ldImptDtl =  new BigDecimal(d.getImpt()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+
+                    String dtlImpt=df1.format(d.getImpt());
+                    sb.append("^FO"+x+",1000^A0R,0,20^FD "+dtlImpt+"^FS ");
                 }else{
-                    sb.append("^FO"+x+",800^A0R,0,20^FD "+d.getDhpc().trim()+"^FS ");
+                   // double ldImptDtl =  new BigDecimal(d.getImpt()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                    lsImptLast=lsImptLast+d.getImpt();
+                    auxCont=auxCont+1;
+
                 }
-                String dtlImpt=df1.format(d.getImpt());
-                sb.append("^FO"+x+",1000^A0R,0,20^FD "+dtlImpt+"^FS ");
+
             }
+            cont=cont+1;
             x=x-30;
+        }
+
+        if( lsImptLast>0){
+            cont= cont+1;
+            x=x+(30*auxCont);
+            sb.append("^FO"+x+",730^A0R,0,20^FD ^FS ");
+            sb.append("^FO"+x+",800^A0R,0,20^FD Otros. ^FS ");
+            sb.append("^FO"+x+",1000^A0R,0,20^FD "+df1.format(lsImptLast)+"^FS ");
         }
 
 
@@ -923,10 +951,6 @@ public class MyZebra {
             }
             x1=x1-30;
         }
-
-        //   sb.append("^FO27,115^A0R,0,20^FD IMPORTE DEUDA Bs ^FS ");
-        // sb.append("^FO"+x1+",200^A0R,0,25^FD "+h.getCons()+" ^FS ");
-        double ttlDeuda= hpw.getImor();
 
         // sb.append("^FO27,600^A0R,0,20^FD "+String.format("%.2f", ttlDeuda)+" ^FS ");
         Log.e("MyZebra","tamanho de la lista de centros de cobranza="+llcc.size());
@@ -978,7 +1002,7 @@ public class MyZebra {
     public StringBuilder printZPLHorizontalZQ320(BsHpw hpw){
         StringBuilder sb = new StringBuilder();
 
-        DecimalFormat df1=new DecimalFormat("#.00");
+        DecimalFormat df1=new DecimalFormat("0.00");
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat dl = new SimpleDateFormat("dd/MM/yyyy");
@@ -1054,12 +1078,11 @@ public class MyZebra {
         //sb.append("^FO420,720^A0R,0,25^FD "+hpw.getImor()+"^FS ");
         //sb.append("^FO420,970^A0R,0,25^FD "+hpw.getNmor()+"^FS ");
         //sb.append("^FO420,1000^A0R,0,25^FD Fcorte.^FS ");
-
+      //  double ldImptMora =  new BigDecimal(hpw.getImor()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
         String imor=df1.format(hpw.getImor());
         xlon=265;
         sb.append("^FO"+xlon+",940^A0R,0,25^FD "+imor+"^FS ");
         sb.append("^FO"+xlon+",1180^A0R,0,25^FD "+String.valueOf(hpw.getNmor())+"^FS ");
-
         sb.append("^FO"+xlon+",1435^A0R,0,25^FD "+lsFcor+"^FS ");
 
         //sb.append("^FO350,620^A0R,0,36^FD itm1^FS ");
@@ -1071,35 +1094,43 @@ public class MyZebra {
         //    sb.append("^FO363,1050^A0R,0,20^FD IMPORTE Bs.^FS ");
 
         int x=135;
+        int cont=0;
+        double ldImptOtros=0;
+        int auxCont=0;
         for (BsDpw d:lldpw) {
             if(x>=0){
-                //y=695
-                sb.append("^FO"+x+",700^A0R,0,20^FD "+d.getOrde()+"^FS ");
-                String dhpc=d.getDhpc().trim();
-                if(dhpc.length()>16){
-                    sb.append("^FO"+x+",755^A0R,0,20^FD "+d.getDhpc().trim().substring(0,16)+"^FS ");
+                if(cont<5){
+                    //y=695
+                    sb.append("^FO"+x+",700^A0R,0,20^FD "+d.getOrde()+"^FS ");
+                    String dhpc=d.getDhpc().trim();
+                    if(dhpc.length()>16){
+                        sb.append("^FO"+x+",755^A0R,0,20^FD "+d.getDhpc().trim().substring(0,16)+"^FS ");
+                    }else{
+                        sb.append("^FO"+x+",755^A0R,0,20^FD "+d.getDhpc().trim()+"^FS ");
+                    }
+                   // double ldImptDtl =  new BigDecimal(d.getImpt()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                    String lsImpt = df1.format(d.getImpt());
+                    sb.append("^FO"+x+",980^A0R,0,20^FD "+lsImpt+"^FS ");
                 }else{
-                    sb.append("^FO"+x+",755^A0R,0,20^FD "+d.getDhpc().trim()+"^FS ");
+                   // double ldImptDtl =  new BigDecimal(d.getImpt()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                    ldImptOtros= ldImptOtros+ d.getImpt();
+                    auxCont=auxCont+1;
                 }
-
-                sb.append("^FO"+x+",980^A0R,0,20^FD "+d.getImpt()+"^FS ");
             }
             x=x-28;
+            cont=cont+1;
         }
+        if(ldImptOtros>0){
 
+            x=x+(auxCont*28);
+            sb.append("^FO"+x+",700^A0R,0,20^FD ^FS ");
+            sb.append("^FO"+x+",755^A0R,0,20^FD Otros. ^FS ");
+            sb.append("^FO"+x+",980^A0R,0,20^FD "+df1.format(ldImptOtros)+"^FS ");
+        }
 
         // sb.append("^FO27,765^A0R,0,20^FD IMPORTE TOTAL FACTURA Bs^FS ");
         String impt= df1.format(hpw.getImpt());
         sb.append("^FO25,980^A0R,0,20^FD "+impt+"^FS ");
-
-        //sb.append("^FO390,300^A0R,0,25^FD HISTORICO^FS ");
-
-        //    sb.append("^FO363,110^A0R,0,20^FD MES^FS ");
-        //   sb.append("^FO363,270^A0R,0,20^FD CONSUMO m3^FS ");
-        //   sb.append("^FO363,450^A0R,0,20^FD IMPORTE Bs^FS ");
-        //   sb.append("^FO363,600^A0R,0,20^FD ESTADO^FS ");
-        //   sb.append("  ");
-
 
         int x1,y;
         x1=135;
@@ -1107,12 +1138,12 @@ public class MyZebra {
         sb.append("^FO"+x1+",230^A0R,0,20^FD "+hpw.getCons()+" ^FS ");
         sb.append("^FO"+x1+",430^A0R,0,20^FD "+impt+" ^FS ");
         sb.append("^FO"+x1+",570^A0R,0,20^FD IMPAGA ^FS ");
-        x1=x1-30;
+        x1=x1-30;//105
         y=0;
 
         for (BsDhw h:lldhw) {
 
-            if(x1>=80) {
+            if(x1>=30) {
 
                 sb.append("^FO"+x1+",80^A0R,0,20^FD "+h.getPeri().trim()+" ^FS ");
                 sb.append("^FO"+x1+",230^A0R,0,20^FD "+h.getCons()+"^FS ");
@@ -1121,10 +1152,6 @@ public class MyZebra {
             }
             x1=x1-30;
         }
-
-        //   sb.append("^FO27,115^A0R,0,20^FD IMPORTE DEUDA Bs ^FS ");
-        // sb.append("^FO"+x1+",200^A0R,0,25^FD "+h.getCons()+" ^FS ");
-        double ttlDeuda= hpw.getImor();
 
         // sb.append("^FO27,600^A0R,0,20^FD "+String.format("%.2f", ttlDeuda)+" ^FS ");
         Log.e("MyZebra","tamanho de la lista de centros de cobranza="+llcc.size());
