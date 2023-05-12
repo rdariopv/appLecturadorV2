@@ -1027,6 +1027,7 @@ public class RealizarLecturacion extends AppCompatActivity {
         return true; // Returns if neither of the above error states is found
     }
 
+
     public void displayToast(final String message) {
 
         new Thread(new Runnable() {

@@ -262,6 +262,7 @@ public class ReImprimir extends AppCompatActivity {
             SGD.SET("device.languages", "zpl", conn);
             LtCnf cnf= new LtCnf();
             boolean existe=  cnf.obtenerCnf(1);
+
             if(existe){
                 if (printerLanguage == PrinterLanguage.ZPL) {
                    // configLabel = "^XA^FO17,16^GB379,371,8^FS^FT65,255^A0N,135,134^FDZPL NO PROGRAMADO^FS^XZ".getBytes();
