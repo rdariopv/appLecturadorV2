@@ -90,6 +90,7 @@ public class AjustesActivity extends AppCompatActivity {
             }
 
             int printer =spPrinter.getSelectedItemPosition();
+
             Log.e("AjustesACtivity","la impresora seleccionada es ="+printer);
 
             LtCnf cnf = new LtCnf();
