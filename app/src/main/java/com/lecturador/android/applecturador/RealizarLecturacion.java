@@ -638,23 +638,22 @@ public class RealizarLecturacion extends AppCompatActivity {
 
             BsTaw taw = new BsTaw();
             LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), 7055, loitemLecturacion.getNcat());
-
-
             for (BsTaw tar : listTarifas) {
                 int desde = tar.getDesd();
                 int hasta = tar.getHast();
                 double val1 = tar.getVal1();
                 double lfTcam = dpw.getTcam();
                 int cmon = tar.getCmon();
-
                 String vafa = tar.getVafa().trim();
                 char lvafa = vafa.charAt(0);
                 if (liCant >= desde && liCant <= hasta) {
                     if ('V' == lvafa) { // SI interesa el consumo
-                        if (cmon == 2) {  // en dolares convertir a bolivianos
-                            val1 = val1 * lfTcam;
-                        }
-                        lfImporte = lfConsumo + val1;
+                        // ultimos cambios fecha 20sept2023
+                         if (cmon == 1) {   //  '--- bolivianos
+                              lfImporte =lfImporte+ val1;
+                         }else{     //'--- Dolares
+                             lfImporte =lfImporte+ val1 * lfTcam;
+                         }
                     } else {
                         lfImporte = lfConsumo * val1 / 100;
                     }
