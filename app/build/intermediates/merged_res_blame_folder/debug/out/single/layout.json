@@ -20,16 +20,16 @@
         "source": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-main-22:\\layout\\fragment_descargar.xml"
     },
     {
-        "merged": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-mergeDebugResources-19:\\layout\\itemobs.xml",
-        "source": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-main-22:\\layout\\itemobs.xml"
+        "merged": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-mergeDebugResources-19:\\layout\\fragment_print.xml",
+        "source": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-main-22:\\layout\\fragment_print.xml"
     },
     {
         "merged": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-mergeDebugResources-19:\\layout\\itemmedidor.xml",
         "source": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-main-22:\\layout\\itemmedidor.xml"
     },
     {
-        "merged": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-mergeDebugResources-19:\\layout\\fragment_print.xml",
-        "source": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-main-22:\\layout\\fragment_print.xml"
+        "merged": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-mergeDebugResources-19:\\layout\\itemobs.xml",
+        "source": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-main-22:\\layout\\itemobs.xml"
     },
     {
         "merged": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-mergeDebugResources-19:\\layout\\activity_ajustes.xml",
@@ -52,16 +52,12 @@
         "source": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-main-22:\\layout\\activity_menu_principal.xml"
     },
     {
-        "merged": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-mergeDebugResources-19:\\layout\\fragment_second.xml",
-        "source": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-main-22:\\layout\\fragment_second.xml"
-    },
-    {
         "merged": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-mergeDebugResources-19:\\layout\\fragment_parametros.xml",
         "source": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-main-22:\\layout\\fragment_parametros.xml"
     },
     {
-        "merged": "com.lecturador.android.applecturador.app-mergeDebugResources-19:/layout/dialog_search.xml",
-        "source": "com.lecturador.android.applecturador.app-main-22:/layout/dialog_search.xml"
+        "merged": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-mergeDebugResources-19:\\layout\\fragment_second.xml",
+        "source": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-main-22:\\layout\\fragment_second.xml"
     },
     {
         "merged": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-mergeDebugResources-19:\\layout\\fragment_url.xml",

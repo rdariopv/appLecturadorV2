@@ -301,6 +301,7 @@ public class BsDpw {
                  DBhelper.COLBSDPWNHPC + "!= 7080  " +
                 " and "+DBhelper.COLBSDPWNHPC + "!= 7004 " +
                 " and "+ DBhelper.COLBSDPWNHPC+ "!= 7050 " +
+                " and "+ DBhelper.COLBSDPWNHPC+ "!= 7055 " +
                 " and "+ DBhelper.COLBSDPWNCAT +" = "+ ncat + " "+
                 " and "+ DBhelper.COLBSDPWSTAD+ " = 1  ";
 

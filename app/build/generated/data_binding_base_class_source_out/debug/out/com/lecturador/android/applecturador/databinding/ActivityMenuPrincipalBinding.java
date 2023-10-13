@@ -32,13 +32,18 @@ public final class ActivityMenuPrincipalBinding implements ViewBinding {
   @NonNull
   public final TextView textView;
 
+  @NonNull
+  public final TextView textView9;
+
   private ActivityMenuPrincipalBinding(@NonNull LinearLayout rootView, @NonNull Button btnAjustes,
-      @NonNull Button btnLecturar, @NonNull Button btnSyncAC, @NonNull TextView textView) {
+      @NonNull Button btnLecturar, @NonNull Button btnSyncAC, @NonNull TextView textView,
+      @NonNull TextView textView9) {
     this.rootView = rootView;
     this.btnAjustes = btnAjustes;
     this.btnLecturar = btnLecturar;
     this.btnSyncAC = btnSyncAC;
     this.textView = textView;
+    this.textView9 = textView9;
   }
 
   @Override
@@ -92,8 +97,14 @@ public final class ActivityMenuPrincipalBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.textView9;
+      TextView textView9 = ViewBindings.findChildViewById(rootView, id);
+      if (textView9 == null) {
+        break missingId;
+      }
+
       return new ActivityMenuPrincipalBinding((LinearLayout) rootView, btnAjustes, btnLecturar,
-          btnSyncAC, textView);
+          btnSyncAC, textView, textView9);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

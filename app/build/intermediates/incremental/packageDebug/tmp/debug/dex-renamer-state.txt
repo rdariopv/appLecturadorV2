@@ -1,4 +1,4 @@
-#Wed Sep 20 22:56:38 BOT 2023
+#Thu Oct 12 23:42:27 BOT 2023
 base.0=D\:\\AndroidProjects\\appLecturador\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

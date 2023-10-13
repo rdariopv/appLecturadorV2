@@ -89,34 +89,56 @@ public class SyncActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.containerS);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mSectionsPagerAdapter.notifyDataSetChanged();
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabsS);
-        tabLayout.setupWithViewPager(mViewPager);
+
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+       //tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+       //    @Override
+       //    public void onTabSelected(TabLayout.Tab tab) {
 
-      //tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-      //    @Override
-      //    public void onTabSelected(TabLayout.Tab tab) {
-      //        mSectionsPagerAdapter.notifyDataSetChanged();
-      //        mViewPager.setCurrentItem(tab.getPosition());
-      //    }
+       //        mViewPager.setCurrentItem(tab.getPosition());
+       //      //  mSectionsPagerAdapter.notifyDataSetChanged();
+       //        Log.e("TAG", "onTabSelected: " + tab.getPosition());
+       //        switch (tab.getPosition()) {
+       //            case 0:
+       //                Log.e("onTabSelected","ParametrosFragment" );
+       //                ((ParametrosFragment) mSectionsPagerAdapter.getItem(tab.getPosition())).updateView();
+       //                break;
+       //            case 1:
+       //                Log.e("onTabSelected","DescargarFragment" );
+       //                ((DescargarFragment) mSectionsPagerAdapter.getItem(tab.getPosition())).updateView();
+       //               // return DescargarFragment.newInstance();
+       //                break;
+       //            case 2:
+       //                Log.e("onTabSelected","SubirFragment" );
+       //                ((SubirFragment) mSectionsPagerAdapter.getItem(tab.getPosition())).updateView();
 
-      //    @Override
-      //    public void onTabUnselected(TabLayout.Tab tab) {
-      //        mSectionsPagerAdapter.notifyDataSetChanged();
-      //        mViewPager.setCurrentItem(tab.getPosition());
-      //    }
+       //        }
+       //        Log.i("TAG", "onTabSelected: " + tab.getPosition());
+       //    }
+       //    @Override
+       //    public void onTabUnselected(TabLayout.Tab tab) {
+       //    }
+       //    @Override
+       //    public void onTabReselected(TabLayout.Tab tab) {
+       //    }
+       //});
+        tabLayout.setupWithViewPager(mViewPager);
+       mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-      //    @Override
-      //    public void onTabReselected(TabLayout.Tab tab) {
-      //        mSectionsPagerAdapter.notifyDataSetChanged();
-      //        mViewPager.setCurrentItem(tab.getPosition());
-      //    }
-      //});
-
-
-
+       // mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+       //     @Override
+       //     public void onPageScrolled(int i, float v, int i1) {
+       //     }
+       //     @Override
+       //     public void onPageSelected(int i) {
+       //     }
+       //     @Override
+       //     public void onPageScrollStateChanged(int i) {
+       //     }
+       // });
 
 
         // FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -273,10 +295,11 @@ public class SyncActivity extends AppCompatActivity {
 
         private Button btnSyncPMT;
         public BsEnw enwPmt;
-
+        public View myRootViewPmt;
         public View IniciarlizarParametros(LayoutInflater inflater, ViewGroup container,
                                            Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_parametros, container, false);
+            myRootViewPmt= rootView;
             enwPmt = new BsEnw();
             btnSyncPMT = (Button) rootView.findViewById(R.id.btnSyncPmt);
             btnSyncPMT.setOnClickListener(new View.OnClickListener() {
@@ -291,6 +314,9 @@ public class SyncActivity extends AppCompatActivity {
 
         }
 
+        public void updateView() {
+             Log.e("ParametrosFragment","updateView");
+        }
 
         //region sincronizar parametros
         public void lanzarDownloadParametros() {
@@ -539,6 +565,7 @@ public class SyncActivity extends AppCompatActivity {
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         public DescargarFragment() {
+            super();
         }
 
         /**
@@ -581,11 +608,12 @@ public class SyncActivity extends AppCompatActivity {
         private int posZona;
 
         public BsEnw enwDsc;
-
+        public View myRootViewDown;
         public View inicializarVar(LayoutInflater inflater, ViewGroup container,
                                    Bundle savedInstanceState) {
 
             View rootView = inflater.inflate(R.layout.fragment_descargar, container, false);
+            myRootViewDown=rootView;
             tilAnio = (TextInputLayout) rootView.findViewById(R.id.tilAnio);
             tilMes = (TextInputLayout) rootView.findViewById(R.id.tilMes);
             tvMesf = (TextView) rootView.findViewById(R.id.tvMesf);
@@ -606,8 +634,6 @@ public class SyncActivity extends AppCompatActivity {
 
             adpZonas = new AdpZonas(getActivity().getWindow().getContext(), listZonas);
             spZona.setAdapter(adpZonas);
-
-
             btnSincronizar = (Button) rootView.findViewById(R.id.btnSincronizar);
 
             btnSincronizar.setOnClickListener(new View.OnClickListener() {
@@ -621,16 +647,24 @@ public class SyncActivity extends AppCompatActivity {
 
         public void updateView() {
 
-            tilAnio.getEditText().setText(enwDsc.getAnio() + "");
-            tilMes.getEditText().setText(enwDsc.getDmes());
-            tvMesf.setText(enwDsc.getMesf() + "");
+          //  View rootView = inflater.inflate(R.layout.fragment_descargar, container, false);
+            tilAnio = (TextInputLayout) myRootViewDown.findViewById(R.id.tilAnio);
+            tilMes = (TextInputLayout) myRootViewDown.findViewById(R.id.tilMes);
+            tvMesf = (TextView) myRootViewDown.findViewById(R.id.tvMesf);
+            spZona = (Spinner) myRootViewDown.findViewById(R.id.spinner);
+               if(tilAnio!=null){
+                   tilAnio.getEditText().setText(enwDsc.getAnio() + "");
+                   tilMes.getEditText().setText(enwDsc.getDmes());
+                   tvMesf.setText(enwDsc.getMesf() + "");
+                   LtZon zon = new LtZon();
+                   LinkedList<LtZon> listZonas = zon.listarLtZon();
+                   adpZonas = new AdpZonas(getActivity().getWindow().getContext(), listZonas);
+                   spZona.setAdapter(adpZonas);
+               }else{
+                   newInstance();
+               }
 
 
-            LtZon zon = new LtZon();
-            LinkedList<LtZon> listZonas = zon.listarLtZon();
-
-            adpZonas = new AdpZonas(getActivity().getWindow().getContext(), listZonas);
-            spZona.setAdapter(adpZonas);
         }
 
         String[] parametros = new String[10];
@@ -861,6 +895,9 @@ public class SyncActivity extends AppCompatActivity {
             fragment.setArguments(args);
             return fragment;
         }
+        public void updateView() {
+            Log.e("SubirFragment","updateView");
+        }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -1020,6 +1057,7 @@ public class SyncActivity extends AppCompatActivity {
        public int getItemPosition(Object object) {
            if (object instanceof DescargarFragment) {
                ((DescargarFragment) object).updateView();
+               notifyDataSetChanged();
            }
            return POSITION_NONE;
        }

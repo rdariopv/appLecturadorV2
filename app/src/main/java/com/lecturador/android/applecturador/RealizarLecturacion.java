@@ -633,8 +633,8 @@ public class RealizarLecturacion extends AppCompatActivity {
         dpw.obtenerDpw(hpw.getNhpf(), 7055);
         double lfImporte=0;
 
-            int liCant = loitemLecturacion.getLact();
-            double lfConsumo = loitemLecturacion.getCons();
+            double liCant = loitemLecturacion.getCons();
+            double lfConsumo = loitemLecturacion.getImco();
 
             BsTaw taw = new BsTaw();
             LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), 7055, loitemLecturacion.getNcat());
@@ -646,6 +646,7 @@ public class RealizarLecturacion extends AppCompatActivity {
                 int cmon = tar.getCmon();
                 String vafa = tar.getVafa().trim();
                 char lvafa = vafa.charAt(0);
+                // cambio 12 oct 2023 licant por lfConsumo
                 if (liCant >= desde && liCant <= hasta) {
                     if ('V' == lvafa) { // SI interesa el consumo
                         // ultimos cambios fecha 20sept2023
@@ -663,6 +664,8 @@ public class RealizarLecturacion extends AppCompatActivity {
                 lfImporte = new BigDecimal(lfImporte).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
                 dpw.setPuni(lfImporte);
                 dpw.registrarPrecioUnitario();
+                dpw.setImpt(lfImporte);
+                dpw.registrarImporte();
             }
     }
 
