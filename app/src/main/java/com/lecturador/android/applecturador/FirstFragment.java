@@ -194,16 +194,18 @@ public class FirstFragment extends Fragment {
                 }
 
                 //aqui calcular alcantarilla
-                double imptAlct = loitemLecturacion.calcularAlcantarilla(loitemLecturacion.getNhpf(), importeConsumo, loitemLecturacion);
+                double imptAlct = loitemLecturacion.calcularAlcantarilla(loitemLecturacion.getNhpf(), importeConsumo);
 
-                loitemLecturacion.recuperacionInversion(loitemLecturacion.getNhpf(), importeConsumo + imptAlct, loitemLecturacion);
+                loitemLecturacion.recuperacionInversion(loitemLecturacion.getNhpf(), importeConsumo + imptAlct);
                 // calcula descuento de ley NHPC=7050
-                Log.e("RealizarLecturacion", "inicia calcularDescuentoLey NHPF=" + loitemLecturacion.getNhpf());
-                loitemLecturacion.calcularDescuentoLey(loitemLecturacion.getNhpf(),loitemLecturacion);
+                Log.e("FirstFragment", "inicia calcularDescuentoLey NHPF=" + loitemLecturacion.getNhpf());
+                loitemLecturacion.calcularDescuentoLey(loitemLecturacion.getNhpf());
+
+                loitemLecturacion.calcularTarifaDignidad(loitemLecturacion.getNhpf());
 
                 loitemLecturacion.calcularCovid(loitemLecturacion.getNhpf(),importeConsumo + imptAlct,loitemLecturacion);
                 //calcular otros conceptos BSDpwStad=1
-                Log.e("RealizarLecturacion", "inicia registrarOtrosConceptos NHPF=" + loitemLecturacion.getNhpf());
+                Log.e("FirstFragment", "inicia registrarOtrosConceptos NHPF=" + loitemLecturacion.getNhpf());
                 loitemLecturacion.registrarOtrosConceptos(loitemLecturacion);
 
                 //registrarTotal

@@ -40,10 +40,6 @@
         "source": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-main-22:\\mipmap-xxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "com.lecturador.android.applecturador.app-merged_res-20:/layout_dialog_search.xml.flat",
-        "source": "com.lecturador.android.applecturador.app-main-22:/layout/dialog_search.xml"
-    },
-    {
         "merged": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-merged_res-20:\\navigation_nav_graph.xml.flat",
         "source": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-main-22:\\navigation\\nav_graph.xml"
     },

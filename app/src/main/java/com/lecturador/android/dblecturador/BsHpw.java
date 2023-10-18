@@ -1682,6 +1682,9 @@ public class BsHpw implements Serializable {
                 }
                 hpw = hpw2;
             }
+
+            double ldImpt =  new BigDecimal(lfImporte).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+            lfImporte= ldImpt;
             dpw.setPuni(lfImporte);
             dpw.registrarPrecioUnitario();
             dpw.setImpt(lfImporte);
@@ -1807,13 +1810,13 @@ public class BsHpw implements Serializable {
         return importe;
     }
 
-    public double calcConsumo(double consumo, BsHpw loitemLecturacion) {
+    public double calcConsumo(double consumo) {
         BsTaw taw = new BsTaw();
-        LinkedList<BsTaw> tarifas = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(),
-                loitemLecturacion.getNhpc(), loitemLecturacion.getNcat());
+        LinkedList<BsTaw> tarifas = taw.obtenerTarifa(this.getAnio(), this.getMesf(),
+                this.getNhpc(), this.getNcat());
 
         BsDpw dpw = new BsDpw();
-        dpw.obtenerDpw(loitemLecturacion.getNhpf(), loitemLecturacion.getNhpc());
+        dpw.obtenerDpw(this.getNhpf(), this.getNhpc());
 
         Double rango = 0.0;
         Double liConAux = consumo;
@@ -1849,12 +1852,14 @@ public class BsHpw implements Serializable {
         return importe;
     }
 
-    public void calcularDescuentoLey(int nhpf, BsHpw loitemLecturacion ) {
+    public void calcularDescuentoLey(int nhpf) {
         BsHpw hpw = new BsHpw();
         hpw.obtenerBsHpw(nhpf);
+        BsHpw loitemLecturacion= new BsHpw();
+        loitemLecturacion.obtenerBsHpw(nhpf);
         BsDpw dpw = new BsDpw();
         dpw.obtenerDpw(hpw.getNhpf(), 7050);
-        int liMinLey =0;
+
         double dctoLey = 0;
         if (dpw.getNhpc() != 0) {
             BsTaw taw = new BsTaw();
@@ -1862,7 +1867,7 @@ public class BsHpw implements Serializable {
 
             if (tarifa.getNhpc() == 7050) {
 
-                 liMinLey = tarifa.getHast();
+                int liMinLey = tarifa.getHast();
 
                 BsTaw tarifaMin = taw.obtenerTarifaDesde(hpw.getAnio(), hpw.getMesf(),
                         hpw.getNhpc(), hpw.getNcat(), 0);
@@ -1878,9 +1883,10 @@ public class BsHpw implements Serializable {
                     }
                 }
 
-                double lfImpConMin = calcConsumo(liMinLey,loitemLecturacion);
+
+                double lfImpConMin = loitemLecturacion.calcConsumo(liMinLey);
                 double lfRecuInv = 0;//recuperacionInversionDeLey(nhpf, lfImpConMin); // para otras empresas
-                double lfAlcan = calcularAlcantarillaDeLey(nhpf, lfImpConMin + lfRecuInv, loitemLecturacion);  // para otras empresas
+                double lfAlcan = calcularAlcantarillaDeLey(nhpf, lfImpConMin + lfRecuInv);  // para otras empresas
 
                 LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(hpw.getAnio(), hpw.getMesf(), 7050, hpw.getNcat());
 
@@ -1912,18 +1918,20 @@ public class BsHpw implements Serializable {
                 dpw.setCant(1);
                 dpw.registrarCantidad();
 
-                double precioUnitario = dctoLey;
+                double ldImpt =  new BigDecimal(dctoLey).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                double precioUnitario = ldImpt;
                 dpw.setPuni(precioUnitario);
                 dpw.registrarPrecioUnitario();
 
+                double ldImpt1 =  new BigDecimal(dctoLey).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                dctoLey= ldImpt1;
                 dpw.setImpt(dctoLey);
                 dpw.registrarImporte();
             }
 
         }
     }
-
-    public double calcularAlcantarilla(int nhpf, double importeConsumo, BsHpw loitemLecturacion) {
+    public double calcularAlcantarilla_(int nhpf, double importeConsumo, BsHpw loitemLecturacion) {
         BsHpw hpw = new BsHpw();
         hpw.obtenerBsHpw(nhpf);
         BsDpw dpw = new BsDpw();
@@ -1968,9 +1976,56 @@ public class BsHpw implements Serializable {
         return lfImporte;
     }
 
-    public double calcularAlcantarillaDeLey(int nhpf, double importeConsumo, BsHpw loitemLecturacion) {
+    public void calcularTarifaDignidad(int nhpf ) {
+
         BsHpw hpw = new BsHpw();
         hpw.obtenerBsHpw(nhpf);
+        BsDpw dpw = new BsDpw();
+        dpw.obtenerDpw(hpw.getNhpf(), 7055);
+        double lfImporte=0;
+
+        double liCant = hpw.getCons();
+        double lfConsumo = hpw.getImco();
+
+        BsTaw taw = new BsTaw();
+        LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(hpw.getAnio(), hpw.getMesf(), 7055, hpw.getNcat());
+        for (BsTaw tar : listTarifas) {
+            int desde = tar.getDesd();
+            int hasta = tar.getHast();
+            double val1 = tar.getVal1();
+            double lfTcam = dpw.getTcam();
+            int cmon = tar.getCmon();
+            String vafa = tar.getVafa().trim();
+            char lvafa = vafa.charAt(0);
+            // cambio 12 oct 2023 licant por lfConsumo
+            if (liCant >= desde && liCant <= hasta) {
+                if ('V' == lvafa) { // SI interesa el consumo
+                    // ultimos cambios fecha 20sept2023
+                    if (cmon == 1) {   //  '--- bolivianos
+                        lfImporte =lfImporte+ val1;
+                    }else{     //'--- Dolares
+                        lfImporte =lfImporte+ val1 * lfTcam;
+                    }
+                } else {
+                    lfImporte = lfConsumo * val1 / 100;
+                }
+            }
+        }
+        if(lfImporte!=0){
+            lfImporte = new BigDecimal(lfImporte).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+            dpw.setPuni(lfImporte);
+            dpw.registrarPrecioUnitario();
+            dpw.setImpt(lfImporte);
+            dpw.registrarImporte();
+        }
+    }
+
+    public double calcularAlcantarilla(int nhpf, double importeConsumo) {
+
+        BsHpw hpw = new BsHpw();
+        hpw.obtenerBsHpw(nhpf);
+        BsHpw loitemLecturacion= new BsHpw();
+        loitemLecturacion.obtenerBsHpw(nhpf);
         BsDpw dpw = new BsDpw();
         dpw.obtenerDpw(hpw.getNhpf(), 7004);
         double lfImporte = 0;
@@ -2001,13 +2056,62 @@ public class BsHpw implements Serializable {
                     lfImporte = val1;
                 }
             }
+
+            // redondeados a 2 decimales
+            double ldImpt =  new BigDecimal(lfImporte).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+            lfImporte=ldImpt;
+            dpw.setPuni(lfImporte);
+            dpw.registrarPrecioUnitario();
+
+            dpw.setImpt(lfImporte);
+            dpw.registrarImporte();
+
         }
 
 
         return lfImporte;
     }
 
-    public double recuperacionInversion(int nhpf, double importeConsumo, BsHpw loitemLecturacion) {
+    public double calcularAlcantarillaDeLey(int nhpf, double importeConsumo) {
+        BsHpw hpw = new BsHpw();
+        hpw.obtenerBsHpw(nhpf);
+        BsDpw dpw = new BsDpw();
+        dpw.obtenerDpw(hpw.getNhpf(), 7004);
+        double lfImporte = 0;
+        if (dpw.getNhpc() != 0) {
+            double ldAlcantarilla = 0;
+
+            BsTaw taw = new BsTaw();
+            LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(hpw.getAnio(), hpw.getMesf(), 7004, hpw.getNcat());
+
+            for (BsTaw tar : listTarifas) {
+                int desde = tar.getDesd();
+                int hasta = tar.getHast();
+                double val1 = tar.getVal1();
+                int cmon = tar.getCmon();
+
+                String fiva = tar.getFiva().trim();
+                String vafa = tar.getVafa().trim();
+
+                if (cmon == 2) {  // en dolares convertir a bolivianos
+                    val1 = val1 * dpw.getTcam();
+                }
+
+                char lfiva = fiva.charAt(0);
+                char lvafa = vafa.charAt(0);
+                if ('F' == lfiva && 'F' == lvafa) { // NO interesa el consumo
+                    lfImporte = importeConsumo * (val1 / 100);
+                } else if ('F' == lfiva && 'V' == lvafa) { // SI interesa el consumo
+                    lfImporte = val1;
+                }
+            }
+        }
+
+
+        return lfImporte;
+    }
+
+    public double recuperacionInversion_(int nhpf, double importeConsumo, BsHpw loitemLecturacion) {
 
         BsHpw hpw = new BsHpw();
         hpw.obtenerBsHpw(nhpf);
@@ -2057,7 +2161,62 @@ public class BsHpw implements Serializable {
     }
 
 
-    public void registrarOtrosConceptos(BsHpw loitemLecturacion) {
+    public double recuperacionInversion(int nhpf, double importeConsumo) {
+
+        BsHpw hpw = new BsHpw();
+        hpw.obtenerBsHpw(nhpf);
+        BsHpw loitemLecturacion= new BsHpw();
+        loitemLecturacion.obtenerBsHpw(nhpf);
+        BsDpw dpw = new BsDpw();
+        dpw.obtenerDpw(hpw.getNhpf(), 7080);
+        if (dpw.getNhpc() != 0) {
+            BsTaw taw = new BsTaw();
+            LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), 7080, loitemLecturacion.getNcat());
+
+            double lfImporte = 0;
+
+            for (BsTaw tar : listTarifas) {
+                int desde = tar.getDesd();
+                int hasta = tar.getHast();
+                double val1 = tar.getVal1();
+                int cmon = tar.getCmon();
+
+                String fiva = tar.getFiva().trim();
+                String vafa = tar.getVafa().trim();
+
+                if (cmon == 2) {  // en dolares convertir a bolivianos
+                    val1 = val1 * dpw.getTcam();
+                }
+
+                char lfiva = fiva.charAt(0);
+                char lvafa = vafa.charAt(0);
+                if ('F' == lfiva && 'F' == lvafa) { // NO interesa el consumo
+                    lfImporte = importeConsumo * (val1 / 100);
+                }
+
+                if ('F' == lfiva && 'V' == lvafa) { // SI interesa el consumo
+                    lfImporte = val1;
+                }
+                if ('V' == lfiva && 'V' == lvafa) { // SI interesa el consumo
+                    lfImporte = hpw.getCons() * val1;
+                }
+            }
+
+            double ldImptMora =  new BigDecimal(lfImporte).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+            lfImporte=ldImptMora;
+            dpw.setPuni(lfImporte);
+            dpw.registrarPrecioUnitario();
+
+            dpw.setImpt(lfImporte);
+            dpw.registrarImporte();
+
+        }
+
+        return 0;
+    }
+
+
+    public void registrarOtrosConceptos(BsHpw loitemLecturacion ) {
 
         BsDpw detalle = new BsDpw();
 
@@ -2067,7 +2226,7 @@ public class BsHpw implements Serializable {
             dpw.setCant(1);
             dpw.registrarCantidad();
 
-            double lfImporte = calcularOtrosImportes(dpw.getNhpc(), dpw.getTcam(), loitemLecturacion.getCons(),loitemLecturacion);
+            double lfImporte = calcularOtrosImportes(dpw.getNhpc(), dpw.getTcam(), loitemLecturacion.getCons(), loitemLecturacion);
             dpw.setImpt(lfImporte);
             dpw.registrarImporte();
 
