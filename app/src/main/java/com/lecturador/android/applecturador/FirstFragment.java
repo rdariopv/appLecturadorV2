@@ -122,6 +122,7 @@ public class FirstFragment extends Fragment {
         this.spObsP = (Spinner) view.findViewById(R.id.spObsP);
         this.spObsP.setAdapter(adpObw);
         this.spObsP.setSelection(adpObw.getIndexbyId(0));
+        this.spObsP.setSelection(adpObw.getIndexbyId(this.loitemLecturacion.getCobs()));
         TextView textView = this.tvDescCodigoP;
         textView.setText(this.loitemLecturacion.getCodf() + "");
         BsEnw enw = new BsEnw();
