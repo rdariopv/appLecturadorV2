@@ -671,7 +671,7 @@ public class MyZebra {
         // sb.append("^FO550,900^A0R,36,20^FD F.Venc^FS ");
         ylon=1475;
         sb.append("^FO625,"+ylon+"^A0R,0,25^FD "+hpw.getDcat().trim()+"^FS ");
-        sb.append("^FO550,"+ylon+"^A0R,0,25^FD "+enw.getMesf()+"/"+enw.getAnio()+"^FS ");
+        sb.append("^FO550,"+ylon+"^A0R,0,25^FD "+enw.getDmes()+"/"+enw.getAnio()+"^FS ");
 
         int xlon=705;
         sb.append("^FO"+xlon+","+ylon+"^A0R,0,25^FD "+hpw.getNcnt()+"^FS ");
@@ -849,7 +849,7 @@ public class MyZebra {
         // sb.append("^FO550,900^A0R,36,20^FD F.Venc^FS ");
         ylon=1475;
         sb.append("^FO625,"+ylon+"^A0R,0,25^FD "+hpw.getDcat().trim()+"^FS ");
-        sb.append("^FO550,"+ylon+"^A0R,0,25^FD "+enw.getMesf()+"/"+enw.getAnio()+"^FS ");
+        sb.append("^FO550,"+ylon+"^A0R,0,25^FD "+enw.getDmes()+"/"+enw.getAnio()+"^FS ");
 
         int xlon=705;
         sb.append("^FO"+xlon+","+ylon+"^A0R,0,25^FD "+hpw.getNcnt()+"^FS ");
@@ -1060,7 +1060,7 @@ public class MyZebra {
         // sb.append("^FO550,900^A0R,36,20^FD F.Venc^FS ");
         ylon=1450;
         sb.append("^FO400,"+ylon+"^A0R,0,25^FD "+hpw.getDcat().trim()+"^FS ");
-        sb.append("^FO338,"+ylon+"^A0R,0,25^FD "+enw.getMesf()+"/"+enw.getAnio()+"^FS ");
+        sb.append("^FO338,"+ylon+"^A0R,0,25^FD "+enw.getDmes()+"/"+enw.getAnio()+"^FS ");
 
         //int xlon=480; buscando el codigo fijo
         int xlon=483;

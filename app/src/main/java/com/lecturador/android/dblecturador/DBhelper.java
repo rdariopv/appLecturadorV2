@@ -205,6 +205,8 @@ public class DBhelper extends SQLiteOpenHelper {
     public static String COLBSHPWLONG="bshpwLong";
     public static String COLBSHPWSTAT="bshpwStat";
     public static String COLBSHPWRIDE="bshpwRide";
+    public static String COLBSHPWIMOO="bshpwImoo";
+    public static String COLBSHPWNMOO="bshpwNmoo";
     public static String [] COLSBSHPW={ COLBSHPWNHPF,COLBSHPWANIO,COLBSHPWMESF,COLBSHPWFGEN,COLBSHPWFENT,COLBSHPWFVTO,
             COLBSHPWFCOR,COLBSHPWNHPC,COLBSHPWNCAT,COLBSHPWDCAT,COLBSHPWLANT,COLBSHPWLACT,
             COLBSHPWCONS,COLBSHPWCONF,COLBSHPWIMCO,COLBSHPWFINI,COLBSHPWFFIN,COLBSHPWIMPT,
@@ -216,7 +218,7 @@ public class DBhelper extends SQLiteOpenHelper {
             COLBSHPWCODF,COLBSHPWNRED,COLBSHPWNVIA,COLBSHPWNROI,COLBSHPWDIRE,COLBSHPWCLAS,
             COLBSHPWIPLV,COLBSHPWNFAC,COLBSHPWNTPC,COLBSHPWNTCN,COLBSHPWNDTB,COLBSHPWONOF,
             COLBSHPWLMAX,COLBSHPWCONP,COLBSHPWKVAT,COLBSHPWCOBS,COLBSHPWNLEC,COLBSHPWPTJC,
-            COLBSHPWSTAD,COLBSHPWLATI,COLBSHPWLONG,COLBSHPWSTAT,COLBSHPWRIDE};
+            COLBSHPWSTAD,COLBSHPWLATI,COLBSHPWLONG,COLBSHPWSTAT,COLBSHPWRIDE,COLBSHPWIMOO,COLBSHPWNMOO};
     public static String CTBSHPW=" create table bshpw (  " +
             " bshpwNhpf integer not null , " +
             " bshpwAnio integer not null , " +
@@ -288,7 +290,9 @@ public class DBhelper extends SQLiteOpenHelper {
             " bshpwLati text not null , " +
             " bshpwLong text not null , " +
             " bshpwStat integer not null , " +
-            " bshpwRide integer not null ); ";
+            " bshpwRide integer not null ," +
+            " bshpwImoo real not null ," +
+            " bshpwNmoo integer not null ); ";
 
 
     // TABLA 2 DETALLE AVISO COBRANZA
@@ -515,7 +519,7 @@ public class DBhelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int OldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + CTUSUARIO);
         db.execSQL("DROP TABLE IF EXISTS " + CTEMPLEADO);
-       db.execSQL("DROP TABLE IF EXISTS " + CTMEDIDOR);
+        db.execSQL("DROP TABLE IF EXISTS " + CTMEDIDOR);
         db.execSQL("DROP TABLE IF EXISTS " + CTPARAMETROS);
         db.execSQL("DROP TABLE IF EXISTS " + CTSOCIO);
        // db.execSQL("DROP TABLE IF EXISTS " + CTLECTURACION);

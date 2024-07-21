@@ -93,7 +93,9 @@ public class SyncBsHpw {
                         hpw.setImpt(Double.valueOf(objHpw.getProperty(17).toString()));
                         hpw.setIcfi(Double.valueOf(objHpw.getProperty(18).toString()));
                         hpw.setImor(Double.valueOf(objHpw.getProperty(19).toString()));
+                        hpw.setImoo(Double.valueOf(objHpw.getProperty(19).toString()));
                         hpw.setNmor(Integer.valueOf(objHpw.getProperty(20).toString()));
+                        hpw.setNmoo(Integer.valueOf(objHpw.getProperty(20).toString()));
                         hpw.setCmor(Integer.valueOf(objHpw.getProperty(21).toString()));
                         hpw.setCort(objHpw.getProperty(22).toString());
                         hpw.setDesc(objHpw.getProperty(23).toString());

@@ -101,6 +101,9 @@ public class BsHpw implements Serializable {
     private int Stat;
     private int Ride;
 
+    private double Imoo;
+    private int Nmoo;
+
 
     public BsHpw() {
         Nhpf = 0;
@@ -174,6 +177,8 @@ public class BsHpw implements Serializable {
         Long = "";
         Stat = 0;
         Ride = 0;
+        Imoo = 0;
+         Nmoo= 0;
     }
 
     public int getNhpf() {
@@ -744,6 +749,22 @@ public class BsHpw implements Serializable {
         Ride = ride;
     }
 
+    public int getNmoo() {
+        return Nmoo;
+    }
+
+    public void setNmoo(int nmor) {
+        Nmoo = nmor;
+    }
+
+    public double getImoo() {
+        return Imoo;
+    }
+
+    public void setImoo(double imor) {
+        Imoo = imor;
+    }
+
     @Override
     public String toString() {
         return "BsHpw{" +
@@ -895,6 +916,8 @@ public class BsHpw implements Serializable {
         datos.add(this.Long);
         datos.add(this.Stat);
         datos.add(this.Ride);
+        datos.add(this.Imoo);
+        datos.add(this.Nmoo);
         DBmanager.insertarTupla(DBhelper.NOMTAHPW, DBhelper.COLSBSHPW, datos);
         DBmanager.CerrarBD();
     }
@@ -997,18 +1020,8 @@ public class BsHpw implements Serializable {
         DBmanager.CerrarBD();
     }
 
-    public void registrarTotal(int nhpf, boolean isFirst,  LinkedList<BsDpw> llOldDtl) {
+    public void registrarTotal(int nhpf) {
         obtenerBsHpw(nhpf);
-        // aqui calculamos el monto a restar
-        double oldTotal=0;
-        if(!isFirst){
-            for (BsDpw dtl : llOldDtl) {
-                oldTotal = oldTotal + dtl.getImpt();
-            }
-        }
-
-
-
         //aqui calculamos el detalle actual
         BsDpw dpw = new BsDpw();
 
@@ -1021,13 +1034,11 @@ public class BsHpw implements Serializable {
             total= total + dtl.getImpt();
         }
         this.setImpt(total);
-        Double imor = total + this.getImor()-oldTotal;
+        Double imor = total + this.getImoo();
         this.setImor(imor);
 
-        if(isFirst){
-           // this.Nmor=this.Nmor+1;
-            this.setNmor(this.Nmor+1);
-        }
+        this.setNmor(this.Nmoo+1);
+
 
         String lsConsulta = DBhelper.COLBSHPWNHPF + " = " + this.Nhpf + " ";
         DBmanager.AbrirBD();

@@ -270,7 +270,7 @@ public class RealizarLecturacion extends AppCompatActivity {
                 registrarOtrosConceptos();
 
                 //registrarTotal
-                loitemLecturacion.registrarTotal(loitemLecturacion.getNhpf(), true,null);
+                loitemLecturacion.registrarTotal(loitemLecturacion.getNhpf());
 
                 escribirAviso();
                 if (config.isCnfOnly()) {
@@ -358,7 +358,6 @@ public class RealizarLecturacion extends AppCompatActivity {
 
 
     }
-
 
     public void dataTxt() {
         StringBuilder sb = new StringBuilder();
@@ -546,7 +545,6 @@ public class RealizarLecturacion extends AppCompatActivity {
         }
         return importe;
     }
-
     public void calcularDescuentoLey(int nhpf) {
         BsHpw hpw = new BsHpw();
         hpw.obtenerBsHpw(nhpf);
@@ -623,7 +621,6 @@ public class RealizarLecturacion extends AppCompatActivity {
 
         }
     }
-
 
     public void calcularTarifaDignidad(int nhpf ) {
 
@@ -853,7 +850,6 @@ public class RealizarLecturacion extends AppCompatActivity {
         return lfImporte;
     }
 
-
     public void registrarOtrosConceptos() {
 
         BsDpw detalle = new BsDpw();
@@ -928,12 +924,6 @@ public class RealizarLecturacion extends AppCompatActivity {
         return importe;
     }
 
-    public void lanzarLecturacionBluetooth() {
-        Intent intent = new Intent(this, LecturacionBluetooth.class);
-        // startActivityForResult(intent, 1);
-        //  startActivity(intent);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -974,7 +964,6 @@ public class RealizarLecturacion extends AppCompatActivity {
 
     private ArrayList<BluetoothDevice> getPairedPrinters() {
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
 
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         ArrayList<BluetoothDevice> pairedDevicesList = new ArrayList<BluetoothDevice>();
@@ -1076,6 +1065,7 @@ public class RealizarLecturacion extends AppCompatActivity {
         protected Boolean doInBackground(String... strings) {
 
             bluetoothAddress = getPairedPrinters().get(0).getAddress();
+
            // BluetoothDevice bt= getPairedPrinters().get(0);
           try{
               BluetoothConnection conn = new BluetoothConnection(bluetoothAddress);
