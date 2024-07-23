@@ -52,8 +52,8 @@ public class ListaMedidores extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.reimprimir) {
-            //lanzarDialogBusquedaCliente();
-            otroDialogo();
+            lanzarDialogBusquedaCliente();
+           // otroDialogo();
             //Toast.makeText(this,"En desarrollo",Toast.LENGTH_LONG ).show();
         }
 

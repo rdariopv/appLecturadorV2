@@ -119,6 +119,8 @@ public class ReImprimir extends AppCompatActivity {
 
         if (config.isPrintOnline()) {
             new enviarImprimir().execute();
+        }else{
+            Toast.makeText(this, "Impresion en linea desactivada" , Toast.LENGTH_SHORT).show();
         }
     }
 
