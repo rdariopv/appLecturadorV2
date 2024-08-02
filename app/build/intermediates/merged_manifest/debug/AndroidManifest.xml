@@ -39,13 +39,17 @@
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:testOnly="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true" >
         <activity
             android:name="com.lecturador.android.applecturador.EditarLectura"
-            android:exported="false"
             android:label="@string/title_activity_editar_lectura"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:parentActivityName="com.lecturador.android.applecturador.ListaMedidores" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ListaMedidores" />
+        </activity>
         <activity
             android:name="com.lecturador.android.applecturador.MenuPrincipal"
             android:exported="true"

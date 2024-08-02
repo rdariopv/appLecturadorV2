@@ -3,14 +3,17 @@ package com.lecturador.android.applecturador.databinding;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.viewbinding.ViewBinding;
 import android.viewbinding.ViewBindings;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.TextView;
 import com.lecturador.android.applecturador.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -18,24 +21,76 @@ import java.lang.String;
 
 public final class ActivityEditarLecturaBinding implements ViewBinding {
   @NonNull
-  private final CoordinatorLayout rootView;
+  private final RelativeLayout rootView;
 
   @NonNull
-  public final FloatingActionButton fab;
+  public final Button btnCancelar;
 
   @NonNull
-  public final Toolbar toolbar;
+  public final Button btnSendPrint;
 
-  private ActivityEditarLecturaBinding(@NonNull CoordinatorLayout rootView,
-      @NonNull FloatingActionButton fab, @NonNull Toolbar toolbar) {
+  @NonNull
+  public final EditText etLecturaP;
+
+  @NonNull
+  public final Spinner spObsP;
+
+  @NonNull
+  public final Switch swNmedP;
+
+  @NonNull
+  public final TextView textView4;
+
+  @NonNull
+  public final TextView textView5;
+
+  @NonNull
+  public final TextView textView6;
+
+  @NonNull
+  public final TextView tvDescCodigoP;
+
+  @NonNull
+  public final TextView tvDescPeriodoP;
+
+  @NonNull
+  public final TextView tvImCodSocioP;
+
+  @NonNull
+  public final TextView tvNombreD;
+
+  @NonNull
+  public final TextView tvNombreSP;
+
+  @NonNull
+  public final TextView tvNumeP;
+
+  private ActivityEditarLecturaBinding(@NonNull RelativeLayout rootView,
+      @NonNull Button btnCancelar, @NonNull Button btnSendPrint, @NonNull EditText etLecturaP,
+      @NonNull Spinner spObsP, @NonNull Switch swNmedP, @NonNull TextView textView4,
+      @NonNull TextView textView5, @NonNull TextView textView6, @NonNull TextView tvDescCodigoP,
+      @NonNull TextView tvDescPeriodoP, @NonNull TextView tvImCodSocioP,
+      @NonNull TextView tvNombreD, @NonNull TextView tvNombreSP, @NonNull TextView tvNumeP) {
     this.rootView = rootView;
-    this.fab = fab;
-    this.toolbar = toolbar;
+    this.btnCancelar = btnCancelar;
+    this.btnSendPrint = btnSendPrint;
+    this.etLecturaP = etLecturaP;
+    this.spObsP = spObsP;
+    this.swNmedP = swNmedP;
+    this.textView4 = textView4;
+    this.textView5 = textView5;
+    this.textView6 = textView6;
+    this.tvDescCodigoP = tvDescCodigoP;
+    this.tvDescPeriodoP = tvDescPeriodoP;
+    this.tvImCodSocioP = tvImCodSocioP;
+    this.tvNombreD = tvNombreD;
+    this.tvNombreSP = tvNombreSP;
+    this.tvNumeP = tvNumeP;
   }
 
   @Override
   @NonNull
-  public CoordinatorLayout getRoot() {
+  public RelativeLayout getRoot() {
     return rootView;
   }
 
@@ -60,19 +115,93 @@ public final class ActivityEditarLecturaBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.fab;
-      FloatingActionButton fab = ViewBindings.findChildViewById(rootView, id);
-      if (fab == null) {
+      id = R.id.btnCancelar;
+      Button btnCancelar = ViewBindings.findChildViewById(rootView, id);
+      if (btnCancelar == null) {
         break missingId;
       }
 
-      id = R.id.toolbar;
-      Toolbar toolbar = ViewBindings.findChildViewById(rootView, id);
-      if (toolbar == null) {
+      id = R.id.btnSendPrint;
+      Button btnSendPrint = ViewBindings.findChildViewById(rootView, id);
+      if (btnSendPrint == null) {
         break missingId;
       }
 
-      return new ActivityEditarLecturaBinding((CoordinatorLayout) rootView, fab, toolbar);
+      id = R.id.etLecturaP;
+      EditText etLecturaP = ViewBindings.findChildViewById(rootView, id);
+      if (etLecturaP == null) {
+        break missingId;
+      }
+
+      id = R.id.spObsP;
+      Spinner spObsP = ViewBindings.findChildViewById(rootView, id);
+      if (spObsP == null) {
+        break missingId;
+      }
+
+      id = R.id.swNmedP;
+      Switch swNmedP = ViewBindings.findChildViewById(rootView, id);
+      if (swNmedP == null) {
+        break missingId;
+      }
+
+      id = R.id.textView4;
+      TextView textView4 = ViewBindings.findChildViewById(rootView, id);
+      if (textView4 == null) {
+        break missingId;
+      }
+
+      id = R.id.textView5;
+      TextView textView5 = ViewBindings.findChildViewById(rootView, id);
+      if (textView5 == null) {
+        break missingId;
+      }
+
+      id = R.id.textView6;
+      TextView textView6 = ViewBindings.findChildViewById(rootView, id);
+      if (textView6 == null) {
+        break missingId;
+      }
+
+      id = R.id.tvDescCodigoP;
+      TextView tvDescCodigoP = ViewBindings.findChildViewById(rootView, id);
+      if (tvDescCodigoP == null) {
+        break missingId;
+      }
+
+      id = R.id.tvDescPeriodoP;
+      TextView tvDescPeriodoP = ViewBindings.findChildViewById(rootView, id);
+      if (tvDescPeriodoP == null) {
+        break missingId;
+      }
+
+      id = R.id.tvImCodSocioP;
+      TextView tvImCodSocioP = ViewBindings.findChildViewById(rootView, id);
+      if (tvImCodSocioP == null) {
+        break missingId;
+      }
+
+      id = R.id.tvNombreD;
+      TextView tvNombreD = ViewBindings.findChildViewById(rootView, id);
+      if (tvNombreD == null) {
+        break missingId;
+      }
+
+      id = R.id.tvNombreSP;
+      TextView tvNombreSP = ViewBindings.findChildViewById(rootView, id);
+      if (tvNombreSP == null) {
+        break missingId;
+      }
+
+      id = R.id.tvNumeP;
+      TextView tvNumeP = ViewBindings.findChildViewById(rootView, id);
+      if (tvNumeP == null) {
+        break missingId;
+      }
+
+      return new ActivityEditarLecturaBinding((RelativeLayout) rootView, btnCancelar, btnSendPrint,
+          etLecturaP, spObsP, swNmedP, textView4, textView5, textView6, tvDescCodigoP,
+          tvDescPeriodoP, tvImCodSocioP, tvNombreD, tvNombreSP, tvNumeP);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

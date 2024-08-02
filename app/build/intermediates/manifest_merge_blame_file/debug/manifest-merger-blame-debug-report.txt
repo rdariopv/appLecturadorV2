@@ -75,7 +75,7 @@
 34-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:28:9-37
 35
 36    <application
-36-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:30:5-120:19
+36-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:30:5-123:19
 37        android:allowBackup="true"
 37-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:31:9-35
 38        android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
@@ -85,162 +85,168 @@
 40-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:32:9-43
 41        android:label="@string/app_name"
 41-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:33:9-41
-42        android:theme="@style/AppTheme"
-42-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:34:9-40
-43        android:usesCleartextTraffic="true" >
-43-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:35:9-44
-44        <activity
-44-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:36:9-40:59
-45            android:name="com.lecturador.android.applecturador.EditarLectura"
-45-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:37:13-42
-46            android:exported="false"
-46-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:38:13-37
+42        android:testOnly="true"
+43        android:theme="@style/AppTheme"
+43-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:34:9-40
+44        android:usesCleartextTraffic="true" >
+44-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:35:9-44
+45        <activity
+45-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:36:9-43:20
+46            android:name="com.lecturador.android.applecturador.EditarLectura"
+46-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:37:13-42
 47            android:label="@string/title_activity_editar_lectura"
-47-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:39:13-66
-48            android:theme="@style/AppTheme.NoActionBar" />
-48-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:40:13-56
-49        <activity
-49-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:41:9-50:20
-50            android:name="com.lecturador.android.applecturador.MenuPrincipal"
-50-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:42:13-42
-51            android:exported="true"
-51-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:43:13-36
-52            android:label="@string/app_name" >
-52-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:44:13-45
-53            <intent-filter>
-53-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:45:13-49:29
-54                <action android:name="android.intent.action.MAIN" />
-54-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:46:17-69
-54-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:46:25-66
-55
-56                <category android:name="android.intent.category.LAUNCHER" />
-56-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:48:17-77
-56-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:48:27-74
-57            </intent-filter>
-58        </activity>
-59        <activity
-59-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:51:9-58:20
-60            android:name="com.lecturador.android.applecturador.ListaMedidores"
-60-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:52:13-43
-61            android:label="@string/title_activity_lista_medidores"
-61-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:53:13-67
-62            android:parentActivityName="com.lecturador.android.applecturador.MenuPrincipal" >
-62-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:54:13-56
-63            <meta-data
-63-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:55:13-57:50
-64                android:name="android.support.PARENT_ACTIVITY"
-64-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:56:17-63
-65                android:value=".MenuPrincipal" />
-65-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:57:17-47
-66        </activity>
-67        <activity
-67-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:59:9-66:20
-68            android:name="com.lecturador.android.applecturador.RealizarLecturacion"
-68-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:60:13-48
-69            android:label="@string/title_activity_realizar_lecturacion"
-69-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:61:13-72
-70            android:parentActivityName="com.lecturador.android.applecturador.ListaMedidores" >
-70-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:62:13-57
-71            <meta-data
-71-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:55:13-57:50
-72                android:name="android.support.PARENT_ACTIVITY"
-72-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:56:17-63
-73                android:value=".ListaMedidores" />
-73-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:57:17-47
-74        </activity>
-75        <activity
-75-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:67:9-69:76
-76            android:name="com.lecturador.android.applecturador.LecturacionBluetooth"
-76-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:68:13-49
-77            android:label="@string/title_activity_lecturacion_bluetooth" />
-77-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:69:13-73
-78        <activity
-78-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:70:9-78:20
-79            android:name="com.lecturador.android.applecturador.AjustsActivity"
-79-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:71:13-43
-80            android:label="@string/title_activity_ajusts"
-80-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:72:13-58
-81            android:parentActivityName="com.lecturador.android.applecturador.MenuPrincipal"
-81-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:73:13-56
-82            android:theme="@style/AppTheme.NoActionBar" >
-82-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:74:13-56
-83            <meta-data
-83-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:55:13-57:50
-84                android:name="android.support.PARENT_ACTIVITY"
-84-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:56:17-63
-85                android:value=".MenuPrincipal" />
-85-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:57:17-47
-86        </activity>
-87        <activity
-87-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:79:9-86:20
-88            android:name="com.lecturador.android.applecturador.DownloadActivity"
-88-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:80:13-45
-89            android:label="@string/title_activity_download"
-89-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:81:13-60
-90            android:parentActivityName="com.lecturador.android.applecturador.MenuPrincipal" >
-90-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:82:13-56
-91            <meta-data
-91-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:55:13-57:50
-92                android:name="android.support.PARENT_ACTIVITY"
-92-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:56:17-63
-93                android:value=".MenuPrincipal" />
-93-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:57:17-47
-94        </activity>
-95        <!--
-96 ATTENTION: This was auto-generated to add Google Play services to your project for
-97     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
-98
-99        <meta-data
-100            android:name="com.google.android.gms.version"
-101            android:value="@integer/google_play_services_version" />
-102        -->
-103        <activity
-103-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:95:9-103:20
-104            android:name="com.lecturador.android.applecturador.SyncActivity"
-104-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:96:13-41
-105            android:label="@string/title_activity_sync"
-105-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:97:13-56
-106            android:parentActivityName="com.lecturador.android.applecturador.MenuPrincipal"
-106-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:98:13-56
-107            android:theme="@style/AppTheme.NoActionBar" >
-107-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:99:13-56
-108            <meta-data
-108-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:55:13-57:50
-109                android:name="android.support.PARENT_ACTIVITY"
-109-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:56:17-63
-110                android:value=".MenuPrincipal" />
-110-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:57:17-47
-111        </activity>
-112        <activity
-112-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:104:9-111:20
-113            android:name="com.lecturador.android.applecturador.AjustesActivity"
-113-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:105:13-44
-114            android:label="@string/title_activity_ajustes"
-114-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:106:13-59
-115            android:parentActivityName="com.lecturador.android.applecturador.MenuPrincipal" >
-115-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:107:13-56
-116            <meta-data
-116-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:55:13-57:50
-117                android:name="android.support.PARENT_ACTIVITY"
-117-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:56:17-63
-118                android:value=".MenuPrincipal" />
-118-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:57:17-47
-119        </activity>
-120        <activity
-120-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:112:9-119:20
-121            android:name="com.lecturador.android.applecturador.ReImprimir"
-121-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:113:13-39
-122            android:label="@string/title_activity_reprint"
-122-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:114:13-59
-123            android:parentActivityName="com.lecturador.android.applecturador.ListaMedidores" >
-123-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:115:13-57
-124            <meta-data
-124-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:55:13-57:50
-125                android:name="android.support.PARENT_ACTIVITY"
-125-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:56:17-63
-126                android:value=".ListaMedidores" />
-126-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:57:17-47
-127        </activity>
-128    </application>
-129
-130</manifest>
+47-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:38:13-66
+48            android:parentActivityName="com.lecturador.android.applecturador.ListaMedidores" >
+48-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:39:13-57
+49            <meta-data
+49-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:40:13-42:51
+50                android:name="android.support.PARENT_ACTIVITY"
+50-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:41:17-63
+51                android:value=".ListaMedidores" />
+51-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:42:17-48
+52        </activity>
+53        <activity
+53-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:44:9-53:20
+54            android:name="com.lecturador.android.applecturador.MenuPrincipal"
+54-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:45:13-42
+55            android:exported="true"
+55-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:46:13-36
+56            android:label="@string/app_name" >
+56-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:47:13-45
+57            <intent-filter>
+57-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:48:13-52:29
+58                <action android:name="android.intent.action.MAIN" />
+58-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:49:17-69
+58-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:49:25-66
+59
+60                <category android:name="android.intent.category.LAUNCHER" />
+60-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:51:17-77
+60-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:51:27-74
+61            </intent-filter>
+62        </activity>
+63        <activity
+63-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:54:9-61:20
+64            android:name="com.lecturador.android.applecturador.ListaMedidores"
+64-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:55:13-43
+65            android:label="@string/title_activity_lista_medidores"
+65-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:56:13-67
+66            android:parentActivityName="com.lecturador.android.applecturador.MenuPrincipal" >
+66-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:57:13-56
+67            <meta-data
+67-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:40:13-42:51
+68                android:name="android.support.PARENT_ACTIVITY"
+68-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:41:17-63
+69                android:value=".MenuPrincipal" />
+69-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:42:17-48
+70        </activity>
+71        <activity
+71-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:62:9-69:20
+72            android:name="com.lecturador.android.applecturador.RealizarLecturacion"
+72-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:63:13-48
+73            android:label="@string/title_activity_realizar_lecturacion"
+73-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:64:13-72
+74            android:parentActivityName="com.lecturador.android.applecturador.ListaMedidores" >
+74-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:65:13-57
+75            <meta-data
+75-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:40:13-42:51
+76                android:name="android.support.PARENT_ACTIVITY"
+76-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:41:17-63
+77                android:value=".ListaMedidores" />
+77-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:42:17-48
+78        </activity>
+79        <activity
+79-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:70:9-72:76
+80            android:name="com.lecturador.android.applecturador.LecturacionBluetooth"
+80-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:71:13-49
+81            android:label="@string/title_activity_lecturacion_bluetooth" />
+81-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:72:13-73
+82        <activity
+82-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:73:9-81:20
+83            android:name="com.lecturador.android.applecturador.AjustsActivity"
+83-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:74:13-43
+84            android:label="@string/title_activity_ajusts"
+84-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:75:13-58
+85            android:parentActivityName="com.lecturador.android.applecturador.MenuPrincipal"
+85-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:76:13-56
+86            android:theme="@style/AppTheme.NoActionBar" >
+86-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:77:13-56
+87            <meta-data
+87-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:40:13-42:51
+88                android:name="android.support.PARENT_ACTIVITY"
+88-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:41:17-63
+89                android:value=".MenuPrincipal" />
+89-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:42:17-48
+90        </activity>
+91        <activity
+91-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:82:9-89:20
+92            android:name="com.lecturador.android.applecturador.DownloadActivity"
+92-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:83:13-45
+93            android:label="@string/title_activity_download"
+93-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:84:13-60
+94            android:parentActivityName="com.lecturador.android.applecturador.MenuPrincipal" >
+94-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:85:13-56
+95            <meta-data
+95-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:40:13-42:51
+96                android:name="android.support.PARENT_ACTIVITY"
+96-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:41:17-63
+97                android:value=".MenuPrincipal" />
+97-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:42:17-48
+98        </activity>
+99        <!--
+100 ATTENTION: This was auto-generated to add Google Play services to your project for
+101     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+102
+103        <meta-data
+104            android:name="com.google.android.gms.version"
+105            android:value="@integer/google_play_services_version" />
+106        -->
+107        <activity
+107-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:98:9-106:20
+108            android:name="com.lecturador.android.applecturador.SyncActivity"
+108-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:99:13-41
+109            android:label="@string/title_activity_sync"
+109-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:100:13-56
+110            android:parentActivityName="com.lecturador.android.applecturador.MenuPrincipal"
+110-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:101:13-56
+111            android:theme="@style/AppTheme.NoActionBar" >
+111-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:102:13-56
+112            <meta-data
+112-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:40:13-42:51
+113                android:name="android.support.PARENT_ACTIVITY"
+113-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:41:17-63
+114                android:value=".MenuPrincipal" />
+114-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:42:17-48
+115        </activity>
+116        <activity
+116-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:107:9-114:20
+117            android:name="com.lecturador.android.applecturador.AjustesActivity"
+117-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:108:13-44
+118            android:label="@string/title_activity_ajustes"
+118-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:109:13-59
+119            android:parentActivityName="com.lecturador.android.applecturador.MenuPrincipal" >
+119-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:110:13-56
+120            <meta-data
+120-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:40:13-42:51
+121                android:name="android.support.PARENT_ACTIVITY"
+121-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:41:17-63
+122                android:value=".MenuPrincipal" />
+122-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:42:17-48
+123        </activity>
+124        <activity
+124-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:115:9-122:20
+125            android:name="com.lecturador.android.applecturador.ReImprimir"
+125-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:116:13-39
+126            android:label="@string/title_activity_reprint"
+126-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:117:13-59
+127            android:parentActivityName="com.lecturador.android.applecturador.ListaMedidores" >
+127-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:118:13-57
+128            <meta-data
+128-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:40:13-42:51
+129                android:name="android.support.PARENT_ACTIVITY"
+129-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:41:17-63
+130                android:value=".ListaMedidores" />
+130-->D:\AndroidProjects\appLecturador\app\src\main\AndroidManifest.xml:42:17-48
+131        </activity>
+132    </application>
+133
+134</manifest>

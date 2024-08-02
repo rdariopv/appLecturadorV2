@@ -1353,7 +1353,6 @@ id etUrlFU
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
-id fab
 id fill
 id fill_horizontal
 id fill_vertical
@@ -1744,6 +1743,8 @@ string appbar_scrolling_view_behavior
 string bottom_sheet_behavior
 string character_counter_content_description
 string character_counter_pattern
+string etHintLectura
+string ethintLectura
 string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
 string first_fragment_label
@@ -1769,6 +1770,7 @@ string sAnio
 string search_menu_title
 string second_fragment_label
 string section_format
+string spObsValue
 string status_bar_notification_info_overflow
 string title_activity_ajustes
 string title_activity_ajusts

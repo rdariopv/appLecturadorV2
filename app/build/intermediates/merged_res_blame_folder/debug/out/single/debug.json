@@ -1,9 +1,5 @@
 [
     {
-        "merged": "com.lecturador.android.applecturador.app-merged_res-20:/layout_activity_menu_principal.xml.flat",
-        "source": "com.lecturador.android.applecturador.app-main-22:/layout/activity_menu_principal.xml"
-    },
-    {
         "merged": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-merged_res-20:\\menu_menu_lecturacion_bluetooth.xml.flat",
         "source": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-main-22:\\menu\\menu_lecturacion_bluetooth.xml"
     },
@@ -70,6 +66,10 @@
     {
         "merged": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-merged_res-20:\\layout_fragment_second.xml.flat",
         "source": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-main-22:\\layout\\fragment_second.xml"
+    },
+    {
+        "merged": "com.lecturador.android.applecturador.app-merged_res-20:/layout_activity_editar_lectura.xml.flat",
+        "source": "com.lecturador.android.applecturador.app-main-22:/layout/activity_editar_lectura.xml"
     },
     {
         "merged": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-merged_res-20:\\menu_menu_listamedidores.xml.flat",
@@ -230,6 +230,10 @@
     {
         "merged": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-merged_res-20:\\mipmap-hdpi_ajustes1.png.flat",
         "source": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-main-22:\\mipmap-hdpi\\ajustes1.png"
+    },
+    {
+        "merged": "com.lecturador.android.applecturador.app-merged_res-20:/layout_activity_realizarlecturacion.xml.flat",
+        "source": "com.lecturador.android.applecturador.app-main-22:/layout/activity_realizarlecturacion.xml"
     },
     {
         "merged": "C:\\Users\\Windows 10\\.gradle\\daemon\\7.3.3\\com.lecturador.android.applecturador.app-merged_res-20:\\mipmap-xxhdpi_llave.png.flat",
