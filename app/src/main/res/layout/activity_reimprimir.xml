@@ -50,22 +50,22 @@
         android:textStyle="bold" />
 
     <EditText
+        android:id="@+id/etLecturaP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/etLecturaP"
-        android:hint=""
         android:layout_below="@+id/textView5"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:inputType="number"
-        android:textColor="#ff29132c"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="40dp"
-        android:padding="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" >
+        android:gravity="center"
+        android:hint=""
+        android:inputType="number"
+        android:padding="10dp"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#ff29132c"
+        android:textSize="40dp">
 
     </EditText>
 
@@ -88,127 +88,131 @@
 
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nro.:"
         android:id="@+id/textView6"
-        android:padding="5dp"
-        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/swNmedP"
+        android:layout_toEndOf="@+id/swNmedP"
         android:layout_toRightOf="@+id/swNmedP"
-        android:layout_toEndOf="@+id/swNmedP" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/tvNumeP"
         android:padding="5dp"
-        android:textAlignment="center"
-        android:gravity="left"
-        android:singleLine="true"
-        android:layout_below="@+id/tvDescPeriodo"
-        android:layout_toRightOf="@+id/textView6"
-        android:layout_alignBottom="@+id/textView6"
+        android:text="Nro.:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvNumeP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvDescPeriodoP"
+        android:layout_alignEnd="@+id/tvDescPeriodoP"
         android:layout_alignRight="@+id/tvDescPeriodoP"
-        android:layout_alignEnd="@+id/tvDescPeriodoP" />
+        android:layout_alignBottom="@+id/textView6"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_toRightOf="@+id/textView6"
+        android:gravity="left"
+        android:padding="5dp"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Digite la Lectura:"
         android:id="@+id/textView5"
-        android:paddingLeft="10dp"
-        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/swNmedP"
+        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:paddingLeft="10dp"
+        android:text="Digite la Lectura:"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold" />
+
     <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:id="@+id/spObsP"
+        android:layout_width="379dp"
+        android:layout_height="39dp"
         android:layout_below="@+id/etLecturaP"
+        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginTop="16dp" />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:id="@+id/tvDescCodigoP"
-        android:padding="10dp"
-        android:textAlignment="center"
-        android:gravity="left"
-        android:singleLine="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/textView3"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_toEndOf="@+id/tvImCodSocioP"
         android:layout_toRightOf="@+id/tvImCodSocioP"
-        android:layout_toEndOf="@+id/tvImCodSocioP" />
+        android:gravity="left"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:id="@+id/tvNombreSP"
-        android:padding="10dp"
-        android:textAlignment="center"
-        android:gravity="left"
-        android:singleLine="true"
-        android:layout_below="@+id/tvDescCodigoP"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignLeft="@+id/tvDescPeriodoP"
-        android:layout_alignStart="@+id/tvDescPeriodoP" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/tvDescPeriodoP"
-        android:padding="10dp"
-        android:textAlignment="center"
-        android:gravity="left"
-        android:singleLine="true"
-        android:layout_below="@+id/tvNombreSP"
-        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvDescCodigoP"
+        android:layout_alignStart="@+id/tvDescPeriodoP"
+        android:layout_alignLeft="@+id/tvDescPeriodoP"
         android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/textView4"
-        android:layout_toEndOf="@+id/textView4" />
+        android:layout_alignParentRight="true"
+        android:gravity="left"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
+    <TextView
+        android:id="@+id/tvDescPeriodoP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNombreSP"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_toEndOf="@+id/textView4"
+        android:layout_toRightOf="@+id/textView4"
+        android:gravity="left"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp"
-        android:weightSum="1"
+        android:layout_width="381dp"
+        android:layout_height="387dp"
         android:layout_below="@+id/spObsP"
+        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_marginTop="14dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:weightSum="1">
 
 
         <Button
-            android:layout_width="145dp"
-            android:layout_height="wrap_content"
-            android:text="CANCELAR"
             android:id="@+id/btnCancelar"
-            android:layout_below="@+id/spObsP"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_weight="0.80" />
-
-        <Button
             android:layout_width="145dp"
             android:layout_height="wrap_content"
-            android:text="Imprimir"
-            android:id="@+id/btnSendPrint"
             android:layout_below="@+id/spObsP"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="0.80"
+            android:text="CANCELAR" />
+
+        <Button
+            android:id="@+id/btnSendPrint"
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spObsP"
             android:layout_alignParentEnd="true"
-            android:layout_weight="0.24" />
+            android:layout_alignParentRight="true"
+            android:layout_weight="0.24"
+            android:text="Imprimir" />
 
     </LinearLayout>
 

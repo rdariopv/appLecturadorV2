@@ -6,17 +6,17 @@
         <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/activity_ajustes.xml" value="0.22" />
         <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/activity_ajusts.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/activity_download.xml" value="0.18802083333333333" />
-        <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/activity_editar_lectura.xml" value="0.13632246376811594" />
+        <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/activity_editar_lectura.xml" value="0.25" />
         <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/activity_lecturacion_bluetooth.xml" value="0.18802083333333333" />
         <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/activity_listamedidores.xml" value="0.18802083333333333" />
         <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/activity_menu_principal.xml" value="0.22" />
         <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/activity_realizarlecturacion.xml" value="0.33" />
-        <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/activity_reimprimir.xml" value="0.18802083333333333" />
+        <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/activity_reimprimir.xml" value="0.33" />
         <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/activity_sync.xml" value="0.18802083333333333" />
-        <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/content_editar_lectura.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/content_editar_lectura.xml" value="0.4083333333333333" />
         <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/dialog_search.xml" value="0.25" />
         <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/fragment_descargar.xml" value="0.18802083333333333" />
-        <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/fragment_first.xml" value="0.13632246376811594" />
+        <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/fragment_first.xml" value="0.4083333333333333" />
         <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/fragment_parametros.xml" value="0.18802083333333333" />
         <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/fragment_print.xml" value="0.18802083333333333" />
         <entry key="..\:/AndroidProjects/appLecturador/app/src/main/res/layout/fragment_second.xml" value="0.13632246376811594" />

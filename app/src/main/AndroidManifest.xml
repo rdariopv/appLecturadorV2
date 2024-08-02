@@ -35,9 +35,12 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".EditarLectura"
-            android:exported="false"
             android:label="@string/title_activity_editar_lectura"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:parentActivityName=".ListaMedidores">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ListaMedidores" />
+        </activity>
         <activity
             android:name=".MenuPrincipal"
             android:exported="true"

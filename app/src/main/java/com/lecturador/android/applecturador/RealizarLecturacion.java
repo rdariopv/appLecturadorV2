@@ -860,7 +860,7 @@ public class RealizarLecturacion extends AppCompatActivity {
             dpw.setCant(1);
             dpw.registrarCantidad();
 
-            double lfImporte = calcularOtrosImportes(dpw.getNhpc(), dpw.getTcam(), loitemLecturacion.getCons());
+            double lfImporte = calcularOtrosImportes(dpw.getNhpc(), dpw.getTcam(), loitemLecturacion.getCons(),loitemLecturacion.getImco());
             dpw.setImpt(lfImporte);
             dpw.registrarImporte();
 
@@ -870,7 +870,7 @@ public class RealizarLecturacion extends AppCompatActivity {
         }
     }
 
-    public double calcularOtrosImportes(int liNhpc, double lfTcam, double lfConsumo) {
+    public double calcularOtrosImportes(int liNhpc, double lfTcam, Integer liConsumo, double lfImptConsumo) {
 
         BsTaw taw = new BsTaw();
         LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(loitemLecturacion.getAnio(), loitemLecturacion.getMesf(), liNhpc, loitemLecturacion.getNcat());
@@ -894,10 +894,10 @@ public class RealizarLecturacion extends AppCompatActivity {
             if ('V' == lfiva && 'V' == lvafa) { // SI interesa el consumo
                 //lfImporte = lfImporte * (val1 / 100);
                 //lfImporte =  new BigDecimal(lfImporte).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                lfImporte = lfConsumo * val1;
+                lfImporte = liConsumo * val1;
             }
             if ('F' == lfiva && 'F' == lvafa) { // NO interesa el consumo
-                lfImporte = lfConsumo * (val1 / 100);
+                lfImporte = lfImptConsumo * (val1 / 100);
             }
         }
         lfImporte =  new BigDecimal(lfImporte).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
@@ -1197,4 +1197,5 @@ public class RealizarLecturacion extends AppCompatActivity {
 
     }
     //endregion
+
 }
