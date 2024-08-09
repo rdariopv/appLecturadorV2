@@ -1037,7 +1037,7 @@ public class BsHpw implements Serializable {
         Double imor = total + this.getImoo();
         this.setImor(imor);
 
-        this.setNmor(this.Nmoo+1);
+        this.setNmor(this.getNmoo()+1);
 
 
         String lsConsulta = DBhelper.COLBSHPWNHPF + " = " + this.Nhpf + " ";
@@ -1132,7 +1132,8 @@ public class BsHpw implements Serializable {
             hpw.setLong(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLONG)));
             hpw.setStat(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWSTAT))));
             hpw.setRide(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWRIDE))));
-
+            hpw.setImoo(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWIMOO))));
+            hpw.setNmoo(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNMOO))));
             Log.e("BSHPW", "listarHPW se anhadio un Header a la lista ");
 
 
@@ -1224,7 +1225,8 @@ public class BsHpw implements Serializable {
             hpw.setLong(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLONG)));
             hpw.setStat(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWSTAT))));
             hpw.setRide(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWRIDE))));
-
+            hpw.setImoo(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWIMOO))));
+            hpw.setNmoo(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNMOO))));
             Log.e("BSHPW", "listarNoLecturadosBsHpw se anhadio un Header a la lista ");
 
 
@@ -1315,6 +1317,8 @@ public class BsHpw implements Serializable {
             hpw.setLong(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLONG)));
             hpw.setStat(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWSTAT))));
             hpw.setRide(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWRIDE))));
+            hpw.setImoo(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWIMOO))));
+            hpw.setNmoo(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNMOO))));
 
             Log.e("BSHPW", "listarLecturadosBsHpw se anhadio un Header a la lista ");
             listHpw.add(hpw);
@@ -1402,6 +1406,9 @@ public class BsHpw implements Serializable {
             this.setLong(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLONG)));
             this.setStat(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWSTAT))));
             this.setRide(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWRIDE))));
+            this.setImoo(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWIMOO))));
+            this.setNmoo(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNMOO))));
+
 
             Log.e("BSHPW", "obtenerBsHpw se obtiene el Header con el nhpf= " + nhpf);
         }
@@ -1489,6 +1496,8 @@ public class BsHpw implements Serializable {
             this.setLong(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLONG)));
             this.setStat(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWSTAT))));
             this.setRide(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWRIDE))));
+            this.setImoo(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWIMOO))));
+            this.setNmoo(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNMOO))));
 
             existe = true;
             Log.e("BSHPW", "obtenerBsHpwByCodigoFijo se obtiene el Header con el NroContrato= " + NroContrato);
@@ -1579,6 +1588,8 @@ public class BsHpw implements Serializable {
         setLong(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLONG)));
         setStat(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWSTAT))).intValue());
         setRide(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWRIDE))).intValue());
+        setImoo(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWIMOO))));
+        setNmoo(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNMOO))));
         Log.e("BSHPW", "obtenerBsHpwByCodigoFijo se obtiene el Header con el NroContrato= " + liNcnt);
         return true;
     }
@@ -1661,6 +1672,8 @@ public class BsHpw implements Serializable {
         setLong(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWLONG)));
         setStat(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWSTAT))).intValue());
         setRide(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWRIDE))).intValue());
+        setImoo(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWIMOO))));
+        setNmoo(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSHPWNMOO))));
         Log.e("BSHPW", "obtenerBsHpwByCodigoFijo se obtiene el Header con el NroContrato= " + liCodf);
         return true;
     }

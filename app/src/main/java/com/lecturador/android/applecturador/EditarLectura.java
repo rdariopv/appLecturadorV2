@@ -474,6 +474,7 @@ public class EditarLectura extends AppCompatActivity {
         }
         return importe;
     }
+
     public void calcularDescuentoLey(int nhpf) {
         BsHpw hpw = new BsHpw();
         hpw.obtenerBsHpw(nhpf);
@@ -486,70 +487,125 @@ public class EditarLectura extends AppCompatActivity {
             BsTaw tarifa = taw.obtenerTarifaDesde(hpw.getAnio(), hpw.getMesf(), 7050, hpw.getNcat(), 0);
 
             if (tarifa.getNhpc() == 7050) {
+                if(hpw.getNhpc()==7002){
+                    int liMinLey = tarifa.getHast();
 
-                int liMinLey = tarifa.getHast();
+                    BsTaw tarifaMin = taw.obtenerTarifaDesde(hpw.getAnio(), hpw.getMesf(),
+                            hpw.getNhpc(), hpw.getNcat(), 0);
+                    int liMinConsumo = tarifaMin.getHast();
 
-                BsTaw tarifaMin = taw.obtenerTarifaDesde(hpw.getAnio(), hpw.getMesf(),
-                        hpw.getNhpc(), hpw.getNcat(), 0);
-                int liMinConsumo = tarifaMin.getHast();
-
-                //'1.2. si el consumo enviado es menor al minimo consumido -> queda con el valor minimo
-                if (hpw.getCons() <= liMinConsumo) {
-                    liMinLey = liMinConsumo;
-                } else {
-                    // ' si es mayor analizamos y es menor al minimo descto ley le ponemos el consumo enviado
-                    if (hpw.getCons() < liMinLey) {
-                        liMinLey = loitemLecturacion.getCons();
-                    }
-                }
-
-                double lfImpConMin = calcConsumo(liMinLey);
-                double lfRecuInv = 0;//recuperacionInversionDeLey(nhpf, lfImpConMin); // para otras empresas
-                double lfAlcan = calcularAlcantarillaDeLey(nhpf, lfImpConMin + lfRecuInv);  // para otras empresas
-
-                LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(hpw.getAnio(), hpw.getMesf(), 7050, hpw.getNcat());
-
-                for (BsTaw tar : listTarifas) {
-                    int desde = tar.getDesd();
-                    int hasta = tar.getHast();
-                    double val1 = tar.getVal1();
-                    int cmon = tar.getCmon();
-                    double tcam = dpw.getTcam();
-                    String fiva = tar.getFiva().trim();
-                    String vafa = tar.getVafa().trim();
-
-                    if (liMinLey >= desde && liMinLey <= hasta) {
-
-                        char lfiva = fiva.charAt(0);
-                        char lvafa = vafa.charAt(0);
-                        if ('V' == lvafa) { // NO interesa el consumo
-                            if (cmon == 1) { // si es bolivianos
-                                dctoLey = dctoLey + val1;
-                            } else {  // es Dolares
-                                dctoLey = dctoLey + (val1 * tcam);
-                            }
-                        } else {
-                            dctoLey = dctoLey + (lfImpConMin + lfRecuInv + lfAlcan) * (val1 / 100);
+                    //'1.2. si el consumo enviado es menor al minimo consumido -> queda con el valor minimo
+                    if (hpw.getCons() <= liMinConsumo) {
+                        liMinLey = liMinConsumo;
+                    } else {
+                        // ' si es mayor analizamos y es menor al minimo descto ley le ponemos el consumo enviado
+                        if (hpw.getCons() < liMinLey) {
+                            liMinLey = loitemLecturacion.getCons();
                         }
                     }
+
+                    double lfImpConMin = calcConsumo(liMinLey);
+                    double lfRecuInv = 0;//recuperacionInversionDeLey(nhpf, lfImpConMin); // para otras empresas
+                    double lfAlcan = calcularAlcantarillaDeLey(nhpf, lfImpConMin + lfRecuInv);  // para otras empresas
+
+                    LinkedList<BsTaw> listTarifas = taw.obtenerTarifa(hpw.getAnio(), hpw.getMesf(), 7050, hpw.getNcat());
+
+                    for (BsTaw tar : listTarifas) {
+                        int desde = tar.getDesd();
+                        int hasta = tar.getHast();
+                        double val1 = tar.getVal1();
+                        int cmon = tar.getCmon();
+                        double tcam = dpw.getTcam();
+                        String fiva = tar.getFiva().trim();
+                        String vafa = tar.getVafa().trim();
+
+                        if (liMinLey >= desde && liMinLey <= hasta) {
+
+                            char lfiva = fiva.charAt(0);
+                            char lvafa = vafa.charAt(0);
+                            if ('V' == lvafa) { // NO interesa el consumo
+                                if (cmon == 1) { // si es bolivianos
+                                    dctoLey = dctoLey + val1;
+                                } else {  // es Dolares
+                                    dctoLey = dctoLey + (val1 * tcam);
+                                }
+                            } else {
+                                dctoLey = dctoLey + (lfImpConMin + lfRecuInv + lfAlcan) * (val1 / 100);
+                            }
+                        }
+                    }
+
+                    dpw.setCant(1);
+                    dpw.registrarCantidad();
+
+                    double ldImpt =  new BigDecimal(dctoLey).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                    double precioUnitario = ldImpt;
+                    dpw.setPuni(precioUnitario);
+                    dpw.registrarPrecioUnitario();
+
+                    double ldImpt1 =  new BigDecimal(dctoLey).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                    dctoLey= ldImpt1;
+                    dpw.setImpt(dctoLey);
+                    dpw.registrarImporte();
+                }else{
+
+
+                    double lfImpConMin=0;
+
+                    List<BsTaw> listTaw= taw.obtenerTarifa(hpw.getAnio(), hpw.getMesf(),dpw.getNhpc(),dpw.getNcat());
+                    for (BsTaw tawaux: listTaw) {
+                        if(hpw.getCons()>= tawaux.getDesd() && hpw.getCons()<= tawaux.getHast()){
+                            if(tawaux.getVafa()=="V"){
+                                if(tawaux.getCmon()==1){
+                                    lfImpConMin=lfImpConMin+tawaux.getVal1();
+                                }else{
+                                    lfImpConMin=lfImpConMin+(tawaux.getVal1() * dpw.getTcam());
+                                }
+                            }else{
+                                lfImpConMin=hpw.getImco()* tawaux.getVal1()/100;
+                            }
+                        }
+                    }
+
+                    if(lfImpConMin==0){
+                        for (BsTaw tawaux: listTaw) {
+                            if(hpw.getCons()>= tawaux.getDesd() && hpw.getCons()<= tawaux.getHast()){
+                                if(tawaux.getVafa()=="V"){
+                                    if(tawaux.getCmon()==1){
+                                        lfImpConMin=lfImpConMin+tawaux.getVal1();
+                                    }else{
+                                        lfImpConMin=lfImpConMin+(tawaux.getVal1() * dpw.getTcam());
+                                    }
+                                }else{
+                                    lfImpConMin=hpw.getImco()* tawaux.getVal1()/100;
+                                }
+                            }else{
+                                lfImpConMin = (hpw.getImco() / hpw.getCons()) * tawaux.getHast() * tawaux.getVal1() / 100;
+                                break;
+                            }
+                        }
+
+                    }
+
+                    dpw.setCant(1);
+                    dpw.registrarCantidad();
+
+                    double ldImpt =  new BigDecimal(lfImpConMin).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                    double precioUnitario = ldImpt;
+                    dpw.setPuni(precioUnitario);
+                    dpw.registrarPrecioUnitario();
+
+                    double ldImpt1 =  new BigDecimal(lfImpConMin).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                    dctoLey= ldImpt1;
+                    dpw.setImpt(dctoLey);
+                    dpw.registrarImporte();
                 }
 
-                dpw.setCant(1);
-                dpw.registrarCantidad();
-
-                double ldImpt =  new BigDecimal(dctoLey).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                double precioUnitario = ldImpt;
-                dpw.setPuni(precioUnitario);
-                dpw.registrarPrecioUnitario();
-
-                double ldImpt1 =  new BigDecimal(dctoLey).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                dctoLey= ldImpt1;
-                dpw.setImpt(dctoLey);
-                dpw.registrarImporte();
             }
 
         }
     }
+
 
     public void calcularTarifaDignidad(int nhpf ) {
 
