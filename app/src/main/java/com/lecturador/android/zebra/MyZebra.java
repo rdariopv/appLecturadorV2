@@ -650,7 +650,7 @@ public class MyZebra {
         enw.ObtenerBsEnw();
 
         BsDpw dpw= new BsDpw();
-        LinkedList<BsDpw> lldpw= dpw.listarDetalles(hpw.getNhpf());
+        LinkedList<BsDpw> lldpw= dpw.listarDetallesDistinct0(hpw.getNhpf());
 
         BsDhw dhw = new BsDhw();
         LinkedList<BsDhw> lldhw= dhw.listarBsDhw(hpw.getNhpf());
@@ -828,7 +828,7 @@ public class MyZebra {
         enw.ObtenerBsEnw();
 
         BsDpw dpw= new BsDpw();
-        LinkedList<BsDpw> lldpw= dpw.listarDetalles(hpw.getNhpf());
+        LinkedList<BsDpw> lldpw= dpw.listarDetallesDistinct0(hpw.getNhpf());
 
         BsDhw dhw = new BsDhw();
         LinkedList<BsDhw> lldhw= dhw.listarBsDhw(hpw.getNhpf());
@@ -886,17 +886,20 @@ public class MyZebra {
 
             if(x>=80){
                 if(cont<8){
+
                     sb.append("^FO"+x+",730^A0R,0,20^FD "+d.getOrde()+"^FS ");
                     String dhpc=d.getDhpc().trim();
+
                     if(dhpc.length()>16){
                         sb.append("^FO"+x+",800^A0R,0,20^FD "+d.getDhpc().trim().substring(0,16)+"^FS ");
                     }else{
                         sb.append("^FO"+x+",800^A0R,0,20^FD "+d.getDhpc().trim()+"^FS ");
                     }
-                   // double ldImptDtl =  new BigDecimal(d.getImpt()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-
+                    // double ldImptDtl =  new BigDecimal(d.getImpt()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
                     String dtlImpt=df1.format(d.getImpt());
                     sb.append("^FO"+x+",1000^A0R,0,20^FD "+dtlImpt+"^FS ");
+
+
                 }else{
                    // double ldImptDtl =  new BigDecimal(d.getImpt()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
                     lsImptLast=lsImptLast+d.getImpt();
@@ -1039,7 +1042,7 @@ public class MyZebra {
         enw.ObtenerBsEnw();
 
         BsDpw dpw= new BsDpw();
-        LinkedList<BsDpw> lldpw= dpw.listarDetalles(hpw.getNhpf());
+        LinkedList<BsDpw> lldpw= dpw.listarDetallesDistinct0(hpw.getNhpf());
 
         BsDhw dhw = new BsDhw();
         LinkedList<BsDhw> lldhw= dhw.listarBsDhw(hpw.getNhpf());

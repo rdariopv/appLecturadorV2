@@ -420,6 +420,45 @@ public class BsDpw {
 
     }
 
+    public LinkedList<BsDpw> listarDetallesDistinct0(int nhpf  ){
+
+
+        DBmanager.AbrirBD();
+        String condicion = DBhelper.COLBSDPWNHPF +" = "+ nhpf +" and  "+ DBhelper.COLBSDPWIMPT + " != 0 ";
+        Cursor cursor = DBmanager.buscarTuplas(DBhelper.NOMTADPW, DBhelper.COLSBSDPW, condicion, null);
+        LinkedList<BsDpw> listDpws = new LinkedList<BsDpw>();
+        while (cursor.moveToNext()) {
+            BsDpw dpw = new BsDpw();
+            dpw.setNhpf(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWNHPF))));
+            dpw.setOrde(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWORDE))));
+            dpw.setNhpc(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWNHPC))));
+            dpw.setDhpc(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWDHPC)));
+            dpw.setNcat(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWNCAT))));
+            dpw.setDcat(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWDCAT)));
+            dpw.setNcta(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWNCTA)));
+            dpw.setCmon(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWCMON))));
+            dpw.setTcam(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWTCAM))));
+            dpw.setCant(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWCANT))));
+            dpw.setPuni(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWPUNI))));
+            dpw.setImpt(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWIMPT))));
+            dpw.setCref(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWCREF)));
+            dpw.setFaci(Double.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWFACI))));
+            dpw.setInex(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWINEX)));
+            dpw.setCprd(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWCPRD))));
+            dpw.setNtpo(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWNTPO))));
+            dpw.setNtpc(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWNTPC))));
+            dpw.setStad(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWSTAD))));
+            dpw.setStat(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWSTAT))));
+            dpw.setRide(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSDPWRIDE))));
+
+
+            Log.e("BSdpw", "listarDetalles se adiciona un REGISTRO ");
+            listDpws.add(dpw);
+        }
+        return listDpws;
+
+    }
+
     public void registrarCantidad(){
         String condicion = DBhelper.COLBSDPWNHPF +" = "+ this.Nhpf +" and "+ DBhelper.COLBSDPWNHPC +" = "+ this.Nhpc + "" ;
             DBmanager.AbrirBD();
