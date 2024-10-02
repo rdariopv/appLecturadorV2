@@ -545,6 +545,7 @@ public class RealizarLecturacion extends AppCompatActivity {
         }
         return importe;
     }
+
     public void calcularDescuentoLey(int nhpf) {
         BsHpw hpw = new BsHpw();
         hpw.obtenerBsHpw(nhpf);
@@ -622,7 +623,7 @@ public class RealizarLecturacion extends AppCompatActivity {
 
                     double lfImpConMin=0;
 
-                   List<BsTaw> listTaw= taw.obtenerTarifa(hpw.getAnio(), hpw.getMesf(),hpw.getNhpc(),hpw.getNcat());
+                    List<BsTaw> listTaw= taw.obtenerTarifa(hpw.getAnio(), hpw.getMesf(),dpw.getNhpc(),dpw.getNcat());
                     for (BsTaw tawaux: listTaw) {
                         if(hpw.getCons()>= tawaux.getDesd() && hpw.getCons()<= tawaux.getHast()){
                             if(tawaux.getVafa()=="V"){
@@ -675,7 +676,6 @@ public class RealizarLecturacion extends AppCompatActivity {
 
         }
     }
-
 
     public void calcularTarifaDignidad(int nhpf ) {
 

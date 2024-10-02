@@ -1,9 +1,5 @@
 package com.lecturador.android.dblecturador;
 
-
-
-
-
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
@@ -244,7 +240,24 @@ public class DBmanager {
 
 		return liCantReg;
 	}
+	public static int Cantidad_de_Registros_Sin_Conexion(String nombreTabla, String Condicion) {
+		String lsSql = "SELECT count(*) nroFilas FROM  " + nombreTabla + " WHERE " + Condicion;
+		int liCantReg = 0;
+		Cursor cursor = null;
+		try {
+			cursor = manager.rawQuery(lsSql, null);
+			if (cursor.moveToNext()) {
+				liCantReg = Integer.valueOf(cursor.getString(0));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.e("DBmanager", "ERROR por IniciarSesion e= " + e.toString());
+		} finally {
+			cursor.close();
+		}
 
+		return liCantReg;
+	}
 	public static Cursor EjecutarConsulta(String consulta) {
 
 		return EjecutarConsulta(consulta, null);

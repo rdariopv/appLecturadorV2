@@ -954,7 +954,6 @@ public class SyncActivity extends AppCompatActivity {
                 // super.onPreExecute();
             }
 
-
             @Override
             protected Boolean doInBackground(String... strings) {
                 SyncBsHpw shpw = new SyncBsHpw();
@@ -1008,6 +1007,7 @@ public class SyncActivity extends AppCompatActivity {
             protected void onPostExecute(Boolean result) {
                 if (this.pd.isShowing()) {
                     this.pd.dismiss();
+                    confirmUpload();
                     //    this.pd= null;
                 }
                 //super.onPostExecute(result);
@@ -1015,6 +1015,26 @@ public class SyncActivity extends AppCompatActivity {
 
         }
         //endregion
+        public void confirmUpload(){
+            //aqui abrir el dialogo
+            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity().getWindow().getContext());
+            builder.setTitle("Datos Subidos");
+            BsHpw enw= new BsHpw();
+
+            String pmt= enw.countRegisterSubidos()+" Registros avisos de cobranza subidos." +System.getProperty("line.separator");
+
+            builder.setMessage(pmt);
+            builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+
+            builder.create();
+            builder.show();
+
+        }
 
     }
 

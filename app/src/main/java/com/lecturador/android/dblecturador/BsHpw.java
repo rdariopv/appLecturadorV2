@@ -1510,6 +1510,11 @@ public class BsHpw implements Serializable {
         return cant;
     }
 
+    public int countRegisterSubidos() {
+        int cant = DBmanager.Cantidad_de_Registros_Sin_Conexion(DBhelper.NOMTAHPW, DBhelper.COLBSDHWSTAD+"=3");
+        return cant;
+    }
+
     public boolean obtenerBsHpwByCodFijo(int liNcnt) {
         DBmanager.AbrirBD();
         Cursor cursor = DBmanager.buscarTuplas(DBhelper.NOMTAHPW, DBhelper.COLSBSHPW, DBhelper.COLBSHPWNCNT + " = " + liNcnt, (String) null);
