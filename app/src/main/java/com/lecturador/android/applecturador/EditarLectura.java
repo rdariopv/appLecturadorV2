@@ -1076,7 +1076,7 @@ public class EditarLectura extends AppCompatActivity {
                     }
                     if (cnf.getCnfNpri() == 2) {
                         MyZebra myZebra = new MyZebra();
-                        StringBuilder sb = myZebra.printZPLHorizontalZQ520(loitemLecturacion);
+                        StringBuilder sb = myZebra.printZPLHorizontalZQ520_formateada(loitemLecturacion);
                         configLabel = sb.toString().getBytes();
                     }
                     if (cnf.getCnfNpri() == 3) {
