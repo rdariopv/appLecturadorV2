@@ -1168,7 +1168,7 @@ public class RealizarLecturacion extends AppCompatActivity {
                     }
                     if (cnf.getCnfNpri() == 2) {
                         MyZebra myZebra = new MyZebra();
-                        StringBuilder sb = myZebra.printZPLHorizontalZQ520_formateada(loitemLecturacion);
+                        StringBuilder sb = myZebra.printZPLHorizontalZQ520_QR(loitemLecturacion);
                         configLabel = sb.toString().getBytes();
                     }
                     if (cnf.getCnfNpri() == 3) {
@@ -1182,6 +1182,7 @@ public class RealizarLecturacion extends AppCompatActivity {
                         StringBuilder sb = myZebra.printZPLHorizontalZQ320(loitemLecturacion) ;
                         configLabel = sb.toString().getBytes();
                     }
+
                     //  StringBuilder sb = myZebra.printZPL(loitemLecturacion);
 
 

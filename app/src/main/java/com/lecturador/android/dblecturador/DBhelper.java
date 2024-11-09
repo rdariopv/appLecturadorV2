@@ -468,7 +468,16 @@ public class DBhelper extends SQLiteOpenHelper {
             " bsdhwImpt int not null , " +
             " bsdhwStad int not null); " ;
 
-
+    // TABLA 10 : CONCEPTOS PARA: LINK QR, ETC.
+    public static  String NOMTABSCON="bscon";
+    public static String COLBSCONPREF = "bsconPref";
+    public static String COLBSCONCODO = "bsconCodo";
+    public static String COLBSCONDESC = "bsconDesc";
+    public static  String [] COLSBSCON ={COLBSCONPREF,COLBSCONCODO,COLBSCONDESC};
+    public static String CTBSCON=" create table bscon (  " +
+            " bsconPref int not null , " +
+            " bsconCodo int not null , " +
+            " bsconDesc text not null); " ;
     /*
     private static String openOrCreateDatabase(){
         //Quitar comentario para guardar la db externa

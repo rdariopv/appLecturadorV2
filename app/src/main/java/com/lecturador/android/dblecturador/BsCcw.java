@@ -35,6 +35,24 @@ public class BsCcw {
         Desc = desc;
     }
 
+    public LinkedList<BsCcw> listarBsCcw_groupby() {
+        LinkedList<BsCcw> listCcostos = new LinkedList<>();
+        DBmanager.AbrirBD();
+        Cursor cursor = DBmanager.buscarTuplas(DBhelper.NOMTABSCCW, DBhelper.COLSBSCCW, (String) null, DBhelper.COLBSCCWDESC, DBhelper.COLBSCCWCODO);
+        //Cursor cursor = DBmanager.listarTabla(DBhelper.NOMTABSCCW, DBhelper.COLSBSCCW);
+
+        while (cursor.moveToNext()) {
+            BsCcw ccw = new BsCcw();
+            ccw.setCodo(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSCCWCODO))));
+            ccw.setDesc(cursor.getString(cursor.getColumnIndex(DBhelper.COLBSCCWDESC)));
+
+            listCcostos.add(ccw);
+            Log.e("BSCCW","listCentrosCobranzas se anhadio un centroCobranza a la lista ="+listCcostos.size());
+
+        }
+        DBmanager.CerrarBD();
+        return listCcostos;
+    }
     @Override
     public String toString() {
         return "BsCcw{" +
